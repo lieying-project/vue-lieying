@@ -1,0 +1,69 @@
+<template>
+    <div>
+        <div class="search-container">
+            <div class="search-date">
+                <el-date-picker
+                        v-model="date"
+                        type="date"
+                        placeholder="选择日期"
+                >
+                </el-date-picker>
+            </div>
+
+            <div class="search-position">
+                <el-input
+                        placeholder="请输入职位名称"
+                        v-model="position"
+                >
+                    <i slot="prefix" class="el-input__icon el-icon-search"></i>
+                </el-input>
+            </div>
+            <div class="search-btn">
+                <el-button type="primary" @click="search">搜索</el-button>
+            </div>
+        </div>
+        <el-divider class="divider"/>
+    </div>
+</template>
+
+<script>
+    export default {
+        name: "DispatcherHeader",
+        data() {
+            return {
+                date: "",
+                position: ""
+            }
+        },
+        methods:{
+            //对于搜索需要进行判断的是,date和position同时存在的话是或查询还是与查询
+            search() {
+
+            }
+        }
+    }
+</script>
+
+<style scoped lang="less">
+    .search-container {
+        background-color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 200px/ @font-size;
+        margin-top: 20px;
+        margin-bottom: 40px;
+        .search-date,.search-position {
+            margin-left: 40px;
+            input {
+                height: 40px;
+                color: red;
+            }
+        }
+
+        .search-btn {
+            margin-left: 40px;
+        }
+
+    }
+</style>
