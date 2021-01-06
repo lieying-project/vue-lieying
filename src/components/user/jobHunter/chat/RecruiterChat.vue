@@ -289,7 +289,6 @@ export default {
         id:0,
         photo:''
       }
-
     }
   },
   methods: {
