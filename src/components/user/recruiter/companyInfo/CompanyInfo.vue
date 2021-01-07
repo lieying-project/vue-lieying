@@ -6,17 +6,17 @@
             </legend>
             <div class="company-info-form">
                 <el-form ref="form" :model="companyInfo" label-width="80px">
-                    <el-form-item label="公司名称">
-                        <el-input v-model="companyInfo.name"></el-input>
+                    <el-form-item label="公司名称" required>
+                        <el-input v-model="companyInfo.name" placeholder="请输入公司名称"></el-input>
                     </el-form-item>
-                    <el-form-item label="公司地址">
-                        <el-input v-model="companyInfo.address"></el-input>
+                    <el-form-item label="公司地址" required>
+                        <el-input v-model="companyInfo.address" placeholder="请输入公司地址"></el-input>
                     </el-form-item>
-                    <el-form-item label="法人代表">
-                        <el-input v-model="companyInfo.person"></el-input>
+                    <el-form-item label="法人代表" required>
+                        <el-input v-model="companyInfo.person" placeholder="请输入公司的法人代表"></el-input>
                     </el-form-item>
-                    <el-form-item label="联系电话">
-                        <el-input v-model="companyInfo.phone"></el-input>
+                    <el-form-item label="联系电话" required>
+                        <el-input v-model="companyInfo.phone" placeholder="请输入公司的联系电话"></el-input>
                     </el-form-item>
                     <el-form-item label="成立时间">
                         <el-date-picker
@@ -27,7 +27,7 @@
                         </el-date-picker>
                     </el-form-item>
                     <el-form-item label="注册资本">
-                        <el-input v-model="companyInfo.money">
+                        <el-input v-model="companyInfo.money" placeholder="请输入公司的注册资本">
                             <template slot="append">元</template>
                         </el-input>
                     </el-form-item>
@@ -50,7 +50,7 @@
                     </el-form-item>
 
 <!--                    营业执照-->
-                    <el-form-item label="营业执照">
+                    <el-form-item label="营业执照" required>
                         <el-upload
                                 action="https://jsonplaceholder.typicode.com/posts/"
                                 list-type="picture-card"
@@ -66,16 +66,16 @@
 
 <!--                    简介-->
                     <el-form-item label="简介">
-                        <el-input type="textarea" v-model="companyInfo.desc"></el-input>
+                        <el-input type="textarea" v-model="companyInfo.desc" placeholder="请输入公司的相关简介"></el-input>
                     </el-form-item>
 
                     <el-form-item label="经营范围">
-                        <el-input v-model="companyInfo.range"></el-input>
+                        <el-input v-model="companyInfo.range" placeholder="请输入公司的经营范围"></el-input>
                     </el-form-item>
 
 <!--                    企业文化-->
                     <el-form-item label="企业文化">
-                        <el-input type="textarea" v-model="companyInfo.liter"></el-input>
+                        <el-input type="textarea" v-model="companyInfo.liter" placeholder="请输入公司的企业文化"></el-input>
                     </el-form-item>
 
 <!--                    公司环境上传照片-->
@@ -179,6 +179,7 @@
         border: 1px solid #e6e6e6;
         padding: 10px 20px 5px 20px;
         color: #6b6b6b;
+        background-color: #ffffff;
     }
 
     .company-info-form {

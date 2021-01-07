@@ -35,6 +35,12 @@
                 <template slot-scope="scope">
                     <el-button
                             size="mini"
+                            type="primary"
+                            @click="handleView(scope.$index, scope.row)">
+                        查看
+                    </el-button>
+                    <el-button
+                            size="mini"
                             @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                     <el-button
                             size="mini"
@@ -43,11 +49,13 @@
                 </template>
             </el-table-column>
         </el-table>
+        <recruit-info-detail :dialogVisible="dialogVisible" @cancelEvent="cancelDialog"/>
     </div>
 </template>
 
 <script>
-    import {mapActions} from "vuex";
+    import {mapActions} from "vuex"
+    import RecruitInfoDetail from "./RecruitInfoDetail";
     export default {
         name: "RecruitInfoContent",
         methods: {
@@ -55,7 +63,7 @@
             handleEdit(index, row) {
                 console.log(index, row);
                 this.$router.push({
-                    path: "/editRecruitInfo",
+                    path: "/recruiterIndex/editRecruitInfo",
                     query:{
                         data:row
                     }
@@ -77,6 +85,13 @@
                         message:"已取消删除"
                     })
                 })
+            },
+            handleView(index, row) {
+                this.dialogVisible = true
+            },
+            //取消对话框
+            cancelDialog(bool){
+                this.dialogVisible=bool;
             }
         },
         data() {
@@ -105,8 +120,12 @@
                     type: "计算机",
                     express: '1年',
                     money: "1k~2k"
-                }]
+                }],
+                dialogVisible:false
             }
+        },
+        components:{
+            RecruitInfoDetail
         }
     }
 </script>

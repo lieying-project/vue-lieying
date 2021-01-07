@@ -25,7 +25,7 @@
 
 <style scoped lang="less">
     .recruit-info {
-        height: 100vh;
-        /*background-color: #F2F2F2;*/
+        background-color: #fff;
+        margin: 20px;
     }
 </style>

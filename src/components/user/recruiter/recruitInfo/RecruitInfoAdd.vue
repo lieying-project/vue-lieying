@@ -95,6 +95,9 @@
                 //     type: 'success',
                 //     message: '添加成功'
                 // })
+                this.$router.replace({
+                    path:'/recruiterInfo'
+                })
             },
             onCancel() {
                 console.log("点击了取消");
@@ -114,6 +117,7 @@
         border: 1px solid #e6e6e6;
         padding: 10px 20px 5px 20px;
         color: #6b6b6b;
+        background-color: #ffffff;
     }
 
     .add-recruiter-form {

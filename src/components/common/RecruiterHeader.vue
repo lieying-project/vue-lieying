@@ -8,7 +8,7 @@
                  background-color="#202329"
                  text-color="#fff"
                  active-text-color="#5dd5c8" >
-            <el-menu-item ><img src="/src/assets/logo.png"></el-menu-item>
+            <el-menu-item ><img class="iconImage" src="@/assets/logo.png"></el-menu-item>
             <el-menu-item index="/recruiterInfo">  <span class="text">招聘信息管理</span></el-menu-item>
             <el-menu-item index="/companyInfo">  <span class="text">公司信息管理</span></el-menu-item>
             <el-menu-item index="/dispatcherInfo">  <span class="text">投递信息管理</span></el-menu-item>
@@ -66,6 +66,10 @@
 
     }
 
+    .iconImage {
+        width:32px;
+        height:32px;
+    }
 
 
 </style>

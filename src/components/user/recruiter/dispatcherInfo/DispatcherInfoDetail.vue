@@ -1,6 +1,5 @@
 <template>
     <div class="dispatcher-info-detail">
-
         <div class="info-person">
             <h3 style="font-size:20px">梁远</h3>
             <ul class="info-person-list">
@@ -80,12 +79,41 @@
             <h4>社交主页</h4>
             <div></div>
         </div>
+
+        <el-divider/>
+
+        <div class="btn">
+            <el-button type="primary" @click="communicate">沟通</el-button>
+            <el-button type="warn" @click="reject">拒绝</el-button>
+        </div>
     </div>
 </template>
 
 <script>
     export default {
-        name: "DispatcherInfoDetail"
+        name: "DispatcherInfoDetail",
+        methods:{
+            communicate() {
+               //进入沟通界面
+
+            },
+            reject() {
+                this.$prompt('', '回馈信息', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                }).then(({ value }) => {
+                    this.$message({
+                        type: 'success',
+                        message: value
+                    });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '取消输入'
+                    });
+                });
+            }
+        }
     }
 </script>
 
@@ -94,10 +122,12 @@
         width:80%;
         margin: 40px auto;
         font-size: 14px;
-
+        padding: 60px;
+        background-color: #ffffff;
     }
     ul {
         list-style: none;
+        padding-left: 0;
         li {
             padding:10px;
         }
@@ -117,9 +147,11 @@
         -webkit-box-sizing: border-box;
     }
 
-    .info-person-list,.info-respect-list {
+    .info-person-list,.info-respect-list{
         display: flex;
         flex-wrap: wrap;
+        justify-content: start;
+        padding-left:0;
     }
     .info-span {
         padding-left: 8px;

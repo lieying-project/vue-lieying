@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="dispatcher-info">
         <dispatcher-header/>
         <dispatcher-content/>
         <el-divider/>
@@ -18,5 +18,8 @@
 </script>
 
 <style scoped>
-
+    .dispatcher-info {
+        background-color: #ffffff;
+        margin: 20px;
+    }
 </style>

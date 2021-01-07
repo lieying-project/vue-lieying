@@ -50,7 +50,7 @@
             handleView(index, row) {
                 console.log(index, row);
                 this.$router.push({
-                    path:"/DispatcherInfoDetail",
+                    path:"/recruiterIndex/dispatcherInfoDetail",
                     query:{
 
                     }
@@ -92,6 +92,7 @@
         display:flex;
         padding: 0 30px;
         justify-content: center;
+
     }
     .el-table .warning-row {
         background: oldlace;

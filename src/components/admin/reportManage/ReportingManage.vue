@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="report-manage">
         <search :bread-arr="breadArr"/>
         <el-divider/>
         <reporting-info/>
@@ -34,5 +34,9 @@
 </script>
 
 <style scoped lang="less">
-
+    .report-manage {
+        background-color: #ffffff;
+        margin: 12px;
+        padding: 20px;
+    }
 </style>
