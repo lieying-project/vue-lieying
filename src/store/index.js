@@ -24,6 +24,7 @@ export default new Vuex.Store({
     company:'',
     administrator:'',
     jobHunterReport:'',
+    jobHunterReports:'',
     companies:'',
     resume:'',
     chats:'',
@@ -196,6 +197,21 @@ export default new Vuex.Store({
     },
     saveArticle(state,article){
       api.saveArticle(state,article)
+    },
+    savePosition(state,position){
+      api.savePosition(state,position)
+    },
+    updatePosition(state,position){
+      api.updatePosition(state,position)
+    },
+    deletePosition(state,id){
+      api.deletePosition(state,id)
+    },
+    getRecruiter(state){
+      api.getRecruiter(state)
+    },
+    getJobHunterReportsByCriteria(state,criteria){
+      api.getJobHunterReportsByCriteria(state,criteria)
     }
   },
   actions: {//允许异步操作
@@ -333,6 +349,21 @@ export default new Vuex.Store({
     },
     saveArticleAction({commit},article){
       commit('saveArticle',article)
+    },
+    savePositionAction({commit},position){
+      commit('savePosition',position)
+    },
+    updatePositionAction({commit},position){
+      commit('updatePosition',position)
+    },
+    deletePositionAction({commit},id){
+      commit('deletePosition',id)
+    },
+    getRecruiterAction({commit}){
+      commit('getRecruiter')
+    },
+    getJobHunterReportsByCriteriaAction({commit},criteria){
+      commit('getJobHunterReportsByCriteria',criteria)
     }
   },
   modules: {}

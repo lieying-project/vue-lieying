@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import admin from './admin'
 import jobHunter from "./jobHunter";
 import recruiter from "./recruiter";
+import Test from "../components/Test";
 
 Vue.use(VueRouter)
 
@@ -10,6 +11,11 @@ const routes = [
   {
     path: '/',
     redirect: "/jobHunterIndex"
+  },
+  {
+    path:'/test',
+    name:'Test',
+    component: Test
   },
   ...jobHunter,
   ...recruiter,

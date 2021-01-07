@@ -42,9 +42,17 @@ export default {
         console.log(state.jobHunter)
       })
     }
-
   },
-
+  //根据招聘者id获取招聘者信息
+  getRecruiter(state){
+    const jobHunterId = localStorage.getItem("jobHunterId")
+    if (jobHunterId != null) {
+      request.get('/api/recruiter/' + jobHunterId).then((res) => {
+        state.recruiter = res.data
+        console.log(state.recruiter)
+      })
+    }
+  },
   //根据求职者id获取所有求职者的简历
   getJobHunterResumesByJobHunterId(jobHunterId) {
     request.get('/api/jobHunter/' + jobHunterId + '/resumes').then((res) => {
@@ -95,7 +103,6 @@ export default {
   },
   //保存职位收藏信息
   savePositionCollect(state, positionCollect) {
-
     request.post("/api/position/collect/save", positionCollect).then(res => {
       console.log(res.data)
       this.getPositionById(state,positionCollect.position.id)
@@ -111,7 +118,24 @@ export default {
   //保存职位浏览信息
   savePositionBrowse(state, positionBrowse) {
     request.post("/api/position/browse/save", positionBrowse).then(res => {
-      //console.log(res.data)
+      console.log(res.data)
+    })
+  },
+  //保存职位信息
+  savePosition(state,position){
+    request.post("/api/position/save", position).then(res => {
+      console.log(res.data)
+    })
+  },
+  //更新职位
+  updatePosition(state,position){
+    request.post("/api/position/update", position).then(res => {
+      console.log(res.data)
+    })
+  },
+  deletePosition(state,id){
+    request.get("/api/position/delete", id).then(res => {
+      console.log(res.data)
     })
   },
   //获取所有城市信息
@@ -300,29 +324,38 @@ export default {
     })
   },
 //更新举报信息
-  updateJobHunterReport(state, jobHunterReport) {
-    axios({
-      method: 'post',
-      url: 'http://127.0.0.1:8080/lieying/jobHunter/report/update',
-      data: jobHunterReport
+  updateJobHunterReport(state, criteria) {
+    request.post("/api/jobHunter/report/update",{
+      reason:criteria.reason,
+      footnote: criteria.footnote,
+      state:criteria.state,
+      evidenceScreenShot:criteria.evidenceScreenShot,
+      createTime:criteria.createdTime,
+      jobHunter:{
+        id:criteria.jobHunterId
+      },
+      position:{
+        id:criteria.positionId
+      },
+      id:criteria.jobHunterReportId
     }).then(res => {
       console.log(res.data)
-
-    }).catch(err => {
-      console.log(err)
+      state.jobHunterReports=res.data
     })
   },
+
 //更新简历状态
-  updateResumeState(state, resume) {
-    axios({
-      method: 'post',
-      url: 'http://127.0.0.1:8080/lieying/jobHunter/resume/update',
-      data: resume
+  updateResumeState(state, criteria){
+    request.post("/api/admin/resume/update",{
+     jobHunter:{
+       id:criteria.jobHunterId
+     },
+      position:{
+       id:criteria.positionId
+      },
+      state:criteria.state
     }).then(res => {
       console.log(res.data)
-
-    }).catch(err => {
-      console.log(err)
     })
   },
 //根据条件搜索公司信息
@@ -354,7 +387,8 @@ export default {
       positionExperience: criteria.positionExperience,
       positionPublishTime: criteria.positionPublishTime,
       keyword: criteria.keyword,
-      page: criteria.page
+      page: criteria.page,
+      recruiterId:criteria.recruiterId
     }).then(res => {
       state.foundPositionPageInfos = res.data
       console.log(state.foundPositionPageInfos)
@@ -417,4 +451,16 @@ export default {
       this.getAllInformations(state)
     })
   },
+  //查询所有举报信息
+  getJobHunterReportsByCriteria(state,criteria){
+    request.get("/api/admin/reports",{
+      positionName:criteria.positionName,
+      jobHunterName:criteria.jobHunterName,
+      reportReason:criteria.reportReason,
+      reportState:criteria.reportState
+    }).then(res => {
+      console.log(res.data)
+      state.jobHunterReports=res.data
+    })
+  }
 }
