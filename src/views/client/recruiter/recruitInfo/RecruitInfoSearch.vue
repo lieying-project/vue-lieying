@@ -42,6 +42,7 @@
 </template>
 
 <script>
+    import {mapActions} from 'vuex';
     export default {
         name: "RecruitInfoSearch",
         data() {
@@ -51,6 +52,7 @@
             }
         },
         methods:{
+            ...mapActions(['getPositionsByCriteriaAction']),
             addPosition() {
                 this.$router.push({
                     path:"/recruiterIndex/addRecruitInfo"

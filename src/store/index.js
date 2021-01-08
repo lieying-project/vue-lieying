@@ -159,8 +159,10 @@ export default new Vuex.Store({
     getChatJobHuntersByRecruiterId(state,recruiterId){
       api.getChatJobHuntersByRecruiterId(state,recruiterId)
     },
-    getPositionsByCriteria(state,criteria){
-      api.getPositionsByCriteria(state,criteria)
+    //保存获取到的职位信息................................................................................................
+    getPositionsByCriteria(state,data){
+      state.foundPositionPageInfos = data;
+      console.log("mutations输出",state.foundPositionPageInfos)
     },
     getInformationById(state,id){
       api.getInformationById(state,id)
@@ -202,7 +204,7 @@ export default new Vuex.Store({
       api.savePosition(state,position)
     },
     updatePosition(state,position){
-      api.updatePosition(state,position)
+
     },
     deletePosition(state,id){
       api.deletePosition(state,id)
@@ -310,9 +312,15 @@ export default new Vuex.Store({
     getChatJobHuntersByRecruiterIdAction({commit},recruiterId){
       commit('getChatJobHuntersByRecruiterId',recruiterId)
     },
-    getPositionsByCriteriaAction({commit},criteria){
-      commit('getPositionsByCriteria',criteria)
+    //获取招聘者发布的职位详细........................................................................................
+    async getPositionsByCriteriaAction({commit},criteria){
+      const data =  await api.getPositionsByCriteria(criteria);
+      commit('getPositionsByCriteria',data);
+      return data;
+      //  console.log('criteria',criteria);
+
     },
+
     getInformationByIdAction({commit},id){
 
       commit('getInformationById',id)
@@ -353,8 +361,10 @@ export default new Vuex.Store({
     savePositionAction({commit},position){
       commit('savePosition',position)
     },
-    updatePositionAction({commit},position){
+    async updatePositionAction({commit},position){
+      const data =  await   api.updatePosition(position);
       commit('updatePosition',position)
+      return data;
     },
     deletePositionAction({commit},id){
       commit('deletePosition',id)

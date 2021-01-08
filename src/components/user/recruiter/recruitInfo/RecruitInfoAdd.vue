@@ -18,22 +18,21 @@
                             :rules="[{ required:true,message:'类型不能为空'}]"
 
                     >
-                        <el-select v-model="form.type" placeholder="请选择职位类型">
-                            <el-option label="前端开发" value="web前端"></el-option>
-                            <el-option label="java开发" value="java开发"></el-option>
+                        <el-select v-model="value" placeholder="请选择职位类型" @change="getType">
+                            <el-option v-for="item in positionCategories" :key="item.id" :label="item.name" :value="item.id"></el-option>
                         </el-select>
                     </el-form-item>
 
                     <el-form-item
                             label="地点"
                     >
-                        <el-input v-model="form.place"></el-input>
+                        <el-input v-model="form.address"></el-input>
                     </el-form-item>
 
                     <el-form-item
                             label="经验要求"
                     >
-                        <el-select v-model="form.exercise" placeholder="请选择经验要求">
+                        <el-select v-model="form.experience" placeholder="请选择经验要求">
                             <el-option label="无经验" value="无经验"></el-option>
                             <el-option label="1年以上" value="1年以上"></el-option>
                             <el-option label="2年以上" value="2年以上"></el-option>
@@ -43,10 +42,10 @@
                         </el-select>
                     </el-form-item>
 
-                    <el-form-item
-                            label="工作制">
-                        <el-input v-model="form.time"></el-input>
-                    </el-form-item>
+<!--                    <el-form-item-->
+<!--                            label="工作制">-->
+<!--                        <el-input v-model="form.time"></el-input>-->
+<!--                    </el-form-item>-->
 
                     <el-form-item
                             label="待遇">
@@ -69,32 +68,59 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex'
+    import {mapActions,mapState} from 'vuex'
     export default {
         name: "RecruitInfoAdd",
         data() {
             return {
                 form: {
                     name: '',
-                    type: '',
-                    place: '',
-                    exercise: '',
-                    time: '',
-                    money: '',
+                    positionCategory:{
+                      id:0
+                    },
+                    address: '',
+                    experience: '',
+                    salary: '',
                     detail: ''
-                }
+                },
+                value:''
             }
         },
+        created(){
+            this.getAllPositionCategoriesAction();
+            console.log("种类数据",this.positionCategories);
+        },
+        computed:{
+          ...mapState(['positionCategories'])
+        },
         methods: {
-            ...mapActions(["addRecruitInfo"]),
+            ...mapActions(["savePositionAction","getAllPositionCategoriesAction"]),
+            getType(data) {
+                console.log('获取data',data);
+                this.form.positionCategory.id = data;
+            },
             onSubmit() {
-                console.log('submit!');
+                this.savePositionAction({...this.form,recruiter:{id:1}})
+                 // this.$store.dispatch('savePositionAction',{
+                 //   name:"name",
+                 //     salary:"100/天",
+                 //    address:"address" ,
+                 //    education:"高中",
+                 //    experience:"experience",
+                 //   detail:"detail" ,
+                 //    recruiter:{
+                 //      id: 1
+                 //   },
+                 //     positionCategory:{
+                 //       id:2
+                 //     }
+                 // })
                 //this.addRecruitInfo(this.form);
                 //根据判断再进行弹框
-                // this.$message({
-                //     type: 'success',
-                //     message: '添加成功'
-                // })
+                this.$message({
+                    type: 'success',
+                    message: '添加成功'
+                })
                 this.$router.replace({
                     path:'/recruiterInfo'
                 })

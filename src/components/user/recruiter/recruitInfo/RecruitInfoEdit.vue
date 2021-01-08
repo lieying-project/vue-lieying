@@ -18,22 +18,21 @@
                             :rules="[{ required:true,message:'类型不能为空'}]"
 
                     >
-                        <el-select v-model="form.type" placeholder="请选择职位类型">
-                            <el-option label="前端开发" value="web前端"></el-option>
-                            <el-option label="java开发" value="java开发"></el-option>
+                        <el-select v-model="form.type" placeholder="请选择职位类型" @change="getType">
+                            <el-option v-for="item in positionCategories" :key="item.id" :label="item.name" :value="item.id"></el-option>
                         </el-select>
                     </el-form-item>
 
                     <el-form-item
                             label="地点"
                     >
-                        <el-input v-model="form.place"></el-input>
+                        <el-input v-model="form.address"></el-input>
                     </el-form-item>
 
                     <el-form-item
                             label="经验要求"
                     >
-                        <el-select v-model="form.exercise" placeholder="请选择经验要求">
+                        <el-select v-model="form.experience" placeholder="请选择经验要求">
                             <el-option label="无经验" value="无经验"></el-option>
                             <el-option label="1年以上" value="1年以上"></el-option>
                             <el-option label="2年以上" value="2年以上"></el-option>
@@ -44,18 +43,18 @@
                     </el-form-item>
 
                     <el-form-item
-                            label="工作制">
-                        <el-input v-model="form.time"></el-input>
+                            label="学历要求">
+                        <el-input v-model="form.education"></el-input>
                     </el-form-item>
 
                     <el-form-item
                             label="待遇">
-                        <el-input v-model="form.money"></el-input>
+                        <el-input v-model="form.salary"></el-input>
                     </el-form-item>
 
 
                     <el-form-item label="详情">
-                        <el-input type="textarea" v-model="form.detail" aria-placeholder="请补充相关职位要求详情"></el-input>
+                        <el-input type="textarea" v-model="form.detail" autosize aria-placeholder="请补充相关职位要求详情"></el-input>
                     </el-form-item>
 
                     <el-form-item>
@@ -69,7 +68,7 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex'
+    import {mapActions, mapState} from 'vuex'
     export default {
         name: "RecruitInfoEdit",
         data() {
@@ -77,29 +76,53 @@
                 form: {
                     name: '',
                     type: '',
-                    place: '',
-                    exercise: '',
-                    time: '',
-                    money: '',
-                    detail: ''
-                }
+                    address: '',
+                    experience: '',
+                    education: '',
+                    salary: '',
+                    detail: '',
+                },
+                typeId:0
             }
         },
         created() {
             //根据传递过来的信息去查找对应的数据 显示到界面上
             console.log(this.$route.query);
+            const data = this.$route.query.data;
+            console.log("data",data);
+            this.form = data;
+            if(this.positionCategories=='') {
+                this.getAllPositionCategoriesAction();
+
+            }
+        },
+        computed:{
+            ...mapState(['positionCategories'])
         },
         methods: {
-            ...mapActions(["updateRecruitInfo"]),
+            ...mapActions(["updatePositionAction","getAllPositionCategoriesAction"]),
+            getType(data) {
+                console.log('获取的类型data',data);
+                this.typeId = data;
+            },
             onSubmit() {
                 console.log('submit!');
                 //进行数据的更新
-                // this.updateRecruitInfo(this.form);
-                //根据判断再进行弹框
-                // this.$message({
-                //     type: 'success',
-                //     message: '编辑成功'
-                // })
+                this.updatePositionAction({
+                    ...this.form,recruiter:{id:2},positionCategory:{id:this.typeId}
+                }).then((data)=>{
+                    console.log("更新",data);
+                    if(data.status===200) {
+                        //根据判断再进行弹框
+                        this.$message({
+                            type: 'success',
+                            message: '编辑成功'
+                        })
+                        this.$router.back();
+                    }
+
+                });
+
             },
             onCancel() {
                 console.log("点击了取消");

@@ -29,7 +29,9 @@ import VueWechatTitle from 'vue-wechat-title'
 //引入过滤器
 import filters from './assets/js/filter'
 Vue.prototype.request = request;
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+//定义一个事件车--处理分页
+Vue.prototype.eventBus = new Vue();
 Vue.use(ElementUI)
 Vue.use(QuillEditor)
 Vue.use(VueWechatTitle)

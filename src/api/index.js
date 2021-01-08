@@ -122,16 +122,26 @@ export default {
     })
   },
   //保存职位信息
-  savePosition(state,position){
-    request.post("/api/position/save", position).then(res => {
-      console.log(res.data)
-    })
+  // savePosition(state,position){
+  //
+  //   request.post("/api/position/save", position).then(res => {
+  //     console.log("savePosition",res.data)
+  //   })
+  // },
+  //保存职位信息
+  savePosition(position){
+    return request.post("/api/position/save", position);
   },
+
+
   //更新职位
-  updatePosition(state,position){
-    request.post("/api/position/update", position).then(res => {
-      console.log(res.data)
-    })
+  // updatePosition(state,position){
+  //   request.post("/api/position/update", position).then(res => {
+  //     console.log(res.data)
+  //   })
+  // },
+  updatePosition(position){
+    return request.post("/api/position/update", position);
   },
   deletePosition(state,id){
     request.get("/api/position/delete", id).then(res => {
@@ -375,25 +385,42 @@ export default {
     })
   },
 //根据条件搜索职位
-  getPositionsByCriteria(state, criteria) {
-    request.get("/api/position", {
-      cityId: criteria.cityId,
-      // companyScaleId: criteria.companyScaleId,
-      industryId: criteria.industryId,
-      financingStageId: criteria.financingStageId,
-      positionCategoryId: criteria.positionCategoryId,
-      positionEducation: criteria.positionEducation,
-      positionSalary: criteria.positionSalary,
-      positionExperience: criteria.positionExperience,
-      positionPublishTime: criteria.positionPublishTime,
-      keyword: criteria.keyword,
-      page: criteria.page,
-      recruiterId:criteria.recruiterId
-    }).then(res => {
-      state.foundPositionPageInfos = res.data
-      console.log(state.foundPositionPageInfos)
-    })
-  },
+//   getPositionsByCriteria(state, criteria) {
+//     request.get("/api/position", {
+//       cityId: criteria.cityId,
+//       // companyScaleId: criteria.companyScaleId,
+//       industryId: criteria.industryId,
+//       financingStageId: criteria.financingStageId,
+//       positionCategoryId: criteria.positionCategoryId,
+//       positionEducation: criteria.positionEducation,
+//       positionSalary: criteria.positionSalary,
+//       positionExperience: criteria.positionExperience,
+//       positionPublishTime: criteria.positionPublishTime,
+//       keyword: criteria.keyword,
+//       page: criteria.page,
+//       recruiterId:criteria.recruiterId
+//     }).then(res => {
+//       state.foundPositionPageInfos = res.data
+//       console.log("index.js输出",state.foundPositionPageInfos)
+//     })
+//   },
+  //................................................测试修改dispatch异步问题.........................................
+   getPositionsByCriteria(criteria) {
+      return request.get("/api/position", {
+        cityId: criteria.cityId,
+        // companyScaleId: criteria.companyScaleId,
+        industryId: criteria.industryId,
+        financingStageId: criteria.financingStageId,
+        positionCategoryId: criteria.positionCategoryId,
+        positionEducation: criteria.positionEducation,
+        positionSalary: criteria.positionSalary,
+        positionExperience: criteria.positionExperience,
+        positionPublishTime: criteria.positionPublishTime,
+        keyword: criteria.keyword,
+        page: criteria.page,
+        recruiterId:criteria.recruiterId
+      })
+    },
 //根据求职者id和招聘者id获取聊天信息
   getChatsByJobHunterIdAndRecruiterId(state, jobHunterId, recruiterId) {
     request.get('/api/chat/' + jobHunterId + "/" + recruiterId)

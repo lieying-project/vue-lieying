@@ -22,12 +22,12 @@
                     align="center">
             </el-table-column>
             <el-table-column
-                    prop="express"
+                    prop="experience"
                     label="经验要求"
                     align="center">
             </el-table-column>
             <el-table-column
-                prop="money"
+                prop="salary"
                 label="薪资"
                 align="center">
             </el-table-column>
@@ -49,19 +49,92 @@
                 </template>
             </el-table-column>
         </el-table>
-        <recruit-info-detail :dialogVisible="dialogVisible" @cancelEvent="cancelDialog"/>
+        <recruit-info-detail :dialogVisible="dialogVisible" :data="data" @cancelEvent="cancelDialog"/>
     </div>
 </template>
 
 <script>
-    import {mapActions} from "vuex"
+    import {mapActions,mapState} from "vuex";
     import RecruitInfoDetail from "./RecruitInfoDetail";
     export default {
         name: "RecruitInfoContent",
+        data() {
+            return {
+                // tableData: [{
+                //     date: '2016-05-02',
+                //     name: 'ui设计',
+                //     type: "计算机",
+                //     express: '1年',
+                //     money: "1k~2k"
+                // }, {
+                //     date: '2016-05-02',
+                //     name: 'ui设计',
+                //     type: "计算机",
+                //     express: '1年',
+                //     money: "1k~2k"
+                // }, {
+                //     date: '2016-05-02',
+                //     name: 'ui设计',
+                //     type: "计算机",
+                //     express: '1年',
+                //     money: "1k~2k"
+                // }, {
+                //     date: '2016-05-02',
+                //     name: 'ui设计',
+                //     type: "计算机",
+                //     experience: '1年',
+                //     salary: "1k~2k"
+                // }],
+                tableData:[],
+                dialogVisible:false,
+                data:{}
+            }
+        },
+        created() {
+
+                this.$store.dispatch('getPositionsByCriteriaAction',{
+                    recruiterId:1,
+                    page:1//页码从1开始
+                }).then((data)=>{
+                    //不能使用fill来填充对象,引用的都是同一个地址
+                    // const arr = new Array(data.data.list.length).fill(null).map(()=>Object.create({
+                    //     date: '',
+                    //     name: '',
+                    //     type: '',
+                    //     experience: '',
+                    //     salary:''}));
+                    const arr = [];
+                    data.data.list.forEach((item)=>{
+                        var time = new Date(item.publishTime).toLocaleDateString().replace(/\/(\d+)/g,function(a,b){
+                            return '-'+b.padStart(2,0)
+                        })
+                        arr.push({
+                            id:item.id,
+                            name:item.name,
+                            date:time,
+                            type:item.positionCategory.fatherPositionCategory.name,
+                            experience:item.experience,
+                            salary:item.salary,
+                            address:item.address,
+                            detail:item.detail,
+                            education:item.education
+                        })
+                    })
+                    this.tableData = arr;
+
+                    //有关分页
+                    this.eventBus.$emit('getRecruitInfo','data');
+                });
+
+
+        },
+        computed:{
+          ...mapState(['foundPositionPageInfos'])
+        },
         methods: {
             ...mapActions(["removePosition"]),
             handleEdit(index, row) {
-                console.log(index, row);
+                console.log("编辑",index, row);
                 this.$router.push({
                     path: "/recruiterIndex/editRecruitInfo",
                     query:{
@@ -87,43 +160,16 @@
                 })
             },
             handleView(index, row) {
-                this.dialogVisible = true
+                this.dialogVisible = true;
+                this.data = row;
+                console.log("this.data",this.data);
             },
             //取消对话框
-            cancelDialog(bool){
-                this.dialogVisible=bool;
+            cancelDialog(){
+                this.dialogVisible=false;
             }
         },
-        data() {
-            return {
-                tableData: [{
-                    date: '2016-05-02',
-                    name: 'ui设计',
-                    type: "计算机",
-                    express: '1年',
-                    money: "1k~2k"
-                }, {
-                    date: '2016-05-02',
-                    name: 'ui设计',
-                    type: "计算机",
-                    express: '1年',
-                    money: "1k~2k"
-                }, {
-                    date: '2016-05-02',
-                    name: 'ui设计',
-                    type: "计算机",
-                    express: '1年',
-                    money: "1k~2k"
-                }, {
-                    date: '2016-05-02',
-                    name: 'ui设计',
-                    type: "计算机",
-                    express: '1年',
-                    money: "1k~2k"
-                }],
-                dialogVisible:false
-            }
-        },
+
         components:{
             RecruitInfoDetail
         }

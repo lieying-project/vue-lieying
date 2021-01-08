@@ -3,41 +3,41 @@
         <el-dialog
                 title="招聘信息"
                 :visible.sync="dialogVisible"
-                width="70%"
-                :show-close="true"
+                width="45%"
+                :before-close="changeDialogVisible"
         >
             <ul class="company-info">
                 <li>
-                    <label class="company-left">发布时间：</label>
-                    <time class="company-right">2016-05-02</time>
+                    <label>发布时间：</label>
+                    <el-input class="company-right" type="text" :readonly="true"  :value="data.date"/>
                 </li>
                 <li>
-                    <label class="company-left">职位名称:</label>
-                    <span class="company-right">我是公司的名称</span>
+                    <label>职位名称:</label>
+                    <el-input type="text" :readonly="true"  :value="data.name"/>
                 </li>
                 <li>
-                    <label class="company-left">类型:</label>
-                    <span class="company-right">职位类型</span>
+                    <label>类型:</label>
+                    <el-input type="text" :readonly="true" :value="data.type"/>
                 </li>
                 <li>
-                    <label  class="company-left">地点:</label>
-                    <span>我是公司地址</span>
+                    <label>地点:</label>
+                    <el-input type="text" :readonly="true" :value="data.address || '--'"/>
                 </li>
                 <li>
-                    <label  class="company-left">经验要求:</label>
-                    <span>经验要求</span>
+                    <label>经验要求:</label>
+                    <el-input type="text" :readonly="true" :value="data.experience"/>
                 </li>
                 <li>
-                    <label  class="company-left">工作制:</label>
-                    <span>工作制</span>
+                    <label>学历要求:</label>
+                    <el-input  type="text" :readonly="true" :value="data.education"/>
                 </li>
                 <li>
-                    <label  class="company-left">待遇:</label>
-                    <span>我是待遇</span>
+                    <label>待遇:</label>
+                    <el-input type="text" :readonly="true" :value="data.salary"/>
                 </li>
                 <li>
-                    <label  class="company-left">详情:</label>
-                    <span>我是招聘信息详情</span>
+                    <label>详情:</label>
+                    <el-input type="textarea" :readonly="true" autosize :value="data.detail || '--'"/>
                 </li>
             </ul>
         </el-dialog>
@@ -53,7 +53,21 @@
                 default(){
                     return false;
                 }
+            },
+            data:{
+                type:Object,
+                default(){
+                    return {}
+                }
             }
+        },
+        created(){
+            console.log('show',this.show);
+        },
+        computed:{
+         show(){
+             return this.dialogVisible;
+         }
         },
         data(){
             return {
@@ -62,6 +76,11 @@
 
         },
         methods: {
+            changeDialogVisible() {
+                console.log("对话框点击前");
+               this.$emit('cancelEvent');
+            }
+
         }
     }
 </script>
@@ -72,8 +91,9 @@
         font-size: 16rem /@font-size;
 
         li{
-            padding: 30px;
+            padding: 10px;
             border-bottom: 1px solid #F6F6F8;
+            display: flex;
         }
     }
     //补充说明
@@ -82,7 +102,7 @@
         justify-content: flex-start;
         width: 80%;
         label{
-            width: 280px;
+            width: 220px;
         }
     }
     //截图
