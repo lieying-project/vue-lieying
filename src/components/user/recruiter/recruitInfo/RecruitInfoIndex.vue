@@ -3,7 +3,7 @@
         <div class="admin-left">
 
             <el-menu
-                    default-active="/recruiterIndex/recruiterInfo"
+                    default-active="this.$route.path"
                     class="el-menu-vertical-demo aside-nav"
                     background-color="#545c64"
                     text-color="#fff"

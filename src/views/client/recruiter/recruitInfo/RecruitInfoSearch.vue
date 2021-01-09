@@ -1,25 +1,25 @@
 <template>
     <div>
         <div class="search-container">
-            <div class="search-date">
-                <div class="date-deal">
-                    <el-input
-                            v-model="date"
-                    >
-                        <template slot="prepend">日期</template>
-                        <i slot="prefix" class="el-input__icon el-icon-date"></i>
-                    </el-input>
-                    <el-date-picker
-                            v-model="date"
-                            type="date"
-                            placeholder="选择日期"
-                            format="yyyy 年 MM 月 dd 日"
-                            value-format="yyyy-MM-dd"
-                            class="date-choice"
-                    >
-                    </el-date-picker>
-                </div>
-            </div>
+<!--            <div class="search-date">-->
+<!--                <div class="date-deal">-->
+<!--                    <el-input-->
+<!--                            v-model="date"-->
+<!--                    >-->
+<!--                        <template slot="prepend">日期</template>-->
+<!--                        <i slot="prefix" class="el-input__icon el-icon-date"></i>-->
+<!--                    </el-input>-->
+<!--                    <el-date-picker-->
+<!--                            v-model="date"-->
+<!--                            type="date"-->
+<!--                            placeholder="选择日期"-->
+<!--                            format="yyyy 年 MM 月 dd 日"-->
+<!--                            value-format="yyyy-MM-dd"-->
+<!--                            class="date-choice"-->
+<!--                    >-->
+<!--                    </el-date-picker>-->
+<!--                </div>-->
+<!--            </div>-->
 
             <div class="search-position">
                 <el-input
@@ -31,7 +31,7 @@
                 </el-input>
             </div>
             <div class="search-btn">
-                <el-button type="primary" @click="search">搜素</el-button>
+                <el-button type="primary" @click="searchInfo">搜素</el-button>
             </div>
             <div class="add-btn">
                 <el-button type="primary" @click="addPosition">添加职位</el-button>
@@ -47,7 +47,7 @@
         name: "RecruitInfoSearch",
         data() {
             return {
-                date: "",
+                // date: "",
                 position: ""
             }
         },
@@ -60,8 +60,8 @@
                 // console.log("addPosition的router",this.$router);
             },
             //对于搜索需要进行判断的是,date和position同时存在的话是或查询还是与查询
-            search() {
-
+            searchInfo() {
+                    this.$emit('search',{position:this.position});
             }
         }
     }

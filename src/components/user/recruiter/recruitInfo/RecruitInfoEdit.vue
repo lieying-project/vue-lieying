@@ -109,7 +109,7 @@
                 console.log('submit!');
                 //进行数据的更新
                 this.updatePositionAction({
-                    ...this.form,recruiter:{id:2},positionCategory:{id:this.typeId}
+                    ...this.form,recruiter:{id:1},positionCategory:{id:this.typeId}
                 }).then((data)=>{
                     console.log("更新",data);
                     if(data.status===200) {

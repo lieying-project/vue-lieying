@@ -58,6 +58,14 @@
     import RecruitInfoDetail from "./RecruitInfoDetail";
     export default {
         name: "RecruitInfoContent",
+        props:{
+          tableData:{
+              type:Array,
+              default(){
+                  return []
+              }
+          }
+        },
         data() {
             return {
                 // tableData: [{
@@ -85,46 +93,46 @@
                 //     experience: '1年',
                 //     salary: "1k~2k"
                 // }],
-                tableData:[],
+                // tableData:[],
                 dialogVisible:false,
                 data:{}
             }
         },
         created() {
 
-                this.$store.dispatch('getPositionsByCriteriaAction',{
-                    recruiterId:1,
-                    page:1//页码从1开始
-                }).then((data)=>{
-                    //不能使用fill来填充对象,引用的都是同一个地址
-                    // const arr = new Array(data.data.list.length).fill(null).map(()=>Object.create({
-                    //     date: '',
-                    //     name: '',
-                    //     type: '',
-                    //     experience: '',
-                    //     salary:''}));
-                    const arr = [];
-                    data.data.list.forEach((item)=>{
-                        var time = new Date(item.publishTime).toLocaleDateString().replace(/\/(\d+)/g,function(a,b){
-                            return '-'+b.padStart(2,0)
-                        })
-                        arr.push({
-                            id:item.id,
-                            name:item.name,
-                            date:time,
-                            type:item.positionCategory.fatherPositionCategory.name,
-                            experience:item.experience,
-                            salary:item.salary,
-                            address:item.address,
-                            detail:item.detail,
-                            education:item.education
-                        })
-                    })
-                    this.tableData = arr;
-
-                    //有关分页
-                    this.eventBus.$emit('getRecruitInfo','data');
-                });
+                // this.$store.dispatch('getPositionsByCriteriaAction',{
+                //     recruiterId:1,
+                //     page:1//页码从1开始
+                // }).then((data)=>{
+                //     //不能使用fill来填充对象,引用的都是同一个地址
+                //     // const arr = new Array(data.data.list.length).fill(null).map(()=>Object.create({
+                //     //     date: '',
+                //     //     name: '',
+                //     //     type: '',
+                //     //     experience: '',
+                //     //     salary:''}));
+                //     const arr = [];
+                //     data.data.list.forEach((item)=>{
+                //         var time = new Date(item.publishTime).toLocaleDateString().replace(/\/(\d+)/g,function(a,b){
+                //             return '-'+b.padStart(2,0)
+                //         })
+                //         arr.push({
+                //             id:item.id,
+                //             name:item.name,
+                //             date:time,
+                //             type:item.positionCategory.fatherPositionCategory.name,
+                //             experience:item.experience,
+                //             salary:item.salary,
+                //             address:item.address,
+                //             detail:item.detail,
+                //             education:item.education
+                //         })
+                //     })
+                //     this.tableData = arr;
+                //
+                //     //有关分页
+                //     this.eventBus.$emit('getRecruitInfo','data');
+                // });
 
 
         },
@@ -132,7 +140,6 @@
           ...mapState(['foundPositionPageInfos'])
         },
         methods: {
-            ...mapActions(["removePosition"]),
             handleEdit(index, row) {
                 console.log("编辑",index, row);
                 this.$router.push({
@@ -143,6 +150,7 @@
                 })
             },
             handleDelete(index, row) {
+                console.log("删除",index,row);
                 //处理删除
                 this.$confirm("确认删除该职位吗?","提示",{
                     confirmButtonText:"确认",
@@ -151,6 +159,22 @@
                 }).then(()=>{
                     //进行删除操作
                     // this.removePosition();
+                    this.$store.dispatch('deletePositionAction',{
+                      id:row.id
+                    }).then((data)=>{
+                        console.log('shchudata',data);
+                        if(data.status === 200) {
+                            this.$message({
+                                type:"success",
+                                message:"已成功删除"
+                            })
+                        } else {
+                            this.$message({
+                                type:"error",
+                                message:"删除失败"
+                            })
+                        }
+                    })
 
                 }).catch(()=>{
                     this.$message({

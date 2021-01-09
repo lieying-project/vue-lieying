@@ -44,13 +44,10 @@ export default {
     }
   },
   //根据招聘者id获取招聘者信息
-  getRecruiter(state){
+  getRecruiter(){
     const jobHunterId = localStorage.getItem("jobHunterId")
     if (jobHunterId != null) {
-      request.get('/api/recruiter/' + jobHunterId).then((res) => {
-        state.recruiter = res.data
-        console.log(state.recruiter)
-      })
+      return request.get('/api/recruiter/' + jobHunterId)
     }
   },
   //根据求职者id获取所有求职者的简历
@@ -60,11 +57,15 @@ export default {
     })
   },
   //根据简历id获取简历信息
-  getResumeById(state, id) {
-    request.get('/api/jobHunter/resume/' + id).then((res) => {
-      console.log(res.data)
-      state.resume = res.data
-    })
+  // getResumeById(state, id) {
+  //   request.get('/api/jobHunter/resume/' + id).then((res) => {
+  //     console.log(res.data)
+  //     state.resume = res.data
+  //   })
+  // },
+  getResumeById(id) {
+
+    return request.get('/api/jobHunter/resume/' + id);
   },
   //根据职位id获取职位信息
   getPositionById(state, id) {
@@ -144,9 +145,7 @@ export default {
     return request.post("/api/position/update", position);
   },
   deletePosition(state,id){
-    request.get("/api/position/delete", id).then(res => {
-      console.log(res.data)
-    })
+    return request.get("/api/position/delete", id);
   },
   //获取所有城市信息
   getAllCities(state) {

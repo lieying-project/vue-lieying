@@ -1,14 +1,19 @@
 <template>
-    <div class="person-info">
+    <div class="person-info" v-if="this.personForm">
         <fieldset class="person-info-fieldset">
             <legend>
                 完善信息
             </legend>
             <div class="person-center">
                 <el-form label-width="80px" :model="personForm">
+                    <el-form-item label="头像" required>
+                        <div>
+                            <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+                        </div>
+                    </el-form-item>
                     <el-form-item label="账号" required>
                         <el-input
-                                v-model="personForm.count"
+                                v-model="personForm.username"
                                 prefix-icon="el-icon-postcard"
                         ></el-input>
                     </el-form-item>
@@ -30,6 +35,13 @@
                                 prefix-icon="el-icon-phone-outline">
                         </el-input>
                     </el-form-item>
+                    <el-form-item label="个人介绍" required>
+                        <el-input
+                                v-model="personForm.intro"
+                                type="textarea"
+                                autosize>
+                        </el-input>
+                    </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="savePersonInfo">保存</el-button>
                         <el-button @click="resetForm('personForm')">重置</el-button>
@@ -43,20 +55,41 @@
 
 
 <script>
+    import {mapState} from 'vuex';
     export default {
         name:'PersonInfo',
         data() {
             return {
                 personForm: {
-                    count:'',
+                    username:'',
                     name: '',
                     position: '',
-                    phone: ''
+                    phone: '',
+                    intro:''
                 }
             };
         },
+        created() {
+            if(this.recruiter!==null&&this.recruiter!==undefined&&Object.keys(this.recruiter).length!==0) {
+                console.log(1);
+                this.personForm = this.recruiter;
+            } else {
+                console.log(2);
+                localStorage.setItem('jobHunterId',1);
+                this.$store.dispatch('getRecruiterAction').then((data)=>{
+                    console.log('data',data);
+                    this.personForm = data.data;
+                })
+            }
+            console.log('招聘者信息',this.personForm);
+
+        },
+        computed:{
+            ...mapState(['recruiter'])
+        },
         methods:{
             savePersonInfo() {
+
                 this.$emit('savePersonInfo',this.personForm);
             },
             resetForm(formName) {

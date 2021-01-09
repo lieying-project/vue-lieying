@@ -5,77 +5,104 @@
                 完善信息
             </legend>
             <div class="company-info-form">
-                <el-form ref="form" :model="companyInfo" label-width="80px">
-                    <el-form-item label="公司名称" required>
-                        <el-input v-model="companyInfo.name" placeholder="请输入公司名称"></el-input>
-                    </el-form-item>
-                    <el-form-item label="公司地址" required>
-                        <el-input v-model="companyInfo.address" placeholder="请输入公司地址"></el-input>
-                    </el-form-item>
-                    <el-form-item label="法人代表" required>
-                        <el-input v-model="companyInfo.person" placeholder="请输入公司的法人代表"></el-input>
-                    </el-form-item>
-                    <el-form-item label="联系电话" required>
-                        <el-input v-model="companyInfo.phone" placeholder="请输入公司的联系电话"></el-input>
-                    </el-form-item>
-                    <el-form-item label="成立时间">
-                        <el-date-picker
-                                v-model="companyInfo.time"
-                                type="date"
-                                placeholder="选择日期"
-                        >
-                        </el-date-picker>
-                    </el-form-item>
-                    <el-form-item label="注册资本">
-                        <el-input v-model="companyInfo.money" placeholder="请输入公司的注册资本">
-                            <template slot="append">元</template>
-                        </el-input>
-                    </el-form-item>
 
-<!--                    标志-->
-                    <el-form-item label="标志">
-                        <el-upload
-                                action="https://jsonplaceholder.typicode.com/posts/"
-                                list-type="picture-card"
-                                :on-preview="handlePictureCardPreview"
-                                :on-remove="handleRemove"
-                                :class="{hide:hideUpload}"
-                        >
-                            <i class="el-icon-plus"></i>
-                            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-                        </el-upload>
-                        <el-dialog :visible.sync="dialogVisible">
-                            <img width="100%" :src="dialogImageUrl" alt="">
-                        </el-dialog>
-                    </el-form-item>
+                <el-form ref="form" :model="companyInfo" label-width="80px" :rules="rules">
+                    <div class="form-item">
+                        <div>
+                            <el-form-item label="公司名称"
+                                          :rules="[{ required: true, message: '公司名称不能为空', trigger: 'blur'}]"
+                            >
+                                <el-input v-model="companyInfo.name" placeholder="请输入公司名称" maxlength=40 show-word-limit></el-input>
+                            </el-form-item>
+                        </div>
+                        <div>
+                            <el-form-item label="公司地址" :rules="[{ required: true, message: '公司地址不能为空', trigger: 'blur'}]">
+                                <el-input v-model="companyInfo.address" placeholder="请输入公司地址" maxlength=40 show-word-limit ></el-input>
+                            </el-form-item>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div>
+                            <el-form-item label="法人代表" >
+                                <el-input v-model="companyInfo.representative" placeholder="请输入公司的法人代表" ></el-input>
+                            </el-form-item>
+                        </div>
+                        <div>
+                            <el-form-item label="联系电话" :rules="[{ required: true, message: '联系电话不能为空', trigger: 'blur'}]">
+                                <el-input v-model="companyInfo.phone" placeholder="请输入公司的联系电话"></el-input>
+                            </el-form-item>
+                        </div>
+                    </div>
 
-<!--                    营业执照-->
-                    <el-form-item label="营业执照" required>
-                        <el-upload
-                                action="https://jsonplaceholder.typicode.com/posts/"
-                                list-type="picture-card"
-                                :on-preview="handlePictureCardPreview"
-                                :on-remove="handleRemove">
-                            <i class="el-icon-plus"></i>
-                            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-                        </el-upload>
-                        <el-dialog :visible.sync="dialogVisible">
-                            <img width="100%" :src="dialogImageUrl" alt="">
-                        </el-dialog>
-                    </el-form-item>
+                    <div  class="form-item">
+                        <el-form-item label="成立时间">
+                            <el-date-picker
+                                    v-model="companyInfo.established"
+                                    type="date"
+                                    placeholder="选择日期"
+                            >
+                            </el-date-picker>
+                        </el-form-item>
+                        <el-form-item label="注册资本"
+                                      :rules="[{ type: 'number', message: '注册资本必须为数字值'}]"
+                        >
+                            <el-input type="number" v-model.number="companyInfo.registerCapital" placeholder="请输入公司的注册资本" min=0>
+                                <template slot="append">元</template>
+                            </el-input>
+                        </el-form-item>
+                    </div>
+
+                    <div class="form-item">
+                        <div>
+                            <!--                    标志-->
+                            <el-form-item label="标志">
+                                <el-upload
+                                        action="https://jsonplaceholder.typicode.com/posts/"
+                                        list-type="picture-card"
+                                        :on-preview="handlePictureCardPreview"
+                                        :on-remove="handleRemove"
+                                        :class="{hide:hideUpload}"
+                                >
+                                    <i class="el-icon-plus"></i>
+                                    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                                </el-upload>
+                                <el-dialog :visible.sync="dialogVisible">
+                                    <img width="100%" :src="dialogImageUrl" alt="">
+                                </el-dialog>
+                            </el-form-item>
+                        </div>
+                        <div>
+                            <!--                    营业执照-->
+                            <el-form-item label="营业执照" required>
+                                <el-upload
+                                        action="https://jsonplaceholder.typicode.com/posts/"
+                                        list-type="picture-card"
+                                        :on-preview="handlePictureCardPreview"
+                                        :on-remove="handleRemove">
+                                    <i class="el-icon-plus"></i>
+                                    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                                </el-upload>
+                                <el-dialog :visible.sync="dialogVisible">
+                                    <img width="100%" :src="dialogImageUrl" alt="">
+                                </el-dialog>
+                            </el-form-item>
+                        </div>
+                    </div>
+
+
 
 <!--                    简介-->
                     <el-form-item label="简介">
-                        <el-input type="textarea" v-model="companyInfo.desc" placeholder="请输入公司的相关简介"></el-input>
+                        <el-input type="textarea" v-model="companyInfo.intro" placeholder="请输入公司的相关简介" maxlength=1000 show-word-limit></el-input>
                     </el-form-item>
 
                     <el-form-item label="经营范围">
-                        <el-input v-model="companyInfo.range" placeholder="请输入公司的经营范围"></el-input>
+                        <el-input v-model="companyInfo.businessScope" placeholder="请输入公司的经营范围"></el-input>
                     </el-form-item>
 
 <!--                    企业文化-->
                     <el-form-item label="企业文化">
-                        <el-input type="textarea" v-model="companyInfo.liter" placeholder="请输入公司的企业文化"></el-input>
+                        <el-input type="textarea" v-model="companyInfo.culture" placeholder="请输入公司的企业文化" maxlength=3000 show-word-limit></el-input>
                     </el-form-item>
 
 <!--                    公司环境上传照片-->
@@ -93,7 +120,7 @@
                             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
                         </el-upload>
                         <el-dialog :visible.sync="dialogVisible">
-                            <img width="100%" :src="dialogImageUrl" alt="">
+                            <img width="100%" :src="companyInfo.sign" alt="">
                         </el-dialog>
                     </el-form-item>
 
@@ -116,20 +143,56 @@
                 companyInfo: {
                     name: '',
                     address: '',
-                    person: '',
+                    representative: '',
                     phone: '',
-                    time: '',
-                    money: '',
-                    desc: '',
-                    range:'',
-                    liter:'',
-                    imageUrl:''
+                    established: '',
+                    registerCapital: '',
+                    intro: '',
+                    businessScope:'',
+                    culture:'',
+                    sign:'',
+                    imageUrl:'',
+                    license:''
                 },
+                rules:{},
                 dialogImageUrl: '',
                 dialogVisible: false,
                 hideUpload:false,
                 limitCount:1
             }
+        },
+        created(){
+
+                //更新公司信息，参数可选
+                this.$store.dispatch('updateCompanyAction',{
+                    id:3,
+                    industry:{
+                        id:1
+                    },
+                    companyScale:{
+                        id:1
+                    },
+                    financingStage:{
+                        id:2
+                    },
+                    city:{
+                        id:1
+                    },
+                    workTime:new Date(),
+                    employeeWelfare:"福利",
+                    businessScope:'经营范围1',
+                    registerCapital:'3000万元',
+                    established:new Date(),
+                    representative:"张xx",
+                    license:'营业执照路径',
+                    sign:'公司标志路径',
+                    culture:'公司文化',
+                    intro:"公司介绍i",
+                    phone:"11212222222",
+                    address:'地址',
+                    name:'公司名称'
+                })
+
         },
         methods: {
             onSubmit() {
@@ -137,7 +200,7 @@
             },
             // logo上传方法
             handleAvatarSuccess(res,file) {
-                this.imageUrl = URL.createObjectURL(file.raw);
+                this.companyInfo.sign = URL.createObjectURL(file.raw);
             },
             beforeAvatarUpload(file) {
                 const isJPG = file.type === 'image/jpeg';
@@ -185,6 +248,7 @@
     .company-info-form {
         padding-top: 20px;
         width: 75%;
+        padding-left:40px;
     }
 
     .company-info {
@@ -193,5 +257,12 @@
     }
     .hide .el-upload--picture-card {
         display: none;
+    }
+    .form-item {
+        display: flex;
+        &>div {
+            width:48%
+        }
+
     }
 </style>

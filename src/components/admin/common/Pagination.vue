@@ -1,59 +1,22 @@
 <template>
     <div class="pagination">
-<!--        <el-pagination-->
-<!--                background-->
-<!--                layout="prev, pager, next"-->
-<!--                :total="80">-->
-<!--        </el-pagination>-->
         <el-pagination
                 background
                 layout="prev,pager,next"
-                :total="foundPositionPageInfos.pages*10"
-                @current-change="search" v-if="foundPositionPageInfos!=''&&foundPositionPageInfos.total!=0">
+                :total="totalNum"
+                @current-change="getnextPageData">
         </el-pagination>
     </div>
 </template>
 
 <script>
-    import {mapState} from 'vuex';
     export default {
         name: "Pagination",
-        data(){
-          return {
-              searchWay:'data'
-          }
-        },
-        mounted() {
-            this.eventBus.$on('getRecruitInfo',(data)=>{
-                console.log('pagination',data);
-
-            })
-        },
-        computed:{
-          ...mapState(['foundPositionPageInfos'])
-        },
+        props:['totalNum'],
         methods: {
-            search(pageNow) {
-                // console.log(this.searchWay)
-                // if (this.searchWay==='search'){
-                //     this.$store.dispatch('getPositionsByCriteriaAction', {
-                //         page: pageNow,
-                //         industryId:this.industryId,
-                //         positionCategoryId:this.positionCategoryId,
-                //         cityId:this.cityId,
-                //         keyword:this.keyword
-                //     })
-                // } else{
-                //     this.$store.dispatch('getPositionsByCriteriaAction', {
-                //         positionExperience: this.experience,
-                //         financingStageId: this.financingStageId,
-                //         positionEducation: this.education,
-                //         positionSalary: this.salary,
-                //         positionPublishTime: this.publishTime,
-                //         keyword: ''
-                //     })
-                // }
-
+            getnextPageData(pageNow) {
+                console.log('page',pageNow);
+                this.$emit('changePage',pageNow);
             }
         }
     }
@@ -61,7 +24,7 @@
 
 <style scoped lang="less">
     .pagination{
-        padding-top: 20px;
+        padding: 20px 0;
         text-align: center;
     }
 </style>

@@ -82,8 +82,9 @@ export default new Vuex.Store({
     getJobHunterResumesByJobHunterId(state, jobHunterId) {
       api.getJobHunterResumesByJobHunterId(jobHunterId)
     },
-    getResumeById(state, id) {
-      api.getResumeById(state,id)
+    getResumeById(state, res) {
+      // api.getResumeById(state,id)
+      state.resume = res.data;
     },
     getPositionById(state,id){
       api.getPositionById(state,id)
@@ -201,23 +202,24 @@ export default new Vuex.Store({
       api.saveArticle(state,article)
     },
     savePosition(state,position){
-      api.savePosition(state,position)
+
     },
     updatePosition(state,position){
 
     },
     deletePosition(state,id){
-      api.deletePosition(state,id)
+
     },
-    getRecruiter(state){
-      api.getRecruiter(state)
+    getRecruiter(state,res){
+      console.log("res",res);
+      state.recruiter = res.data
+      console.log("mutationsRecruiter",state.recruiter);
     },
     getJobHunterReportsByCriteria(state,criteria){
       api.getJobHunterReportsByCriteria(state,criteria)
     }
   },
   actions: {//允许异步操作
-
     updateTokenAction({commit}, payload) {
       commit("updateToken", payload);
     },
@@ -236,8 +238,12 @@ export default new Vuex.Store({
     getJobHunterResumesByJobHunterIdAction({commit}, jobHunterId) {
       commit('getJobHunterResumesByJobHunterId', jobHunterId)
     },
-    getResumeByIdAction({commit}, id) {
-      commit('getResumeById', id)
+    async getResumeByIdAction({commit}, id) {
+      const data = await api.getResumeById(id);
+      console.log("action",data);
+      commit('getResumeById', data);
+      return data;
+
     },
     getPositionByIdAction({commit},id){
       commit('getPositionById',id)
@@ -246,7 +252,7 @@ export default new Vuex.Store({
       commit('savePositionCollect',positionCollect)
     },
     deletePositionCollectAction({commit},data){
-      commit('deletePositionCollect',data)
+      // commit('deletePositionCollect',data)
     },
     savePositionBrowseAction({commit},positionBrowse){
       commit('savePositionBrowse',positionBrowse)
@@ -358,19 +364,26 @@ export default new Vuex.Store({
     saveArticleAction({commit},article){
       commit('saveArticle',article)
     },
-    savePositionAction({commit},position){
-      commit('savePosition',position)
+    async savePositionAction({commit},position){
+
+      const data = await api.savePosition(position);
+      commit('savePosition',data);
+      return data;
     },
     async updatePositionAction({commit},position){
       const data =  await   api.updatePosition(position);
       commit('updatePosition',position)
       return data;
     },
-    deletePositionAction({commit},id){
-      commit('deletePosition',id)
+    async deletePositionAction({commit},id){
+      const data = await api.deletePosition(id);
+      commit('deletePosition',id);
+      return data;
     },
-    getRecruiterAction({commit}){
-      commit('getRecruiter')
+    async getRecruiterAction({commit}){
+      const data = await  api.getRecruiter();
+      commit('getRecruiter',data);
+      return data;
     },
     getJobHunterReportsByCriteriaAction({commit},criteria){
       commit('getJobHunterReportsByCriteria',criteria)

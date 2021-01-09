@@ -10,7 +10,7 @@
                             label="职位名称"
                             :rules="[{ required:true,message:'职位名称不能为空'}]"
                     >
-                        <el-input v-model="form.name"></el-input>
+                        <el-input v-model="form.name" maxlength=15 show-word-limit aria-placeholder="请输入职位名称,注意不要输入特殊符号"></el-input>
                     </el-form-item>
 
                     <el-form-item
@@ -27,6 +27,12 @@
                             label="地点"
                     >
                         <el-input v-model="form.address"></el-input>
+<!--                        <el-cascader :options="options">-->
+<!--                            <template slot-scope="{ node, data }">-->
+<!--                                <span>{{ data.label }}</span>-->
+<!--                                <span v-if="!node.isLeaf"> ({{ data.children.length }}) </span>-->
+<!--                            </template>-->
+<!--                        </el-cascader>-->
                     </el-form-item>
 
                     <el-form-item
@@ -42,19 +48,29 @@
                         </el-select>
                     </el-form-item>
 
-<!--                    <el-form-item-->
-<!--                            label="工作制">-->
-<!--                        <el-input v-model="form.time"></el-input>-->
-<!--                    </el-form-item>-->
+                    <el-form-item
+                            label="学历要求"
+                    >
+                        <el-select v-model="form.education" placeholder="请选择学历要求">
+                            <el-option label="不限" value="不限"></el-option>
+                            <el-option label="大专" value="大专"></el-option>
+                            <el-option label="本科" value="本科"></el-option>
+                            <el-option label="硕士" value="硕士"></el-option>
+                            <el-option label="博士" value="博士"></el-option>
+                        </el-select>
+                    </el-form-item>
 
                     <el-form-item
                             label="待遇">
-                        <el-input v-model="form.money"></el-input>
+                        <el-input v-model="form.money" maxlength=40 show-word-limit></el-input>
                     </el-form-item>
 
 
                     <el-form-item label="详情">
-                        <el-input type="textarea" v-model="form.detail" aria-placeholder="请补充相关职位要求详情"></el-input>
+                        <el-input type="textarea" v-model="form.detail" placeholder="请补充相关职位要求详情,例如:
+1.需要较强的沟通能力;
+2.性格开朗;
+3.抗压能力强" maxlength=1000 show-word-limit   :autosize="{ minRows: 4}"></el-input>
                     </el-form-item>
 
                     <el-form-item>
@@ -69,10 +85,25 @@
 
 <script>
     import {mapActions,mapState} from 'vuex'
+    let id = 0;
     export default {
         name: "RecruitInfoAdd",
         data() {
             return {
+                options: [{
+                        value: 'others',
+                        label: 'Others',
+                        children: [{
+                            value: 'dialog',
+                            label: 'Dialog 对话框'
+                        }, {
+                            value: 'tooltip',
+                            label: 'Tooltip 文字提示'
+                        }, {
+                            value: 'popover',
+                            label: 'Popover 弹出框'
+                        }]
+                    }],
                 form: {
                     name: '',
                     positionCategory:{
@@ -81,14 +112,16 @@
                     address: '',
                     experience: '',
                     salary: '',
-                    detail: ''
+                    detail: '',
+                    education:'',
                 },
                 value:''
             }
         },
         created(){
-            this.getAllPositionCategoriesAction();
-            console.log("种类数据",this.positionCategories);
+            if(this.positionCategories==='') {
+                this.getAllPositionCategoriesAction();
+            }
         },
         computed:{
           ...mapState(['positionCategories'])
@@ -100,7 +133,30 @@
                 this.form.positionCategory.id = data;
             },
             onSubmit() {
-                this.savePositionAction({...this.form,recruiter:{id:1}})
+                this.$refs[form].validate((valid) => {
+                    if (valid) {
+                        alert('submit!');
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+                this.savePositionAction({...this.form,recruiter:{id:1},publishTime:new Date()}).then((data)=>{
+                    console.log('data',data);
+                    if(data.status == 200) {
+                        this.$message({
+                            type: 'success',
+                            message: '添加成功'
+                        })
+                    } else {
+                        this.$message({
+                            type: 'error',
+                            message: '添加失败'
+                        })
+                    }
+
+                    this.$router.back();
+                })
                  // this.$store.dispatch('savePositionAction',{
                  //   name:"name",
                  //     salary:"100/天",
@@ -117,13 +173,7 @@
                  // })
                 //this.addRecruitInfo(this.form);
                 //根据判断再进行弹框
-                this.$message({
-                    type: 'success',
-                    message: '添加成功'
-                })
-                this.$router.replace({
-                    path:'/recruiterInfo'
-                })
+
             },
             onCancel() {
                 console.log("点击了取消");

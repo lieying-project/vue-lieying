@@ -61,9 +61,6 @@
                 }
             }
         },
-        created(){
-            console.log('show',this.show);
-        },
         computed:{
          show(){
              return this.dialogVisible;
