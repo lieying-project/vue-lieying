@@ -217,7 +217,7 @@ export default new Vuex.Store({
       console.log("mutationsRecruiter",state.recruiter);
     },
     getJobHunterReportsByCriteria(state,criteria){
-<<<<<<< HEAD
+
       api.getJobHunterReportsByCriteria(state,criteria)
     },
     updateCompany(state,company){
@@ -234,12 +234,10 @@ export default new Vuex.Store({
           console.log(state.jobHunter)
         })
       }
-=======
+
 
     },
-    updateCompany(state,res) {
->>>>>>> 3bee5cb9c2687badf8438a9038cd14d06ce178c9
-    }
+
 
   },
   actions: {//允许异步操作
@@ -266,10 +264,7 @@ export default new Vuex.Store({
       console.log("action",data);
       commit('getResumeById', data);
       return data;
-<<<<<<< HEAD
-=======
 
->>>>>>> 3bee5cb9c2687badf8438a9038cd14d06ce178c9
     },
     getPositionByIdAction({commit},id){
       commit('getPositionById',id)
@@ -356,19 +351,18 @@ export default new Vuex.Store({
     },
     //获取招聘者发布的职位详细........................................................................................
     async getPositionsByCriteriaAction({commit},criteria){
-<<<<<<< HEAD
+
       console.log(criteria)
       const data =  await api.getPositionsByCriteria(criteria);
       commit('getPositionsByCriteria',data.data.list);
       return data;
-      //  console.log('criteria',criteria);
-=======
-      const data =  await api.getPositionsByCriteria(criteria);
-      commit('getPositionsByCriteria',data);
-      return data;
-      //  console.log('criteria',criteria);
 
->>>>>>> 3bee5cb9c2687badf8438a9038cd14d06ce178c9
+      // const data =  await api.getPositionsByCriteria(criteria);
+      // commit('getPositionsByCriteria',data);
+      // return data;
+      // //  console.log('criteria',criteria);
+
+
     },
 
     getInformationByIdAction({commit},id){
@@ -408,21 +402,18 @@ export default new Vuex.Store({
       commit('saveArticle',article)
     },
     async savePositionAction({commit},position){
-<<<<<<< HEAD
-=======
 
->>>>>>> 3bee5cb9c2687badf8438a9038cd14d06ce178c9
       const data = await api.savePosition(position);
       commit('savePosition',data);
       return data;
     },
     async updatePositionAction({commit},position){
       const data =  await   api.updatePosition(position);
-<<<<<<< HEAD
+
       //commit('updatePosition',position)
-=======
+
       commit('updatePosition',position)
->>>>>>> 3bee5cb9c2687badf8438a9038cd14d06ce178c9
+
       return data;
     },
     async deletePositionAction({commit},id){
@@ -430,9 +421,10 @@ export default new Vuex.Store({
       commit('deletePosition',id);
       return data;
     },
-<<<<<<< HEAD
+
     getRecruiterAction({commit}){
-      commit('getRecruiter')
+      //commit('getRecruiter')
+      api.getRecruiter()
     },
     getJobHunterReportsByCriteriaAction({commit},criteria){
       commit('getJobHunterReportsByCriteria',criteria)
@@ -471,23 +463,23 @@ export default new Vuex.Store({
       const data = await api.updateJobHunter(jobHunter)
       commit('getJobHunter')
       return data
-=======
-    async getRecruiterAction({commit}){
-      const data = await  api.getRecruiter();
-      commit('getRecruiter',data);
-      return data;
     },
-    async getJobHunterReportsByCriteriaAction({commit},criteria){
-      const data = await api.getJobHunterReportsByCriteria(criteria)
-      commit('getJobHunterReportsByCriteria',criteria);
-      return data;
-    },
-    //更新公司信息
-    async updateCompanyAction({commit},company) {
-      const data = await api.updateCompany(company);
-      commit('updateCompany',data);
->>>>>>> 3bee5cb9c2687badf8438a9038cd14d06ce178c9
-    }
+    // async getRecruiterAction({commit}){
+    //   const data = await  api.getRecruiter();
+    //   commit('getRecruiter',data);
+    //   return data;
+    // },
+    // async getJobHunterReportsByCriteriaAction({commit},criteria){
+    //   const data = await api.getJobHunterReportsByCriteria(criteria)
+    //   commit('getJobHunterReportsByCriteria',criteria);
+    //   return data;
+    // },
+    // //更新公司信息
+    // async updateCompanyAction({commit},company) {
+    //   const data = await api.updateCompany(company);
+    //   commit('updateCompany',data);
+    //
+    // }
   },
   modules: {}
 })

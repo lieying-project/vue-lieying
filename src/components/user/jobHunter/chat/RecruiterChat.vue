@@ -8,7 +8,7 @@
                         :style="{backgroundColor:currentJobHunter.id==index?'#F2F5FA':'#ffffff'}"
                         @click="setCurrentRecruiterIndex(index)" @mouseover="changeUserBackground(index,0)"
                         @mouseout="changeUserBackground(index,1)">
-                        <img :src="require(`@/assets/${jobHunter.photo}`)">
+                        <img :src="jobHunter.photo">
                         <div class="text">
                             <p class="name-wrap">
                                 <span class="name">{{jobHunter.username}}</span>
@@ -41,11 +41,11 @@
                     <li v-for="(chat,index) in $store.state.recruiterChats" :key="index" >
                         <div class="message-publish-time" v-if="chat.jobHunter.id==currentJobHunter.id">{{chat.sentDate | formatDate}}</div>
                         <div class="message-text" v-if="chat.senderFlag==true&&chat.jobHunter!=null&&chat.jobHunter.id==currentJobHunter.id">
-                            <img :src="require(`@/assets/${chat.jobHunter.photo}`)">
+                            <img :src="chat.jobHunter.photo">
                             <span class="content" v-html="chat.content"></span>
                         </div>
                         <div class="right-message-text" v-if="chat.senderFlag==false&&chat.jobHunter.id==currentJobHunter.id">
-                            <img :src="require(`@/assets/${chat.recruiter.photo}`)">
+                            <img :src="chat.recruiter.photo">
                             <span class="content" v-html="chat.content"></span>
                         </div>
                     <li/>

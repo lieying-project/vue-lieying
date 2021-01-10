@@ -7,6 +7,7 @@ import RecruitInfoAdd from "../components/user/recruiter/recruitInfo/RecruitInfo
 import RecruitInfoEdit from "../components/user/recruiter/recruitInfo/RecruitInfoEdit";
 import RecruitInfoIndex from "../components/user/recruiter/recruitInfo/RecruitInfoIndex";
 import Certify from "../components/user/recruiter/certify/Certify";
+import RecruiterChat from "../components/user/jobHunter/chat/RecruiterChat";
 
 export default [
     {
@@ -42,6 +43,14 @@ export default [
                 path: "/recruiterIndex/editRecruitInfo",
                 component: RecruitInfoEdit,
                 meta: {role: "recruiter"}
+            },
+            {
+                path: '/recruiter/chat/:recruiterId',
+                component: RecruiterChat,
+                meta: {
+                    title: '招聘者聊天',
+                    role:'recruiter'
+                }
             },
         ],
         redirect: "/recruiterIndex/recruiterInfo"
