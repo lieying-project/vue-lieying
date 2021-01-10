@@ -38,7 +38,8 @@ export default [
                 component:PublishInformation,
                 meta:{role:"admin"}
             }
-        ]
+        ],
+        redirect:"/admin/company"
     }
 
 ]

@@ -36,6 +36,7 @@ function request(url,params,options={loading:true,error:true},method) {
             } else{
                 if (options.error) {
                     Message.error("出错了");
+                    console.log("问题",res);
                     reject(res)
                 }
             }
@@ -43,7 +44,8 @@ function request(url,params,options={loading:true,error:true},method) {
         }).catch((error)=>{
 
             // eslint-disable-next-line no-undef
-            Message.error(error.message)
+            Message.error("出错了");
+            console.log("问题",error);
         }).finally(()=>{
             loadingInstance.close();
         })

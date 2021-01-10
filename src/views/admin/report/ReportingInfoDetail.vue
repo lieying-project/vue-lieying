@@ -9,23 +9,23 @@
                 <ul class="report-info">
                     <li>
                         <label class="report-left">举报时间:</label>
-                        <time class="report-right">2016-05-02</time>
+                        <time class="report-right">{{data.date}}</time>
                     </li>
                     <li>
                         <label class="report-left">举报公司名称:</label>
-                        <span class="report-right">我是公司的名称</span>
+                        <span class="report-right">{{data.name}}</span>
                     </li>
                     <li>
                         <label  class="report-left">举报职位名称:</label>
-                        <span>我是职位</span>
+                        <span>{{data.position}}</span>
                     </li>
                     <li>
                         <label class="report-left">举报原因:</label>
-                        <span>暴力</span>
+                        <span>{{data.reason}}</span>
                     </li>
                     <li class="report-intr">
                         <label class="report-left">补充说明:</label>
-                        <el-input type="textarea"/>
+                        <el-input type="textarea" :value="data.detail"/>
                     </li>
                     <li>
                         <label class="report-left">证据截图:</label>
@@ -56,6 +56,12 @@
                 type:Boolean,
                 default(){
                     return false;
+                }
+            },
+            data:{
+                type:Object,
+                default() {
+                    return {};
                 }
             }
         },

@@ -116,14 +116,14 @@ export default new Vuex.Store({
     getIndustryById(state,id){
       api.getIndustryById(id)
     },
-    getAllIndustries(state){
-      api.getAllIndustries(state)
+    getAllIndustries(state,res){
+      state.industries = res.data
     },
-    getAllFinancingStages(state){
-      api.getAllFinancingStages(state)
+    getAllFinancingStages(state,res){
+        state.financingStages = res.data;
     },
-    getCompanyScales(state){
-      api.getCompanyScales(state)
+    getCompanyScales(state,res){
+        state.companyScales = res.data
     },
     getAdministratorById(state,id){
       api.getAdministratorById(state,id)
@@ -139,8 +139,9 @@ export default new Vuex.Store({
       api.saveJobHunterReport(state,jobHunterReport)
     },
     adminLogin(state,data){
-      api.adminLogin(state,data)
-    },
+        state.administrator = data;
+        console.log("administrator",state.administrator);
+      },
     updateResumeState(state,data){
       api.updateResumeState(state,data)
     },
@@ -210,10 +211,13 @@ export default new Vuex.Store({
     deletePosition(state,id){
 
     },
-    getRecruiter(state){
-      api.getRecruiter(state)
+    getRecruiter(state,res){
+      console.log("res",res);
+      state.recruiter = res.data
+      console.log("mutationsRecruiter",state.recruiter);
     },
     getJobHunterReportsByCriteria(state,criteria){
+<<<<<<< HEAD
       api.getJobHunterReportsByCriteria(state,criteria)
     },
     updateCompany(state,company){
@@ -230,11 +234,15 @@ export default new Vuex.Store({
           console.log(state.jobHunter)
         })
       }
+=======
+
+    },
+    updateCompany(state,res) {
+>>>>>>> 3bee5cb9c2687badf8438a9038cd14d06ce178c9
     }
 
   },
   actions: {//允许异步操作
-
     updateTokenAction({commit}, payload) {
       commit("updateToken", payload);
     },
@@ -258,6 +266,10 @@ export default new Vuex.Store({
       console.log("action",data);
       commit('getResumeById', data);
       return data;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3bee5cb9c2687badf8438a9038cd14d06ce178c9
     },
     getPositionByIdAction({commit},id){
       commit('getPositionById',id)
@@ -289,14 +301,21 @@ export default new Vuex.Store({
     getIndustryByIdAction({commit},id){
       commit('getIndustryById',id)
     },
-    getAllIndustriesAction({commit}){
-      commit('getAllIndustries')
+    async getAllIndustriesAction({commit}){
+      const data = await api.getAllIndustries();
+      commit('getAllIndustries',data);
+      return data;
     },
-    getAllFinancingStagesAction({commit}){
-      commit('getAllFinancingStages')
+   async getAllFinancingStagesAction({commit}){
+      const data = await api.getAllFinancingStages();
+      commit('getAllFinancingStages',data);
+     return data;
     },
-    getCompanyScalesAction({commit}){
-      commit('getCompanyScales')
+
+    async getCompanyScalesAction({commit}){
+      const data = await api.getCompanyScales()
+      commit('getCompanyScales',data);
+      return data;
     },
     getAdministratorByIdAction({commit},id){
       commit('getAdministratorById',id)
@@ -310,8 +329,12 @@ export default new Vuex.Store({
     saveJobHunterReportAction({commit},jobHunterReport){
       commit('saveJobHunterReport',jobHunterReport)
     },
-    adminLoginAction({commit},data){
-      commit('adminLogin',data)
+    async adminLoginAction({commit},data){
+      const data1 =  await api.adminLogin(data);
+      if(data.username === "xiaoming" && data.password === "abc123456") {
+        commit('adminLogin',data);
+      }
+      return data1;
     },
     updateResumeStateAction({commit},data){
       commit('updateResumeState',data)
@@ -333,12 +356,21 @@ export default new Vuex.Store({
     },
     //获取招聘者发布的职位详细........................................................................................
     async getPositionsByCriteriaAction({commit},criteria){
+<<<<<<< HEAD
       console.log(criteria)
       const data =  await api.getPositionsByCriteria(criteria);
       commit('getPositionsByCriteria',data.data.list);
       return data;
       //  console.log('criteria',criteria);
+=======
+      const data =  await api.getPositionsByCriteria(criteria);
+      commit('getPositionsByCriteria',data);
+      return data;
+      //  console.log('criteria',criteria);
+
+>>>>>>> 3bee5cb9c2687badf8438a9038cd14d06ce178c9
     },
+
     getInformationByIdAction({commit},id){
       commit('getInformationById',id)
     },
@@ -376,13 +408,21 @@ export default new Vuex.Store({
       commit('saveArticle',article)
     },
     async savePositionAction({commit},position){
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3bee5cb9c2687badf8438a9038cd14d06ce178c9
       const data = await api.savePosition(position);
       commit('savePosition',data);
       return data;
     },
     async updatePositionAction({commit},position){
       const data =  await   api.updatePosition(position);
+<<<<<<< HEAD
       //commit('updatePosition',position)
+=======
+      commit('updatePosition',position)
+>>>>>>> 3bee5cb9c2687badf8438a9038cd14d06ce178c9
       return data;
     },
     async deletePositionAction({commit},id){
@@ -390,6 +430,7 @@ export default new Vuex.Store({
       commit('deletePosition',id);
       return data;
     },
+<<<<<<< HEAD
     getRecruiterAction({commit}){
       commit('getRecruiter')
     },
@@ -430,6 +471,22 @@ export default new Vuex.Store({
       const data = await api.updateJobHunter(jobHunter)
       commit('getJobHunter')
       return data
+=======
+    async getRecruiterAction({commit}){
+      const data = await  api.getRecruiter();
+      commit('getRecruiter',data);
+      return data;
+    },
+    async getJobHunterReportsByCriteriaAction({commit},criteria){
+      const data = await api.getJobHunterReportsByCriteria(criteria)
+      commit('getJobHunterReportsByCriteria',criteria);
+      return data;
+    },
+    //更新公司信息
+    async updateCompanyAction({commit},company) {
+      const data = await api.updateCompany(company);
+      commit('updateCompany',data);
+>>>>>>> 3bee5cb9c2687badf8438a9038cd14d06ce178c9
     }
   },
   modules: {}

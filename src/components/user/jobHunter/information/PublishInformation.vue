@@ -71,6 +71,9 @@ export default {
 <style scoped lang="less">
 
     .publish-information {
+        background-color: #ffffff;
+        padding: 20px;
+        margin-top: 10px;
         .title-wrapper {
             display: flex;
 

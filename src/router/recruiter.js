@@ -1,4 +1,3 @@
-import RecruiterIndex from "../components/user/recruiter/RecruiterIndex";
 import RecruitInfo from "../components/user/recruiter/recruitInfo/RecruitInfo";
 import CompanyInfo from "../components/user/recruiter/companyInfo/CompanyInfo";
 import PersonInfo from "../components/user/recruiter/personInfo/PersonInfo";
@@ -6,39 +5,49 @@ import DispatcherInfo from "../components/user/recruiter/dispatcherInfo/Dispatch
 import DispatcherInfoDetail from "../components/user/recruiter/dispatcherInfo/DispatcherInfoDetail";
 import RecruitInfoAdd from "../components/user/recruiter/recruitInfo/RecruitInfoAdd"
 import RecruitInfoEdit from "../components/user/recruiter/recruitInfo/RecruitInfoEdit";
+import RecruitInfoIndex from "../components/user/recruiter/recruitInfo/RecruitInfoIndex";
+import Certify from "../components/user/recruiter/certify/Certify";
 
 export default [
-  {
-    path: "/recruiterIndex",
-    component: RecruiterIndex,
-    meta: {role: "recruiter"}
-  }, {
-    path: "/recruiterInfo",
-    component: RecruitInfo,
-    meta: {role: "recruiter"}
-  }, {
-    path: "/companyInfo",
-    component: CompanyInfo,
-    meta: {role: "recruiter"}
-  }, {
-    path: "/personInfo",
-    component: PersonInfo,
-    meta: {role: "recruiter"}
-  }, {
-    path: "/dispatcherInfo",
-    component: DispatcherInfo,
-    meta: {role: "recruiter"}
-  }, {
-    path: "/addRecruitInfo",
-    component: RecruitInfoAdd,
-    meta: {role: "recruiter"}
-  }, {
-    path: "/editRecruitInfo",
-    component: RecruitInfoEdit,
-    meta: {role: "recruiter"}
-  }, {
-    path: "/dispatcherInfoDetail",
-    component: DispatcherInfoDetail,
-    meta: {role: "recruiter"}
-  }
+    {
+        path: "/recruiterIndex",
+        component: RecruitInfoIndex,
+        children: [
+            {
+                path: "/recruiterIndex/recruiterInfo",
+                component: RecruitInfo,
+                meta: {role: "recruiter"}
+            }, {
+                path: "/recruiterIndex/companyInfo",
+                component: CompanyInfo,
+                meta: {role: "recruiter"}
+            }, {
+                path: "/recruiterIndex/personInfo",
+                component: PersonInfo,
+                meta: {role: "recruiter"}
+            }, {
+                path: "/recruiterIndex/dispatcherInfo",
+                component: DispatcherInfo,
+                meta: {role: "recruiter"}
+            }, {
+                path: "/recruiterIndex/dispatcherInfoDetail",
+                component: DispatcherInfoDetail,
+                meta: {role: "recruiter"}
+            }, {
+                path: "/recruiterIndex/addRecruitInfo",
+                component: RecruitInfoAdd,
+                meta: {role: "recruiter"}
+            },
+            {
+                path: "/recruiterIndex/editRecruitInfo",
+                component: RecruitInfoEdit,
+                meta: {role: "recruiter"}
+            },
+        ],
+        redirect: "/recruiterIndex/recruiterInfo"
+    },
+    {
+        path: "/certify",
+        component: Certify
+    }
 ]

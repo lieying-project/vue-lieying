@@ -23,7 +23,7 @@
             </el-table-column>
 
             <el-table-column
-                    prop="educa"
+                    prop="education"
                     label="学历"
                     align="center">
             </el-table-column>
@@ -46,13 +46,24 @@
     // import {mapActions} from "vuex";
     export default {
         name: "DispatcherContent",
+        props:{
+          tableData:{
+              type:Array,
+              default() {
+                  return []
+              }
+          }
+        },
+        created(){
+          console.log("this.tableData",this.tableData);
+        },
         methods: {
             handleView(index, row) {
                 console.log(index, row);
                 this.$router.push({
-                    path:"/DispatcherInfoDetail",
+                    path:"/recruiterIndex/dispatcherInfoDetail",
                     query:{
-
+                        id:row.id
                     }
                 })
             }
@@ -60,27 +71,27 @@
         },
         data() {
             return {
-                tableData: [{
-                    date: '2016-05-02',
-                    position: 'ui设计',
-                    name: "计算机",
-                    educa: '1年'
-                }, {
-                    date: '2016-05-02',
-                    position: 'ui设计',
-                    name: "计算机",
-                    educa: '1年'
-                }, {
-                    date: '2016-05-02',
-                    position: 'ui设计',
-                    name: "计算机",
-                    educa: '1年'
-                }, {
-                    date: '2016-05-02',
-                    position: 'ui设计',
-                    name: "计算机",
-                    educa: '1年'
-                }]
+                // tableData: [{
+                //     date: '2016-05-02',
+                //     position: 'ui设计',
+                //     name: "计算机",
+                //     educa: '1年'
+                // }, {
+                //     date: '2016-05-02',
+                //     position: 'ui设计',
+                //     name: "计算机",
+                //     educa: '1年'
+                // }, {
+                //     date: '2016-05-02',
+                //     position: 'ui设计',
+                //     name: "计算机",
+                //     educa: '1年'
+                // }, {
+                //     date: '2016-05-02',
+                //     position: 'ui设计',
+                //     name: "计算机",
+                //     educa: '1年'
+                // }]
             }
         }
     }
@@ -92,6 +103,7 @@
         display:flex;
         padding: 0 30px;
         justify-content: center;
+
     }
     .el-table .warning-row {
         background: oldlace;
