@@ -21,7 +21,14 @@ export default {
     return {
       pubVue:new Vue()
     }
-
+  },
+  mounted() {
+    this.$store.dispatch('getPositionsByCriteriaAction',{
+      industryId:null,
+      cityId:null,
+      positionCategoryId:null,
+      keyword:""
+    })
   }
 }
 </script>

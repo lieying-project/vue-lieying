@@ -1,66 +1,68 @@
 <template>
     <div class="company-position">
-        <div class="position-category">
-            <div class="position-filter">
-                <div class="position-filter-label">
-                    <span>职位类型:</span>
-                </div>
-                <ul class="position-category-items">
-                    <li class="position-category-item" v-for="(positionCategory,index) in positionCategories"
-                        :key="index" @click="togglePositionCategory(index)"
-                        :style="{color: selectPositionCategoryIndex==index?'#18c3b1':'#414a60'}">
-                        {{positionCategory.name}} ({{positionCategory.num}})
-                    </li>
-                </ul>
-            </div>
-            <div class="position-filter">
-                <div class="position-filter-label">
-                    <span>筛选职位:</span>
-                </div>
-                <el-select v-model="selectedCityId" placeholder="工作城市" class="select-item">
-                    <el-option
-                            v-for="item in cities"
-                            :key="item.id"
-                            :label="item.name"
-                            :value="item.id">
-                    </el-option>
-                </el-select>
-                <el-select v-model="selectedExperienceId" placeholder="经验要求" class="select-item">
-                    <el-option
-                            v-for="item in experiences"
-                            :key="item.id"
-                            :label="item.name"
-                            :value="item.id">
-                    </el-option>
-                </el-select>
-                <el-select v-model="selectedEducationId" placeholder="学历要求" class="select-item">
-                    <el-option
-                            v-for="item in educations"
-                            :key="item.id"
-                            :label="item.name"
-                            :value="item.id">
-                    </el-option>
-                </el-select>
-                <el-select v-model="selectedSalaryId" placeholder="薪资要求" class="select-item">
-                    <el-option
-                            v-for="item in salaries"
-                            :key="item.id"
-                            :label="item.name"
-                            :value="item.id">
-                    </el-option>
-                </el-select>
-            </div>
-        </div>
+<!--        <div class="position-category">-->
+<!--            <div class="position-filter">-->
+<!--                <div class="position-filter-label">-->
+<!--                    <span>职位类型:</span>-->
+<!--                </div>-->
+<!--                <ul class="position-category-items">-->
+<!--                    <li class="position-category-item" v-for="(positionCategory,index) in positionCategories"-->
+<!--                        :key="index" @click="togglePositionCategory(index)"-->
+<!--                        :style="{color: selectPositionCategoryIndex==index?'#18c3b1':'#414a60'}">-->
+<!--                        {{positionCategory.name}} ({{positionCategory.num}})-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--            <div class="position-filter">-->
+<!--                <div class="position-filter-label">-->
+<!--                    <span>筛选职位:</span>-->
+<!--                </div>-->
+<!--                <el-select v-model="selectedCityId" placeholder="工作城市" class="select-item">-->
+<!--                    <el-option-->
+<!--                            v-for="item in cities"-->
+<!--                            :key="item.id"-->
+<!--                            :label="item.name"-->
+<!--                            :value="item.id">-->
+<!--                    </el-option>-->
+<!--                </el-select>-->
+<!--                <el-select v-model="selectedExperienceId" placeholder="经验要求" class="select-item">-->
+<!--                    <el-option-->
+<!--                            v-for="item in experiences"-->
+<!--                            :key="item.id"-->
+<!--                            :label="item.name"-->
+<!--                            :value="item.id">-->
+<!--                    </el-option>-->
+<!--                </el-select>-->
+<!--                <el-select v-model="selectedEducationId" placeholder="学历要求" class="select-item">-->
+<!--                    <el-option-->
+<!--                            v-for="item in educations"-->
+<!--                            :key="item.id"-->
+<!--                            :label="item.name"-->
+<!--                            :value="item.id">-->
+<!--                    </el-option>-->
+<!--                </el-select>-->
+<!--                <el-select v-model="selectedSalaryId" placeholder="薪资要求" class="select-item">-->
+<!--                    <el-option-->
+<!--                            v-for="item in salaries"-->
+<!--                            :key="item.id"-->
+<!--                            :label="item.name"-->
+<!--                            :value="item.id">-->
+<!--                    </el-option>-->
+<!--                </el-select>-->
+<!--            </div>-->
+<!--        </div>-->
         <div class="position-wrapper">
+
+
             <ul class="position-list">
-                <li v-for="(position,index) in positionCategories[selectPositionCategoryIndex].positions" :key="index"
+                <li v-for="(position,index) in this.company.positions" :key="index"
                     @mouseover="goToCommunicate(index)"
                     @mouseout="continueView(index)">
                     <div class="position-info">
                         <h3 class="name-wrapper">
                             <span class="name">{{position.name}}</span>
-                            <span class="address">[{{position.address}}]</span>
-                            <span class="date">发布于[{{position.publishTime}}]</span>
+                            <span class="address">[{{company.address}}]</span>
+                            <span class="date">发布于[{{position.publishTime | formatDate}}]</span>
                         </h3>
                         <p>
                             <span class="salary">{{position.salary}}</span>
@@ -68,37 +70,39 @@
                             <span class="experience">{{position.experience}}</span>
                             <Vdot :color="'#9fa3b0'"/>
                             <span class="education" v-if="position.education!=null">{{position.education.name}}</span>
+                            <button class="communicate-btn" ref="communicateBtn">立即沟通</button>
                         </p>
                     </div>
-                    <div class="recruiter-info" ref="recruiterInfo" v-if="position.recruiter!=null">
-                        <img :src="position.recruiter.photo">
-                        <Vdot :color="'#9fa3b0'"/>
-                        <span class="name">{{position.recruiter.name}}</span>
-                        <Vdot :color="'#9fa3b0'"/>
-                        <span class="position">{{position.recruiter.position}}</span>
-                    </div>
-                    <button class="communicate-btn" ref="communicateBtn">立即沟通</button>
+<!--                    <div class="recruiter-info" ref="recruiterInfo" >-->
+
+<!--                        <img :src="position.recruiter.photo">-->
+<!--                        <Vdot :color="'#9fa3b0'"/>-->
+<!--                        <span class="name">{{position.recruiter.name}}</span>-->
+<!--                        <Vdot :color="'#9fa3b0'"/>-->
+<!--                        <span class="position">{{position.recruiter.position}}</span>-->
+<!--                    </div>-->
+
                 </li>
             </ul>
-            <div class="seen-position-list">
-                <div class="title"><span>看过的职位</span></div>
-                <ul>
-                    <li v-for="(position,index) in seenPositions" :key="index">
-                        <h4 class="name-wrapper">
-                            <span class="name">{{position.name}}</span>
-                            <span class="salary">{{position.salary}}</span>
-                        </h4>
-                        <p v-if="position.company!=null">{{position.company.name}}</p>
-                    </li>
-                </ul>
-            </div>
+<!--            <div class="seen-position-list">-->
+<!--                <div class="title"><span>看过的职位</span></div>-->
+<!--                <ul>-->
+<!--                    <li v-for="(position,index) in seenPositions" :key="index">-->
+<!--                        <h4 class="name-wrapper">-->
+<!--                            <span class="name">{{position.name}}</span>-->
+<!--                            <span class="salary">{{position.salary}}</span>-->
+<!--                        </h4>-->
+<!--                        <p v-if="position.company!=null">{{position.company.name}}</p>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </div>-->
         </div>
     </div>
 </template>
 
 <script>
 import Vdot from "../../../common/Vdot";
-
+import {mapState} from 'vuex'
 export default {
   name: "CompanyPosition",
   components: {Vdot},
@@ -370,6 +374,9 @@ export default {
     togglePositionCategory(index) {
       this.selectPositionCategoryIndex = index
     }
+  },
+  computed:{
+    ...mapState(['company'])
   }
 
 }

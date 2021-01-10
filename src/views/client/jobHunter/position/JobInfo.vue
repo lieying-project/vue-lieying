@@ -1,6 +1,6 @@
 <template>
     <div class="job-info" >
-        <div class="job-info-items" v-for="position in foundPositionPageInfos.list">
+        <div class="job-info-items" v-for="position in foundPositionPageInfos" v-if="foundPositionPageInfos">
             <job-info-item :position="position"/>
         </div>
         <el-pagination
@@ -9,7 +9,6 @@
                 :total="foundPositionPageInfos.pages*10"
                 @current-change="searchPositions" v-if="foundPositionPageInfos!=''&&foundPositionPageInfos.total!=0">
         </el-pagination>
-
         <el-card class="position-not-found" v-if="foundPositionPageInfos.total==0">未查询到相关职位信息</el-card>
     </div>
 </template>
@@ -17,7 +16,6 @@
 <script>
 import JobInfoItem from "./JobInfoItem";
 import {mapState} from 'vuex'
-
 export default {
   name: "JobInfo",
   components: {

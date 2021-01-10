@@ -150,14 +150,9 @@
 </template>
 
 <script>
-
+import {mapState} from 'vuex'
 export default {
   name: "ResumeProjectExperience",
-  props: {
-    resume: {
-
-    }
-  },
   data() {
     return {
       isAddProjectExperienceFormVisible: false,
@@ -286,6 +281,9 @@ export default {
   },
   updated() {
     this.refreshProjectExperienceList()
+  },
+  computed:{
+    ...mapState(['resume'])
   }
 
 }

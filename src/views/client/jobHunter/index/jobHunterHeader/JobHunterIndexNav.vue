@@ -18,7 +18,7 @@
             <el-menu-item index="/article/list"><span class="text">文章</span></el-menu-item>
             <el-submenu v-if="jobHunter!=null" index="/" class="right personal-info">
                 <template slot="title">
-                    <el-avatar :size="30" :src="require(`@/assets/${jobHunter.photo}`)"></el-avatar>
+                    <el-avatar :size="30" :src="jobHunter.photo"></el-avatar>
                 </template>
                 <el-menu-item index="/recruiterIndex">切换为招聘者</el-menu-item>
                 <el-menu-item index="/jobHunter/info">个人信息</el-menu-item>

@@ -38,7 +38,8 @@ export default new Vuex.Store({
     article:'',
     articles:'',
     browsedPositions:'',
-    role: ''
+    role: '',
+    recommendedPositions:''
   },
   getters: {//store中state的一些派生状态
     getToken(state) {
@@ -71,7 +72,6 @@ export default new Vuex.Store({
           }
         })
       })
-
     },
     recruiterLogin(state,recruiter){
       api.recruiterLogin(state,recruiter)
@@ -82,8 +82,9 @@ export default new Vuex.Store({
     getJobHunterResumesByJobHunterId(state, jobHunterId) {
       api.getJobHunterResumesByJobHunterId(jobHunterId)
     },
-    getResumeById(state, id) {
-      api.getResumeById(state,id)
+    getResumeById(state, res) {
+      // api.getResumeById(state,id)
+      state.resume = res.data;
     },
     getPositionById(state,id){
       api.getPositionById(state,id)
@@ -159,8 +160,10 @@ export default new Vuex.Store({
     getChatJobHuntersByRecruiterId(state,recruiterId){
       api.getChatJobHuntersByRecruiterId(state,recruiterId)
     },
-    getPositionsByCriteria(state,criteria){
-      api.getPositionsByCriteria(state,criteria)
+    //保存获取到的职位信息................................................................................................
+    getPositionsByCriteria(state,data){
+      state.foundPositionPageInfos = data;
+      console.log("mutations输出",state.foundPositionPageInfos)
     },
     getInformationById(state,id){
       api.getInformationById(state,id)
@@ -199,20 +202,36 @@ export default new Vuex.Store({
       api.saveArticle(state,article)
     },
     savePosition(state,position){
-      api.savePosition(state,position)
+
     },
     updatePosition(state,position){
-      api.updatePosition(state,position)
+
     },
     deletePosition(state,id){
-      api.deletePosition(state,id)
+
     },
     getRecruiter(state){
       api.getRecruiter(state)
     },
     getJobHunterReportsByCriteria(state,criteria){
       api.getJobHunterReportsByCriteria(state,criteria)
+    },
+    updateCompany(state,company){
+      api.updateCompany(state,company)
+    },
+    setRecommendedPositions(state,positions){
+      state.recommendedPositions=positions
+    },
+    getJobHunter1(state) {
+      const jobHunterId = localStorage.getItem("jobHunterId")
+      if (jobHunterId != null) {
+        request.get('/api/jobHunter/' + jobHunterId).then((res) => {
+          state.jobHunter = res.data
+          console.log(state.jobHunter)
+        })
+      }
     }
+
   },
   actions: {//允许异步操作
 
@@ -234,8 +253,11 @@ export default new Vuex.Store({
     getJobHunterResumesByJobHunterIdAction({commit}, jobHunterId) {
       commit('getJobHunterResumesByJobHunterId', jobHunterId)
     },
-    getResumeByIdAction({commit}, id) {
-      commit('getResumeById', id)
+    async getResumeByIdAction({commit}, id) {
+      const data = await api.getResumeById(id);
+      console.log("action",data);
+      commit('getResumeById', data);
+      return data;
     },
     getPositionByIdAction({commit},id){
       commit('getPositionById',id)
@@ -244,7 +266,7 @@ export default new Vuex.Store({
       commit('savePositionCollect',positionCollect)
     },
     deletePositionCollectAction({commit},data){
-      commit('deletePositionCollect',data)
+      // commit('deletePositionCollect',data)
     },
     savePositionBrowseAction({commit},positionBrowse){
       commit('savePositionBrowse',positionBrowse)
@@ -300,7 +322,6 @@ export default new Vuex.Store({
     getChatsByJobHunterIdAndRecruiterIdAction({commit},data){
       commit('getChatsByJobHunterIdAndRecruiterId',data)
     },
-
     getChatsByRecruiterIdAction({commit},recruiterId){
       commit('getChatsByRecruiterId',recruiterId)
     },
@@ -310,11 +331,15 @@ export default new Vuex.Store({
     getChatJobHuntersByRecruiterIdAction({commit},recruiterId){
       commit('getChatJobHuntersByRecruiterId',recruiterId)
     },
-    getPositionsByCriteriaAction({commit},criteria){
-      commit('getPositionsByCriteria',criteria)
+    //获取招聘者发布的职位详细........................................................................................
+    async getPositionsByCriteriaAction({commit},criteria){
+      console.log(criteria)
+      const data =  await api.getPositionsByCriteria(criteria);
+      commit('getPositionsByCriteria',data.data.list);
+      return data;
+      //  console.log('criteria',criteria);
     },
     getInformationByIdAction({commit},id){
-
       commit('getInformationById',id)
     },
     getAllInformationsAction({commit}){
@@ -350,20 +375,61 @@ export default new Vuex.Store({
     saveArticleAction({commit},article){
       commit('saveArticle',article)
     },
-    savePositionAction({commit},position){
-      commit('savePosition',position)
+    async savePositionAction({commit},position){
+      const data = await api.savePosition(position);
+      commit('savePosition',data);
+      return data;
     },
-    updatePositionAction({commit},position){
-      commit('updatePosition',position)
+    async updatePositionAction({commit},position){
+      const data =  await   api.updatePosition(position);
+      //commit('updatePosition',position)
+      return data;
     },
-    deletePositionAction({commit},id){
-      commit('deletePosition',id)
+    async deletePositionAction({commit},id){
+      const data = await api.deletePosition(id);
+      commit('deletePosition',id);
+      return data;
     },
     getRecruiterAction({commit}){
       commit('getRecruiter')
     },
     getJobHunterReportsByCriteriaAction({commit},criteria){
       commit('getJobHunterReportsByCriteria',criteria)
+    },
+    updateCompanyAction({commit},company){
+      commit('updateCompany',company)
+    },
+    async updateResumeAction({commit}, resume) {
+      const data = await api.updateResume(resume)
+      return data;
+    },
+    async saveCredentialAction({commit},credential){
+      const data = await api.saveCredential(credential)
+      return data;
+    },
+    async saveVolunteerExperienceAction({commit},volunteerExperience){
+      const data = await api.saveVolunteerExperience(volunteerExperience)
+      return data;
+    },
+    async saveSocialHomepageAction({commit},socialHomepage){
+      const data=await api.saveSocialHomepage(socialHomepage)
+      return data;
+    },
+    async updateSocialHomepageAction({commit},socialHomepage){
+      const data=await api.updateSocialHomepage(socialHomepage)
+      return data;
+    },
+    async getRecommendPositionsAction({commit},jobHunterId){
+
+      const data=await api.getRecommendPositions(jobHunterId)
+      commit('setRecommendedPositions',data.data)
+      return data
+
+    },
+    async updateJobHunterAction({commit},jobHunter) {
+      const data = await api.updateJobHunter(jobHunter)
+      commit('getJobHunter')
+      return data
     }
   },
   modules: {}

@@ -129,13 +129,10 @@
 
 <script>
 import ResumeTitleWrapper from "../../../../common/ResumeTitleWrapper";
-
+import {mapState} from 'vuex'
 export default {
   name: "ResumeVolunteerExperience",
   components: {ResumeTitleWrapper},
-  props: {
-    resume: {},
-  },
   data() {
     return {
       isAddVolunteerExperienceFormVisible: false,
@@ -146,9 +143,22 @@ export default {
         duration: '',
         startTime: '',
         endTime: '',
-        description: ''
+        description: '',
+        resume:{
+          id:this.resume.id
+        }
       },
-      primaryVolunteerExperience: '',
+      primaryVolunteerExperience: {
+        id: '',
+        name: '',
+        duration: '',
+        startTime: '',
+        endTime: '',
+        description: '',
+        resume:{
+          id:this.resume.id
+        }
+      },
       currentEditVolunteerExperienceIndex:''
     }
   },
@@ -210,7 +220,18 @@ export default {
       this.volunteerExperience.id = this.resume.volunteerExperiences.length
       this.resume.volunteerExperiences.push(this.volunteerExperience)
       this.isAddVolunteerExperienceFormVisible = false
-      this.projectExperience=''
+      this.$store.dispatch('saveVolunteerExperienceAction',this.volunteerExperience)
+      this.volunteerExperience= {
+        id: '',
+        name: '',
+        duration: '',
+        startTime: '',
+        endTime: '',
+        description: '',
+        resume:{
+          id:this.resume.id
+        }
+      }
     },
     cancelAddVolunteerExperience() {
       this.volunteerExperience = this.primaryVolunteerExperience
@@ -258,6 +279,9 @@ export default {
   },
   updated() {
     this.refreshVolunteerExperienceList()
+  },
+  computed:{
+    ...mapState(['resume'])
   }
 }
 </script>

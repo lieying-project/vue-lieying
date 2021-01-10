@@ -6,8 +6,7 @@
                 <h1 class="title">{{article.title}}</h1>
                 <div class="info">
                     <p class="author" v-if="article.jobHunter!=null">
-
-                        <img :src="require(`@/assets/${article.jobHunter.photo}`)"
+                        <img :src="article.jobHunter.photo"
                              v-if="article.jobHunter!=null" class="user-img"/>
                         <span>{{article.jobHunter.username}}</span>
                     </p>
@@ -18,12 +17,8 @@
                         <img src="../../../../assets/imgs/comment.png" class="comment-img">
                         <span>{{article.articleComments.length}}</span>
                     </p>
-
-
                 </div>
                 <div class="content" v-html="article.content"></div>
-
-
             </el-card>
             <ArticleComment />
         </div>
@@ -71,16 +66,13 @@ export default {
                 display: flex;
                 flex-flow: column nowrap;
                 padding: 35rem /@font-size 45rem /@font-size 45rem /@font-size;
-
                 margin-bottom: 10rem /@font-size;
                 background-color: #FFFFFF;
-
                 .title {
                     font-size: 30px;
                     line-height: 50px;
                     font-weight: 400;
                 }
-
                 .info {
                     display: flex;
                     align-items: center;
@@ -117,10 +109,7 @@ export default {
                             height: 20rem /@font-size;
                         }
                     }
-
-
                 }
-
                 .content {
 
                 }

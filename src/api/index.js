@@ -1,5 +1,6 @@
 import request from "./request";
 import {removeEmptyField} from "../assets/js/util";
+
 export default {
 
   //求职者登录
@@ -60,30 +61,32 @@ export default {
     })
   },
   //根据简历id获取简历信息
-  getResumeById(state, id) {
-    request.get('/api/jobHunter/resume/' + id).then((res) => {
-      console.log(res.data)
-      state.resume = res.data
-    })
+  // getResumeById(state, id) {
+  //   request.get('/api/jobHunter/resume/' + id).then((res) => {
+  //     console.log(res.data)
+  //     state.resume = res.data
+  //   })
+  // },
+  getResumeById(id) {
+
+    return request.get('/api/jobHunter/resume/' + id);
   },
   //根据职位id获取职位信息
   getPositionById(state, id) {
     request.get('/api/position/' + id)
         .then(res => {
-
           state.position = res.data
-
           console.log(state.position)
           const jobHunterId=localStorage.getItem("jobHunterId")
-            this.savePositionBrowse(state,{
-              position:{
-                id:state.position.id
-              },
-              jobHunter:{
-                id:jobHunterId
-              },
-              createdTime:new Date()
-            })
+          this.savePositionBrowse(state,{
+            position:{
+              id:state.position.id
+            },
+            jobHunter:{
+              id:jobHunterId
+            },
+            createdTime:new Date()
+          })
 
         })
   },
@@ -122,21 +125,29 @@ export default {
     })
   },
   //保存职位信息
-  savePosition(state,position){
-    request.post("/api/position/save", position).then(res => {
-      console.log(res.data)
-    })
+  // savePosition(state,position){
+  //
+  //   request.post("/api/position/save", position).then(res => {
+  //     console.log("savePosition",res.data)
+  //   })
+  // },
+  //保存职位信息
+  savePosition(position){
+    return request.post("/api/position/save", position);
   },
+
+
   //更新职位
-  updatePosition(state,position){
-    request.post("/api/position/update", position).then(res => {
-      console.log(res.data)
-    })
+  // updatePosition(state,position){
+  //   request.post("/api/position/update", position).then(res => {
+  //     console.log(res.data)
+  //   })
+  // },
+  updatePosition(position){
+    return request.post("/api/position/update", position);
   },
   deletePosition(state,id){
-    request.get("/api/position/delete", id).then(res => {
-      console.log(res.data)
-    })
+    return request.get("/api/position/delete", id);
   },
   //获取所有城市信息
   getAllCities(state) {
@@ -199,7 +210,7 @@ export default {
   },
   //保存文章评论
   saveArticleComment(state, articleComment) {
-    request.post("/api/article/save", articleComment).then(res => {
+    request.post("/api/article/comment/save", articleComment).then(res => {
       console.log(res.data)
       //重新获取文章信息
       this.getArticleById(state, articleComment.article.id)
@@ -208,7 +219,7 @@ export default {
   //保存文章评论回复
   saveArticleCommentRely(state, articleCommentRely, articleId) {
     console.log(articleCommentRely)
-    request.post("/api/article/comment/save", articleCommentRely).then(res => {
+    request.post("/api/article/comment/rely/save", articleCommentRely).then(res => {
       console.log(res.data)
       //重新获取文章信息
       this.getArticleById(state, articleId)
@@ -347,11 +358,11 @@ export default {
 //更新简历状态
   updateResumeState(state, criteria){
     request.post("/api/admin/resume/update",{
-     jobHunter:{
-       id:criteria.jobHunterId
-     },
+      jobHunter:{
+        id:criteria.jobHunterId
+      },
       position:{
-       id:criteria.positionId
+        id:criteria.positionId
       },
       state:criteria.state
     }).then(res => {
@@ -375,8 +386,28 @@ export default {
     })
   },
 //根据条件搜索职位
-  getPositionsByCriteria(state, criteria) {
-    request.get("/api/position", {
+//   getPositionsByCriteria(state, criteria) {
+//     request.get("/api/position", {
+//       cityId: criteria.cityId,
+//       // companyScaleId: criteria.companyScaleId,
+//       industryId: criteria.industryId,
+//       financingStageId: criteria.financingStageId,
+//       positionCategoryId: criteria.positionCategoryId,
+//       positionEducation: criteria.positionEducation,
+//       positionSalary: criteria.positionSalary,
+//       positionExperience: criteria.positionExperience,
+//       positionPublishTime: criteria.positionPublishTime,
+//       keyword: criteria.keyword,
+//       page: criteria.page,
+//       recruiterId:criteria.recruiterId
+//     }).then(res => {
+//       state.foundPositionPageInfos = res.data
+//       console.log("index.js输出",state.foundPositionPageInfos)
+//     })
+//   },
+  //................................................测试修改dispatch异步问题.........................................
+  getPositionsByCriteria(criteria) {
+    return request.get("/api/position", {
       cityId: criteria.cityId,
       // companyScaleId: criteria.companyScaleId,
       industryId: criteria.industryId,
@@ -389,9 +420,6 @@ export default {
       keyword: criteria.keyword,
       page: criteria.page,
       recruiterId:criteria.recruiterId
-    }).then(res => {
-      state.foundPositionPageInfos = res.data
-      console.log(state.foundPositionPageInfos)
     })
   },
 //根据求职者id和招聘者id获取聊天信息
@@ -461,6 +489,121 @@ export default {
     }).then(res => {
       console.log(res.data)
       state.jobHunterReports=res.data
+    })
+  },
+  //更新公司信息
+  updateCompany(state, company) {
+    request.post("/api/company/update", company).then(res => {
+      console.log(res.data)
+    })
+  },
+  //添加简历
+  saveResume(state,resume){
+    request.post("/api/jobHunter/resume/add", resume).then(res => {
+      console.log(res.data)
+    })
+  },
+  //更新简历
+  updateResume(resume){
+    request.post("/api/jobHunter/resume/update", resume).then(res => {
+      console.log(res.data)
+    })
+  },
+  //添加志愿服务经历
+  saveVolunteerExperience(state,volunteerExperience){
+    request.post("/api/jobHunter/resume/volunteer/save", volunteerExperience).then(res => {
+      console.log(res.data)
+    })
+  },
+  //更新志愿经历
+  updateVolunteerExperience(state,volunteerExperience){
+    request.post("/api/jobHunter/resume/volunteer/update", volunteerExperience).then(res => {
+      console.log(res.data)
+    })
+  },
+  //添加实习经历
+  saveInternshipExperience(state,data){
+    request.post("/api/jobHunter/resume/internship/save", data).then(res => {
+      console.log(res.data)
+    })
+  },
+  //更新实习经历
+  updateInternshipExperience(state,data){
+    request.post("/api/jobHunter/resume/internship/update", data).then(res => {
+      console.log(res.data)
+    })
+  },
+  //添加资格证书
+  saveCredential(data){
+    request.post("/api/jobHunter/resume/credential/save", data).then(res => {
+      console.log(res.data)
+    })
+  },
+  //更新资格证书
+  updateCredential(state,data){
+    request.post("/api/jobHunter/resume/credential/update", data).then(res => {
+      console.log(res.data)
+    })
+  },
+  //添加项目经历
+  saveProjectExperience(state,data){
+    request.post("/api/jobHunter/resume/project/save", data).then(res => {
+      console.log(res.data)
+    })
+  },
+  //更新项目经历
+  updateProjectExperience(state,data){
+    request.post("/api/jobHunter/resume/project/update", data).then(res => {
+      console.log(res.data)
+    })
+  },
+  //添加教育经历
+  saveEducationExperience(state,data){
+    request.post("/api/jobHunter/resume/education/save", data).then(res => {
+      console.log(res.data)
+    })
+  },
+  //更新教育经历
+  updateEducationExperience(state,data){
+    request.post("/api/jobHunter/resume/education/update", data).then(res => {
+      console.log(res.data)
+    })
+  },
+  //添加社交主页
+  saveSocialHomepage(data){
+    request.post("/api/jobHunter/resume/socialHomepage/save", data).then(res => {
+      console.log(res.data)
+    })
+  },
+  //更新社交主页
+  updateSocialHomepage(data){
+    request.post("/api/jobHunter/resume/socialHomepage/update", data).then(res => {
+      console.log(res.data)
+    })
+  },
+  //文件上传
+  uploadFile(formData,config){
+   this.$axios.post("/api/file/upload",formData,config)
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+  },
+  //推荐职位
+  getRecommendPositions(jobHunterId){
+    console.log("recommend")
+    request.get("/api/position/recommend",{
+      jobHunterId:3
+    }).then(res => {
+      console.log(res.data)
+    })
+  },
+  //更新求职者信息
+  updateJobHunter(jobHunter){
+    request.post("/api/jobHunter/update",jobHunter).then(res => {
+      console.log(res.data)
     })
   }
 }

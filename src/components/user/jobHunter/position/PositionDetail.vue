@@ -3,29 +3,29 @@
         <div class="job-banner" ref="jobBanner">
             <div class="detail-box">
                 <div class="job-info">
-                    <span class="job-status">招聘中</span>
+<!--                    <span class="job-status">招聘中</span>-->
                     <div class="job-name-wrapper" v-if="position!=null">
                         <span class="job-name">{{position.name}}</span>
                         <span class="job-salary"> {{position.salary}}</span>
                     </div>
                     <p class="text">
                         <a class="text-city" v-if="position.city!=null">{{position.city.name}}</a>
+<!--                        <Vdot/>-->
+<!--                        5天/周-->
+<!--                        <Vdot/>-->
+<!--                        6个月-->
                         <Vdot/>
-                        5天/周
-                        <Vdot/>
-                        6个月
-                        <Vdot/>
-                        本科
+                        {{position.education}}
                     </p>
                     <div class="job-tags">
-                        <span>五险一金</span>
-                        <span>补充医疗保险</span>
-                        <span>定期体检</span>
-                        <span>加班补助</span>
-                        <span>年终奖</span>
-                        <span>带薪年假</span>
-                        <span>交通补助</span>
-                        <span>零食下午茶</span>
+<!--                        <span>五险一金</span>-->
+<!--                        <span>补充医疗保险</span>-->
+<!--                        <span>定期体检</span>-->
+<!--                        <span>加班补助</span>-->
+<!--                        <span>年终奖</span>-->
+<!--                        <span>带薪年假</span>-->
+<!--                        <span>交通补助</span>-->
+<!--                        <span>零食下午茶</span>-->
                     </div>
                 </div>
                 <div class="job-op">
@@ -45,37 +45,37 @@
 
             </div>
         </div>
-        <transition name="fade">
-            <div class="small-banner" id="small-banner" v-bind:style="{'display':bannerDisplayed}">
-                <div class="detail-box">
-                    <div class="job-info">
-                        <div class="job-name-wrapper">
-                            <span class="job-name">数据分析实习生</span>
-                            <span class="job-salary"> 80-100元/天</span>
-                        </div>
-                        <div class="job-tags">
-                            <span>五险一金</span>
-                            <span>补充医疗保险</span>
-                            <span>定期体检</span>
-                            <span>加班补助</span>
-                            <span>年终奖</span>
-                            <span>带薪年假</span>
-                            <span>交通补助</span>
-                            <span>零食下午茶</span>
-                        </div>
-                        <p class="other-info">
-                            <span>明略科技</span>
-                            <a>查看所有职位</a>
-                        </p>
-                    </div>
-                    <div class="job-op">
-                        <a class="communicate-btn" @click="chat">立即沟通</a>
+<!--        <transition name="fade">-->
+<!--            <div class="small-banner" id="small-banner" v-bind:style="{'display':bannerDisplayed}">-->
+<!--                <div class="detail-box">-->
+<!--                    <div class="job-info">-->
+<!--                        <div class="job-name-wrapper">-->
+<!--                            <span class="job-name">数据分析实习生</span>-->
+<!--                            <span class="job-salary"> 80-100元/天</span>-->
+<!--                        </div>-->
+<!--                        <div class="job-tags">-->
+<!--                            <span>五险一金</span>-->
+<!--                            <span>补充医疗保险</span>-->
+<!--                            <span>定期体检</span>-->
+<!--                            <span>加班补助</span>-->
+<!--                            <span>年终奖</span>-->
+<!--                            <span>带薪年假</span>-->
+<!--                            <span>交通补助</span>-->
+<!--                            <span>零食下午茶</span>-->
+<!--                        </div>-->
+<!--                        <p class="other-info">-->
+<!--                            <span>明略科技</span>-->
+<!--                            <a>查看所有职位</a>-->
+<!--                        </p>-->
+<!--                    </div>-->
+<!--                    <div class="job-op">-->
+<!--                        <a class="communicate-btn" @click="chat">立即沟通</a>-->
 
-                    </div>
+<!--                    </div>-->
 
-                </div>
-            </div>
-        </transition>
+<!--                </div>-->
+<!--            </div>-->
+<!--        </transition>-->
         <div class="job-box">
             <div class="job-detail">
                 <div class="detail-op">
@@ -134,7 +134,7 @@
                                 </el-form-item>
                             </el-form>
                             <div slot="footer" class="dialog-footer">
-                                <el-button @click="reportDialogFormVisible = false">取 消</el-button>
+                                <el-button @click="reportDialogFormVisible = false">取消</el-button>
                                 <el-button type="primary" @click="reportDialogFormVisible = false">确 定</el-button>
                             </div>
                         </el-dialog>
@@ -167,41 +167,41 @@
 
                     <TitleWrapper :title="'工作地址'"/>
                     <div class="job-location">
-                        <div class="location-address">烟台市 芝罘区 天鸿凯旋城大厦 4-1404</div>
-                        <div class="location-map"></div>
+                        <div class="location-address">{{position.company.address}}</div>
+<!--                        <div class="location-map"></div>-->
                     </div>
-                    <span class="view-map">点击查看地图</span>
+<!--                    <span class="view-map">点击查看地图</span>-->
                 </div>
-                <div class="job-recommend">
-                    <h3 class="title">
-                        <span class="text">看了该职位的人还看了</span>
-                        <a class="more">更多职位<i class="el-icon-arrow-right"></i></a>
-                    </h3>
-                    <ul>
-                        <li v-for="i in 3" :key="i">
-                            <a>
-                                <img class="company-image"
-                                     src="../../../../assets/imgs/fe06f1bf47e665a75138bfe72f4588cde31cdba4a5477d6038a6f76662743c7f_s.jpg"/>
-                                <div class="company-info">
-                                    <div class="name"><b>实习生</b></div>
-                                    <p class="red">4-6K</p>
-                                    <p class="gray">
-                                        山东锐登网络科技
-                                        <em class="vdot">·</em>
-                                        烟台
-                                    </p>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+<!--                <div class="job-recommend">-->
+<!--                    <h3 class="title">-->
+<!--                        <span class="text">看了该职位的人还看了</span>-->
+<!--                        <a class="more">更多职位<i class="el-icon-arrow-right"></i></a>-->
+<!--                    </h3>-->
+<!--                    <ul>-->
+<!--                        <li v-for="i in 3" :key="i">-->
+<!--                            <a>-->
+<!--                                <img class="company-image"-->
+<!--                                     src="../../../../assets/imgs/fe06f1bf47e665a75138bfe72f4588cde31cdba4a5477d6038a6f76662743c7f_s.jpg"/>-->
+<!--                                <div class="company-info">-->
+<!--                                    <div class="name"><b>实习生</b></div>-->
+<!--                                    <p class="red">4-6K</p>-->
+<!--                                    <p class="gray">-->
+<!--                                        山东锐登网络科技-->
+<!--                                        <em class="vdot">·</em>-->
+<!--                                        烟台-->
+<!--                                    </p>-->
+<!--                                </div>-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
             </div>
             <div class="job-sider">
                 <div class="sider-company" v-if="position.company!=null">
                     <h3 class="title">公司基本信息</h3>
                     <div class="company-info">
                         <img class="company-image"
-                             :src="require(`@/assets/${position.company.sign}`)">
+                             :src="position.company.sign">
                         <span class="name">{{position.company.name}}</span>
                     </div>
                     <p><i class="el-icon-s-marketing"></i>
@@ -209,46 +209,45 @@
                            {{position.company.financingStage.name}}
                         </span></p>
                     <p><i class="el-icon-user">
-
                     </i>
                         <span v-if="position.company.companyScale!=null">
                          {{position.company.companyScale.name}}
                         </span></p>
                     <p><i class="el-icon-menu"></i>
                         <span v-if="position.company.industry!=null">{{position.company.industry.name}}</span></p>
-                    <p><i class="el-icon-c-scale-to-original"></i>
-                        <span>https://www.mininglamp.com/</span></p>
-                    <p class="gray">更新于：2020-09-14</p>
+<!--                    <p><i class="el-icon-c-scale-to-original"></i>-->
+<!--                        <span>https://www.mininglamp.com/</span></p>-->
+<!--                    <p class="gray">更新于：2020-09-14</p>-->
                 </div>
-                <div class="promotion-job">
-                    <h3 class="title">
-                        <span class="similar-position">相似职位</span>
-                        <a class="more-position">更多职位<i class="el-icon-arrow-right"></i></a>
-                    </h3>
-                    <ul>
-                        <li v-for="i in 5" :key="i">
-                            <div class="intro">
-                                <p class="name-wrapper">
-                                    <span class="name">行政人事实习生</span>
-                                    <span class="salary">3-4K</span>
-                                </p>
-                                <p class="gray">
-                                    <span>文多科技</span>
-                                    <em class="vdot">·</em>
-                                    <span>烟台</span>
-                                </p>
-                            </div>
-                            <img src="../../../../assets/imgs/0b5314f540499ebb99682329a1f43c78749af8c8538c9f3e9fa8f689fe037fa4.jpg">
-                        </li>
-                    </ul>
-                    <a class="view-more">
-                        <span>更多相似职位</span>
-                        <i class="el-icon-arrow-right"></i>
-                    </a>
-                </div>
-                <div class="promotion-img">
-                    <img src="../../../../assets/imgs/pro-1.png">
-                </div>
+<!--                <div class="promotion-job">-->
+<!--                    <h3 class="title">-->
+<!--                        <span class="similar-position">相似职位</span>-->
+<!--                        <a class="more-position">更多职位<i class="el-icon-arrow-right"></i></a>-->
+<!--                    </h3>-->
+<!--                    <ul>-->
+<!--                        <li v-for="i in 5" :key="i">-->
+<!--                            <div class="intro">-->
+<!--                                <p class="name-wrapper">-->
+<!--                                    <span class="name">行政人事实习生</span>-->
+<!--                                    <span class="salary">3-4K</span>-->
+<!--                                </p>-->
+<!--                                <p class="gray">-->
+<!--                                    <span>文多科技</span>-->
+<!--                                    <em class="vdot">·</em>-->
+<!--                                    <span>烟台</span>-->
+<!--                                </p>-->
+<!--                            </div>-->
+<!--                            <img src="../../../../assets/imgs/0b5314f540499ebb99682329a1f43c78749af8c8538c9f3e9fa8f689fe037fa4.jpg">-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                    <a class="view-more">-->
+<!--                        <span>更多相似职位</span>-->
+<!--                        <i class="el-icon-arrow-right"></i>-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--                <div class="promotion-img">-->
+<!--                    <img src="../../../../assets/imgs/pro-1.png">-->
+<!--                </div>-->
 
             </div>
         </div>

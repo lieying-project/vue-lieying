@@ -3,22 +3,23 @@
         <div class="company-banner" ref="companyBanner">
             <div class="info-primary">
                 <div class="company-info">
-                    <img src="../../../../assets/imgs/fe06f1bf47e665a75138bfe72f4588cde31cdba4a5477d6038a6f76662743c7f_s.jpg"
-                         class="company-image">
+                    <!--                    <img src="../../../../assets/imgs/fe06f1bf47e665a75138bfe72f4588cde31cdba4a5477d6038a6f76662743c7f_s.jpg"-->
+                    <!--                         class="company-image">-->
+                    <img :src="company.sign" class="company-image">
                     <div class="company-name-wrapper">
                         <span class="name">{{this.$store.state.company.name}}</span>
                         <p v-if="this.$store.state.company!=null&&this.$store.state.company!=''">
-                            <span v-if="this.$store.state.company.financingStage!=null">
-                                {{this.$store.state.company.financingStage.name}}
-                            </span>
+                                                <span v-if="this.$store.state.company.financingStage!=null">
+                                                    {{this.$store.state.company.financingStage.name}}
+                                                </span>
                             <Vdot/>
                             <span v-if="this.$store.state.company.companyScale!=null">
-                                {{this.$store.state.company.companyScale.name}}
-                            </span>
+                                                    {{this.$store.state.company.companyScale.name}}
+                                                </span>
                             <Vdot/>
                             <span v-if="this.$store.state.company.industry!=null">
-                                {{this.$store.state.company.industry.name}}
-                            </span>
+                                                    {{this.$store.state.company.industry.name}}
+                                                </span>
                         </p>
                     </div>
                 </div>
@@ -33,23 +34,23 @@
                             <span>位BOSS</span>
                         </a>
                     </div>
-                    <div class="op">
-                        <a>
-                            <i class="el-icon-postcard"></i>
-                            <span>完善在线简历</span>
-                        </a>
-                        <a>
-                            <i class="el-icon-upload2"></i>
-                            <span>上传附件简历</span>
-                        </a>
-                    </div>
+<!--                    <div class="op">-->
+<!--                        <a>-->
+<!--                            <i class="el-icon-postcard"></i>-->
+<!--                            <span>完善在线简历</span>-->
+<!--                        </a>-->
+<!--                        <a>-->
+<!--                            <i class="el-icon-upload2"></i>-->
+<!--                            <span>上传附件简历</span>-->
+<!--                        </a>-->
+<!--                    </div>-->
                 </div>
             </div>
             <div class="company-tab">
                 <a @click="toggle(index)" v-for="(tab,index) in tabs" :key="index"
                    :class="{active:activeIndex==index,activeColor:activeIndex==index}">
                     {{tab.name}}
-                    <span class="num" v-if="index==1&&$store.state.company.positions!=null" >({{$store.state.company.positions.length}})</span>
+                    <span class="num" v-if="index==1&&$store.state.company.positions!=null">({{$store.state.company.positions.length}})</span>
                 </a>
 
             </div>
@@ -62,32 +63,32 @@
                     <div class="company-name-wrapper">
                         <span class="name">{{this.$store.state.company.name}}</span>
                         <p v-if="this.$store.state.company!=null&&this.$store.state.company!=''">
-                            <span v-if="this.$store.state.company.financingStage!=null">
-                                {{this.$store.state.company.financingStage.name}}
-                            </span>
+                                                <span v-if="this.$store.state.company.financingStage!=null">
+                                                    {{this.$store.state.company.financingStage.name}}
+                                                </span>
                             <Vdot/>
                             <span v-if="this.$store.state.company.companyScale!=null">
-                                {{this.$store.state.company.companyScale.name}}
-                            </span>
+                                                    {{this.$store.state.company.companyScale.name}}
+                                                </span>
                             <Vdot/>
                             <span v-if="this.$store.state.company.industry!=null">
-                                {{this.$store.state.company.industry.name}}
-                            </span>
+                                                    {{this.$store.state.company.industry.name}}
+                                                </span>
                         </p>
                     </div>
                 </div>
                 <div class="company-position-info">
-                    <div class="op">
-                        <a>
-                            <i class="el-icon-postcard"></i>
-                            <span>完善在线简历</span>
-                        </a>
+<!--                    <div class="op">-->
+<!--                        <a>-->
+<!--                            <i class="el-icon-postcard"></i>-->
+<!--                            <span>完善在线简历</span>-->
+<!--                        </a>-->
 
-                        <a>
-                            <i class="el-icon-upload2"></i>
-                            <span>上传附件简历</span>
-                        </a>
-                    </div>
+<!--                        <a>-->
+<!--                            <i class="el-icon-upload2"></i>-->
+<!--                            <span>上传附件简历</span>-->
+<!--                        </a>-->
+<!--                    </div>-->
                 </div>
             </div>
             <div class="company-tab">
@@ -112,8 +113,7 @@
 import Vdot from "../../../common/Vdot";
 import CompanyIntro from "./CompanyIntro";
 import CompanyPosition from "./CompanyPosition";
-// import {mapState} from 'vuex'
-
+import {mapState} from 'vuex'
 export default {
   name: "CompanyDetail",
   data() {
@@ -134,7 +134,7 @@ export default {
     handleScroll() {
       var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
       var companyBanner = this.$refs.companyBanner
-      if(companyBanner!==undefined){//等待该dom初始化完成
+      if (companyBanner !== undefined) {//等待该dom初始化完成
         var companyBannerHeight = companyBanner.offsetHeight
         if (scrollTop > companyBannerHeight) {
           this.bannerDisplayed = "block"
@@ -151,6 +151,9 @@ export default {
     const companyId = this.$route.params.id
     this.$store.dispatch('getCompanyByIdAction', companyId)
     this.$store.dispatch('getAllPositionCategoriesAction')
+  },
+  computed: {
+    ...mapState(['company'])
   }
 }
 </script>
@@ -163,6 +166,7 @@ export default {
         width: 100%;
         margin: 0 auto;
         background-color: #FFFFFF;
+
         .company-banner {
             width: 100%;
             display: flex;

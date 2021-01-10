@@ -3,7 +3,7 @@
         <div class="item" v-for="(articleCommentRely,index) in articleCommentRelies"
              v-if="articleCommentRelies!=null"
              :style="{borderBottom:index==(articleCommentRelies.length-1)?'':'0.078125rem solid #DCDFE6'}">
-            <div class="photo"><img :src="require(`@/assets/${articleCommentRely.jobHunter.photo}`)"></div>
+            <div class="photo"><img :src="articleCommentRely.jobHunter.photo"></div>
             <div class="info">
                 <div class="top-info">
                 <span class="username">{{articleCommentRely.jobHunter.username}}

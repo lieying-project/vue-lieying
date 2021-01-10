@@ -1,9 +1,7 @@
 <template>
     <p class="praise" v-if="article.articlePraises!=null">
         <img src="../../../../assets/imgs/hasAgreed.png" class="agree-img" v-if="showArticlePraise(article.articlePraises).flag"
-                @click="deleteArticlePraise(showArticlePraise(article.articlePraises).articlePraiseId)"
-         />
-
+                @click="deleteArticlePraise(showArticlePraise(article.articlePraises).articlePraiseId)"/>
         <img src="../../../../assets/imgs/agree.png" class="agree-img"
              @click="praiseArticle()" v-if="showArticlePraise(article.articlePraises).flag==false">
         <span>{{article.articlePraises.length}}</span>

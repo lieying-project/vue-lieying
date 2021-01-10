@@ -17,28 +17,28 @@
                 </div>
                 <div class="content" v-html="information.content"></div>
             </div>
-            <div class="hot-information">
-                <div class="title-wrapper">
-                    <div class="line"></div>
-                    <span class="title">热门资讯</span>
-                </div>
-                <ul>
-                    <li v-for="information in hotInformations">
-                        <div class="title">
-                            <a>{{information.title}}</a>
-                        </div>
-                        <div class="info">
-                            <span class="type">{{information.type}}</span>
-                            <div class="right-info">
-                                <span>{{information.administrator.username}}</span>
-                                ·
-                                <span>{{timestampToTime(information.createdTime)}}</span>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+<!--            <div class="hot-information">-->
+<!--                <div class="title-wrapper">-->
+<!--                    <div class="line"></div>-->
+<!--                    <span class="title">热门资讯</span>-->
+<!--                </div>-->
+<!--                <ul>-->
+<!--                    <li v-for="information in hotInformations">-->
+<!--                        <div class="title">-->
+<!--                            <a>{{information.title}}</a>-->
+<!--                        </div>-->
+<!--                        <div class="info">-->
+<!--                            <span class="type">{{information.type}}</span>-->
+<!--                            <div class="right-info">-->
+<!--                                <span>{{information.administrator.username}}</span>-->
+<!--                                ·-->
+<!--                                <span>{{timestampToTime(information.createdTime)}}</span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                </ul>-->
 
-            </div>
+<!--            </div>-->
         </div>
     </div>
 </template>

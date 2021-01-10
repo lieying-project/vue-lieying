@@ -44,14 +44,9 @@
 
 <script>
 
-
+import {mapState} from 'vuex'
 export default {
   name: "ResumeSocialHomepage",
-  props: {
-    resume: {
-
-    }
-  },
   data() {
     return {
       currentSocialHomepage: '',
@@ -69,9 +64,19 @@ export default {
       var socialHomepage = {id: (lastIndex + 1), url: this.currentSocialHomepage}
       this.resume.socialHomepages.push(socialHomepage)
       this.isSocialHomepageFormVisible = false
+      this.$store.dispatch('saveSocialHomepageAction',{
+        resume:{
+          id:this.resume.id
+        },
+        url: this.currentSocialHomepage,
+        sign:'sign',
+        createdTime:new Date(),
+        updatedTime:new Date()
+      })
       this.currentSocialHomepage = ''
     },
     editSocialHomepage() {
+      console.log(this.resume.socialHomepages[this.currentEditHomepageIndex])
       this.resume.socialHomepages[this.currentEditHomepageIndex].url = this.currentSocialHomepage
       this.isEditSocialHomepageFormVisible = false
       this.currentSocialHomepage = ''
@@ -138,6 +143,9 @@ export default {
   },
   updated() {
     this.refreshSocialHomepageLi()
+  },
+  computed:{
+    ...mapState(['resume'])
   }
 }
 </script>
