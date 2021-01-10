@@ -62,7 +62,7 @@
 
                     <el-form-item
                             label="待遇">
-                        <el-input v-model="form.money" maxlength=40 show-word-limit></el-input>
+                        <el-input v-model="form.salary" maxlength=40 show-word-limit></el-input>
                     </el-form-item>
 
 
@@ -133,14 +133,6 @@
                 this.form.positionCategory.id = data;
             },
             onSubmit() {
-                this.$refs[form].validate((valid) => {
-                    if (valid) {
-                        alert('submit!');
-                    } else {
-                        console.log('error submit!!');
-                        return false;
-                    }
-                });
                 this.savePositionAction({...this.form,recruiter:{id:1},publishTime:new Date()}).then((data)=>{
                     console.log('data',data);
                     if(data.status == 200) {

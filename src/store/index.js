@@ -116,14 +116,14 @@ export default new Vuex.Store({
     getIndustryById(state,id){
       api.getIndustryById(id)
     },
-    getAllIndustries(state){
-      api.getAllIndustries(state)
+    getAllIndustries(state,res){
+      state.industries = res.data
     },
-    getAllFinancingStages(state){
-      api.getAllFinancingStages(state)
+    getAllFinancingStages(state,res){
+        state.financingStages = res.data;
     },
-    getCompanyScales(state){
-      api.getCompanyScales(state)
+    getCompanyScales(state,res){
+        state.companyScales = res.data
     },
     getAdministratorById(state,id){
       api.getAdministratorById(state,id)
@@ -139,8 +139,9 @@ export default new Vuex.Store({
       api.saveJobHunterReport(state,jobHunterReport)
     },
     adminLogin(state,data){
-      api.adminLogin(state,data)
-    },
+        state.administrator = data;
+        console.log("administrator",state.administrator);
+      },
     updateResumeState(state,data){
       api.updateResumeState(state,data)
     },
@@ -216,7 +217,9 @@ export default new Vuex.Store({
       console.log("mutationsRecruiter",state.recruiter);
     },
     getJobHunterReportsByCriteria(state,criteria){
-      api.getJobHunterReportsByCriteria(state,criteria)
+
+    },
+    updateCompany(state,res) {
     }
   },
   actions: {//允许异步操作
@@ -275,14 +278,21 @@ export default new Vuex.Store({
     getIndustryByIdAction({commit},id){
       commit('getIndustryById',id)
     },
-    getAllIndustriesAction({commit}){
-      commit('getAllIndustries')
+    async getAllIndustriesAction({commit}){
+      const data = await api.getAllIndustries();
+      commit('getAllIndustries',data);
+      return data;
     },
-    getAllFinancingStagesAction({commit}){
-      commit('getAllFinancingStages')
+   async getAllFinancingStagesAction({commit}){
+      const data = await api.getAllFinancingStages();
+      commit('getAllFinancingStages',data);
+     return data;
     },
-    getCompanyScalesAction({commit}){
-      commit('getCompanyScales')
+
+    async getCompanyScalesAction({commit}){
+      const data = await api.getCompanyScales()
+      commit('getCompanyScales',data);
+      return data;
     },
     getAdministratorByIdAction({commit},id){
       commit('getAdministratorById',id)
@@ -296,8 +306,12 @@ export default new Vuex.Store({
     saveJobHunterReportAction({commit},jobHunterReport){
       commit('saveJobHunterReport',jobHunterReport)
     },
-    adminLoginAction({commit},data){
-      commit('adminLogin',data)
+    async adminLoginAction({commit},data){
+      const data1 =  await api.adminLogin(data);
+      if(data.username === "xiaoming" && data.password === "abc123456") {
+        commit('adminLogin',data);
+      }
+      return data1;
     },
     updateResumeStateAction({commit},data){
       commit('updateResumeState',data)
@@ -385,8 +399,15 @@ export default new Vuex.Store({
       commit('getRecruiter',data);
       return data;
     },
-    getJobHunterReportsByCriteriaAction({commit},criteria){
-      commit('getJobHunterReportsByCriteria',criteria)
+    async getJobHunterReportsByCriteriaAction({commit},criteria){
+      const data = await api.getJobHunterReportsByCriteria(criteria)
+      commit('getJobHunterReportsByCriteria',criteria);
+      return data;
+    },
+    //更新公司信息
+    async updateCompanyAction({commit},company) {
+      const data = await api.updateCompany(company);
+      commit('updateCompany',data);
     }
   },
   modules: {}

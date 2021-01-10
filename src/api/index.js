@@ -273,39 +273,20 @@ export default {
     })
   },
 //查询所有行业信息
-  getAllIndustries(state) {
-    request.get('/api/company/industry/all').then(res => {
-      console.log(res.data)
-      state.industries = res.data
-    })
+  getAllIndustries() {
+   return  request.get('/api/company/industry/all')
   },
 //查询所有融资阶段信息
-  getAllFinancingStages(state) {
-    request.get('/api/company/financingStage/all').then(res => {
-      console.log(res.data)
-      state.financingStages = res.data
-    })
+  getAllFinancingStages() {
+    return request.get('/api/company/financingStage/all')
   },
 //查询所有公司规模信息
-  getCompanyScales(state) {
-    request.get('/api/company/scale/all').then(res => {
-      console.log(res.data)
-      state.companyScales = res.data
-      //console.log(this.$store.state.companyScales)
-    })
+  getCompanyScales() {
+    return request.get('/api/company/scale/all')
   },
 //管理员登录
-  adminLogin(state, administrator) {
-    request.post('/api/admin/login', administrator).then(res => {
-      console.log(res.data)
-      state.administrator = res.data
-      if (res.data != null) {
-        alert('登录成功')
-      } else {
-        alert('用户名或密码错误')
-      }
-
-    })
+  adminLogin(administrator) {
+    return request.post('/api/admin/login', administrator)
   },
 //根据管理员id查询管理员信息
   getAdministratorById(state, id) {
@@ -478,15 +459,22 @@ export default {
     })
   },
   //查询所有举报信息
-  getJobHunterReportsByCriteria(state,criteria){
-    request.get("/api/admin/reports",{
-      positionName:criteria.positionName,
-      jobHunterName:criteria.jobHunterName,
-      reportReason:criteria.reportReason,
-      reportState:criteria.reportState
-    }).then(res => {
-      console.log(res.data)
-      state.jobHunterReports=res.data
-    })
+  getJobHunterReportsByCriteria(criteria){
+    if(!criteria) {
+      return request.get("/api/admin/reports");
+    } else {
+      return request.get("/api/admin/reports",{
+        positionName:criteria.positionName,
+        jobHunterName:criteria.jobHunterName,
+        reportReason:criteria.reportReason,
+        reportState:criteria.reportState
+      })
+    }
+  },
+// /api/company/update
+//
+//更新公司信息
+  updateCompany(company){
+    return request.post("/api/company/update",company);
   }
 }

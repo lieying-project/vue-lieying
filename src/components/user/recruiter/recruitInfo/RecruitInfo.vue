@@ -25,9 +25,19 @@
           }
         },
         created() {
-            if(this.foundPositionPageInfos === undefined||this.foundPositionPageInfos===null || this.foundPositionPageInfos===""){this.getPositionInfo();}
-            else if(Object.keys(this.foundPositionPageInfos)===0);
-            else this.getInfo(this.foundPositionPageInfos.data);
+            // if(this.foundPositionPageInfos === undefined||this.foundPositionPageInfos===null || this.foundPositionPageInfos===""){
+            //     this.searchInfo={};
+            //     this.getPositionInfo();
+            // }
+            // else if(Object.keys(this.foundPositionPageInfos)===0);
+            // else this.getInfo(this.foundPositionPageInfos.data);
+            this.getPositionInfo();
+        },
+        beforeDestroy() {
+            // console.log('destory');
+            // this.searchInfo = {};
+            // this.getPositionInfo();
+
         },
         computed:{
           ...mapState(['foundPositionPageInfos'])

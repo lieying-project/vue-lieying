@@ -67,11 +67,9 @@
 </template>
 
 <script>
+    import {mapState,mapActions} from 'vuex';
     export default {
         name: "AdminIndex",
-        created() {
-          this.$router.push('/recruiterIndex/recruiterInfo')
-        },
         data() {
             return {
                 menuData: [
@@ -99,36 +97,18 @@
             }
         },
         created() {
-            // this.$store.dispatch('adminLoginAction',{
-            //   username:'xiaoming',
-            //   password:'111111'
-            // })
-            // this.$store.dispatch('getAdministratorByIdAction', 1)
-            // this.$store.dispatch('getJobHunterReportByJobHunterIdAndPositionIdAction', {jobHunterId: 1, positionId: 1})
-            // //更新举报信息
-            // this.$store.dispatch('updateJobHunterReportAction',
-            //     {
-            //       reason: '非法',
-            //       footnote: 'footnote',
-            //       evidenceScreenShot: 'evidenceScreenShot',
-            //       position:{
-            //         id:1
-            //       },
-            //       jobHunter:{
-            //         id:1
-            //       }
-            //     }
-            // )
-
-            this.$store.dispatch('updateResumeStateAction', {
-                jobHunter: {
-                    id: 1
-                },
-                position: {
-                    id: 1
-                },
-                state: '不符合'
-            })
+            console.log("this.jobHunter",this.jobHunter);
+            // if(this.jobHunter === null) {
+            //     this.$message({
+            //         type: 'error',
+            //         message: '未登录,无权访问'
+            //     })
+            //     this.$router.replace('/jobHunterIndex');
+            // }
+            // this.$router.push('/recruiterIndex/recruiterInfo')
+        },
+        computed:{
+          ...mapState(["jobHunter"])
         },
         methods:{
 

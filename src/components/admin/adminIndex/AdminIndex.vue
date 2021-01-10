@@ -1,9 +1,8 @@
 <template>
     <div class="admin-contanier">
         <div class="admin-left">
-
             <el-menu
-                    default-active="/admin/company"
+                    default-active="this.$route.path"
                     class="el-menu-vertical-demo aside-nav"
                     background-color="#545c64"
                     text-color="#fff"
@@ -11,17 +10,10 @@
                     :router="true"
                     :collapse="isCollapse"
             >
-                <el-submenu v-for="(item,index) in menuData" :index="item.index" :key="index">
-                    <template slot="title">
-                        <i :class="item.className" style="font-size:16px"></i>
-                        <span>{{item.des}}</span>
-                    </template>
-                    <el-menu-item-group>
-                        <el-menu-item v-for="(childEle,index) in item.child" :index="childEle.index" :key="index">
-                            {{childEle.des}}
-                        </el-menu-item>
-                    </el-menu-item-group>
-                </el-submenu>
+                <el-menu-item v-for="(item,index) in menuData" :index="item.index"  :key="index">
+                    <i :class="item.className" style="font-size:16px"></i>
+                    <span slot="title">{{item.des}}</span>
+                </el-menu-item>
             </el-menu>
         </div>
         <div class="admin-right">
@@ -56,50 +48,26 @@
             return {
                 menuData: [
                     {
-                        index: "/admin/company",
-                        des: "公司认证管理",
-                        className: "el-icon-s-check",
-                        child: [{
-                            index: "/admin/company",
-                            des: "待处理"
-                        },
-                            {
-                                index: "",
-                                des: "已通过"
-                            }
-                        ]
-                    }, {
                         index: "/admin/report",
                         des: "举报信息管理",
                         className: "el-icon-warning",
-                        child: [{
-                            index: "/admin/report",
-                            des: "待处理"
-                        },
-                            {
-                                index: "",
-                                des: "已通过"
-                            }
-                        ]
                     }, {
-                        index: "/admin/source",
+                        index: "/admin/information/publish",
                         des: "资源信息管理",
                         className: "el-icon-collection",
-                        child: [{
-                            index: "/admin/source",
-                            des: "上传文件"
-                        },
-                            {
-                                index: "/admin/information/publish",
-                                des: "发布资讯"
-                            }
-                        ]
                     }
                 ],
                 isCollapse: false
             }
         },
         created() {
+            if(!this.$store.state.administrator) {
+                this.$message({
+                    type: 'error',
+                    message: '请登录之后再访问'
+                })
+                this.$router.replace('/adminLogin');
+            }
             // this.$store.dispatch('adminLoginAction',{
             //   username:'xiaoming',
             //   password:'111111'

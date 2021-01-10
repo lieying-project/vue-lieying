@@ -1,9 +1,9 @@
 <template>
     <div class="dispatcher-info">
-        <dispatcher-header/>
+<!--        <dispatcher-header/>-->
         <dispatcher-content :tableData="tableData"/>
         <el-divider/>
-        <pagination :totalNum="2"/>
+<!--        <pagination :totalNum="2"/>-->
     </div>
 </template>
 
@@ -25,9 +25,11 @@
         },
         created() {
             console.log('found',this.foundPositionPageInfos);
-            if(this.foundPositionPageInfos==="") {
+            if(this.foundPositionPageInfos===""||this.foundPositionPageInfos===undefined||this.foundPositionPageInfos===null) {
                 this.getDispatcherInfo();
+                console.log('a');
             } else {
+                console.log('b');
                 const initData = this.foundPositionPageInfos.data.list;
 
                 initData.forEach((item)=>{
@@ -57,10 +59,9 @@
         methods:{
             getDispatcherInfo() {
                 this.$store.dispatch('getPositionsByCriteriaAction',{
-                    recruiterId:1,
-                    page:this.page,//页码从1开始
-                    ...this.searchInfo
+                    recruiterId:1
                 }).then((data)=> {
+                    console.log('c');
                     const initData = data.data.list;
                     initData.forEach((item)=>{
                         console.log(item.resumes)

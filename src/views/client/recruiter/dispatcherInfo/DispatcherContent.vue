@@ -54,6 +54,9 @@
               }
           }
         },
+        created(){
+          console.log("this.tableData",this.tableData);
+        },
         methods: {
             handleView(index, row) {
                 console.log(index, row);
