@@ -51,10 +51,10 @@
         </div>
         <div class="company-box">
             <ul>
-
                 <li v-for="(company,index) in companies" :key="index" @click="toCompany(company)">
                     <a class="company-info">
-                        <img :src="require(`@/assets/${company.sign}`)">
+<!--                        <img :src="require(`@/assets/${company.sign}`)">-->
+                        <img :src="company.sign">
                         <div class="company-text">
                             <h4 class="name">{{company.name}}</h4>
                             <p >
@@ -64,13 +64,13 @@
                             </p>
                         </div>
                     </a>
-                    <a class="hot-position">
+                    <!--<a class="hot-position">
                         <p>
                             <span>热招</span>
                             <span class="position">软件测试</span>
                             <span class="salary">4-6k</span>
                         </p>
-                    </a>
+                    </a>-->
                 </li>
             </ul>
         </div>
@@ -109,13 +109,11 @@ export default {
       this.updateCompanyList()
     },
     setSelectedIndustryId(industryId){
-
       if (this.selectedIndustryId===industryId){
         this.selectedIndustryId=null
       } else{
         this.selectedIndustryId=industryId
       }
-
       this.updateCompanyList()
     },
     setSelectedCompanyScaleId(companyScaleId){
@@ -124,11 +122,9 @@ export default {
       } else{
         this.selectedCompanyScaleId=companyScaleId
       }
-
       this.updateCompanyList()
     },
     setSelectedFinancingStageId(financingStageId){
-
       if (this.selectedFinancingStageId===financingStageId){
         this.selectedFinancingStageId=null
       } else{

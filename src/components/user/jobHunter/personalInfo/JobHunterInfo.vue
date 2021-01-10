@@ -36,10 +36,13 @@
 
                     </p>
                     <p><span class="prev-line" v-if="jobHunter!=null">
-                    <img src="../../../../assets/imgs/phone.png">{{jobHunter.phone}}</span></p>
+
+                    <img src="../../../../assets/imgs/phone.png">{{jobHunter.phone}}
+                    </span></p>
                 </div>
                 <div class="info-flex-photo-wrapper">
-                    <img :src="require(`@/assets/${jobHunter.photo}`)" class="photo" v-if="jobHunter!=null">
+                    <el-avatar :size="80" :src="jobHunter.photo"></el-avatar>
+<!--                    <img :src="jobHunter.photo" class="photo" v-if="jobHunter!=null">-->
                     <div class="op" @click="goUpdateShowPersonalInfoForm">
                         <i class="el-icon-edit-outline"></i>
                         <span>编辑</span>
@@ -47,7 +50,55 @@
                 </div>
             </div>
             <div class="personal-info-form" :style="{display:isShowPersonalInfoForm==true?'flex':'none'}">
-                <h3 class="form-title">编辑个人信息</h3>
+                <h3 class="form-title">
+                    <span>编辑个人信息</span>
+                    <p>
+                        <el-avatar :size="80" :src="jobHunter.photo"></el-avatar>
+
+
+
+
+                        <el-button type="primary"
+                                   @click="dialogVisible2 = true">更换头像</el-button>
+                        <el-dialog title="上传头像"
+                                   :visible.sync="dialogVisible2"
+                                   width="30%">
+                            <el-form :model="form">
+                                <el-form-item :label-width="formLabelWidth"
+                                              ref="uploadElement">
+                                    <el-upload ref="upload"
+                                               action="#"
+                                               accept="image/png,image/gif,image/jpg,image/jpeg"
+                                               list-type="picture-card"
+                                               :limit=limitNum
+                                               :auto-upload="false"
+                                               :on-exceed="handleExceed"
+                                               :before-upload="handleBeforeUpload"
+                                               :on-preview="handlePictureCardPreview"
+                                               :on-remove="handleRemove"
+                                               :on-change="imgChange"
+                                               :class="{hide:hideUpload}">
+                                        <i class="el-icon-plus"></i>
+                                    </el-upload>
+                                    <el-dialog :visible.sync="dialogVisible">
+                                        <img width="100%"
+                                             :src="dialogImageUrl"
+                                             alt="">
+                                    </el-dialog>
+                                </el-form-item>
+                                <el-form-item>
+                                    <el-button size="small"
+                                               type="primary"
+                                               @click="uploadFile">立即上传</el-button>
+                                    <el-button size="small"
+                                               @click="tocancel">取消</el-button>
+                                </el-form-item>
+                            </el-form>
+                        </el-dialog>
+
+                    </p>
+
+                </h3>
                 <div class="form-item">
                     <div class="item-label">
                         姓名
@@ -66,7 +117,7 @@
 
                 <div class="form-item">
                     <div class="item-label">
-                        生日
+                        出生年月
                     </div>
                     <el-date-picker
                             v-model="jobHunter.birthday"
@@ -78,33 +129,30 @@
                     <div class="item-label">
                         电话
                     </div>
-                    <el-input placeholder="电话" v-model="jobHunter.phone" :disabled="false"
-                              v-if="jobHunter!=null"/>
+                    <el-input placeholder="电话"  :disabled="false"
+                              v-if="jobHunter!=null" disabled="true"/>
                 </div>
                 <div class="form-item">
                     <div class="item-label">
-                        当前求职状态
+                        所在地
                     </div>
-                    <el-input placeholder="当前求职状态"></el-input>
+
+                    <el-input placeholder="所在地" v-model="jobHunter.address" :disabled="false"
+                              v-if="jobHunter!=null" />
                 </div>
+
                 <div class="form-item">
                     <div class="item-label">
-                        身份
+                        邮箱
                     </div>
-                    <el-input placeholder="身份" :disabled="true"></el-input>
+                    <el-input placeholder="邮箱 " v-model="jobHunter.email" v-if="jobHunter!=null"/>
                 </div>
+
                 <div class="form-item">
                     <div class="item-label">
-                        微信号 (选填)
+                        兴趣
                     </div>
-                    <el-input placeholder="微信号 (选填)" v-model="jobHunter.wechat"
-                              v-if="jobHunter!=null"/>
-                </div>
-                <div class="form-item">
-                    <div class="item-label">
-                        邮箱 (选填)
-                    </div>
-                    <el-input placeholder="邮箱 (选填)" v-model="jobHunter.email" v-if="jobHunter!=null"/>
+                    <el-input placeholder="兴趣" v-model="jobHunter.interest" v-if="jobHunter!=null"/>
                 </div>
                 <div class="form-item">
                     <div class="op">
@@ -119,13 +167,21 @@
 </template>
 
 <script>
+import axios from 'axios'
 import {mapState} from 'vuex'
 export default {
   name: "JobHunterInfo",
   data() {
     return {
       isShowPersonalInfoForm: false,
-      oldJobHunter: ''
+      oldJobHunter: '',
+      hideUpload: false,
+      dialogImageUrl: '',
+      dialogVisible: false,//图片预览弹窗
+      formLabelWidth: '80px',
+      limitNum: 1,
+      form: {},
+      dialogVisible2: false//弹窗
     }
   },
   methods: {
@@ -136,11 +192,71 @@ export default {
 
     },
     confirmPersonalInfoForm() {
+      this.$store.dispatch('updateJobHunterAction',this.jobHunter)
       this.isShowPersonalInfoForm = false
     },
     goUpdateShowPersonalInfoForm() {
       this.isShowPersonalInfoForm = true
       this.oldJobHunter = this.jobHunter
+
+    },
+    // 上传文件之前的钩子
+    handleBeforeUpload (file) {
+      if (!(file.type === 'image/png' || file.type === 'image/gif' || file.type === 'image/jpg' || file.type === 'image/jpeg')) {
+        this.$notify.warning({
+          title: '警告',
+          message: '请上传格式为image/png, image/gif, image/jpg, image/jpeg的图片'
+        })
+      }
+      let size = file.size / 1024 / 1024 / 2
+      if (size > 2) {
+        this.$notify.warning({
+          title: '警告',
+          message: '图片大小必须小于2M'
+        })
+      }
+      let fd = new FormData();//通过form数据格式来传
+      fd.append("file", file); //传文件
+      console.log(fd.get('picFile'));
+      axios({
+        url: "/api/file/upload",
+        method: "post",
+        data: fd,
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then((data) => {
+        this.jobHunter.photo=data.data
+        this.$store.dispatch('updateJobHunterAction',this.jobHunter)
+      })
+    },
+    // 文件超出个数限制时的钩子
+    handleExceed (files, fileList) {
+
+    },
+    // 文件列表移除文件时的钩子
+    handleRemove (file, fileList) {
+      this.hideUpload = fileList.length >= this.limitNum;
+
+    },
+    // 点击文件列表中已上传的文件时的钩子
+    handlePictureCardPreview (file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
+    },
+    uploadFile () {
+      console.log("111")
+      this.$refs.upload.submit()
+      console.log("222")
+    },
+    imgChange (files, fileList) {
+      this.hideUpload = fileList.length >= this.limitNum;
+      if (fileList) {
+        this.$refs.uploadElement.clearValidate();
+      }
+    },
+    tocancel () {
+      this.dialogVisible2 = false
 
     }
   },
@@ -245,13 +361,23 @@ export default {
                background-color: #F8F9FB;
                flex-flow: column nowrap;
                margin: 0;
-
+               .form-title{
+                   display: flex;
+                   justify-content: space-between;
+                   align-items: center;
+                   p{
+                       display: flex;
+                       flex-flow: column nowrap;
+                       align-items: center;
+                   }
+               }
                .form-item-title {
                    font-size: 16rem /@font-size;
                    font-weight: 400;
                    margin-top: 0;
                    padding: 0;
                    color: #24272e;
+
                }
 
                .form-item {

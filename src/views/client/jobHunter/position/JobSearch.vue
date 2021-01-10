@@ -18,7 +18,6 @@
                         :value="item.id">
                 </el-option>
             </el-select>
-
             <el-select v-model="industryId"   placeholder="公司行业" class="selected-item" clearable>
                 <el-option
                         v-for="item in industries"

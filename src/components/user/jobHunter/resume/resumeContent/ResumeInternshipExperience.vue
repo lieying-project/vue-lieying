@@ -191,15 +191,10 @@
 
 <script>
 import ResumeTitleWrapper from "../../../../common/ResumeTitleWrapper";
-
+import {mapState} from 'vuex'
 export default {
   name: "ResumeInternshipExperience",
   components: {ResumeTitleWrapper},
-  props: {
-    resume: {
-
-    }
-  },
   data() {
     return {
       isAddInternshipExperienceFormVisible: false,
@@ -337,6 +332,9 @@ export default {
   },
   updated() {
     this.refreshInternshipExperienceList()
+  },
+  computed:{
+    ...mapState(['resume'])
   }
 
 }

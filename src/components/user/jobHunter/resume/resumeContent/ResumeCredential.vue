@@ -34,12 +34,9 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
   name: "ResumeCredential",
-  props: {
-    resume: {
-    }
-  },
   data() {
     return {
       credentialBgColor: '#ffffff',
@@ -56,15 +53,25 @@ export default {
       var credential = {id: (lastIndex + 2), name: this.currentCredential}
       this.resume.credentials.push(credential)
       this.isCredentialFormVisible = false
+      this.$store.dispatch('saveCredentialAction',{
+        name:this.currentCredential,
+        photo:'http://localhost:8080/uploads/credential.jpg',
+        resume:{
+          id:this.resume.id
+        }
+      })
       this.currentCredential = ''
+
     }
+  },
+  computed:{
+    ...mapState(['resume'])
   }
 }
 </script>
 
 <style scoped lang="less">
     @import "../../../../../assets/styles/variables";
-
     .credential {
         display: flex;
         flex-flow: column nowrap;

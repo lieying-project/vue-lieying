@@ -149,13 +149,9 @@
 </template>
 
 <script>
-
+import {mapState} from 'vuex'
 export default {
   name: "ResumeEducationExperience",
-  props: {
-    resume: {
-    }
-  },
   data () {
     return {
       currentEducationExperience: '',
@@ -286,6 +282,9 @@ export default {
   },
   updated() {
     this.refreshEducationExperienceList()
+  },
+  computed:{
+    ...mapState(['resume'])
   }
 }
 </script>

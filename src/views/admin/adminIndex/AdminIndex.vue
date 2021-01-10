@@ -75,7 +75,7 @@ export default {
           ]
         }, {
           index: "/admin/source",
-          des: "资源信息管理",
+          des: "资讯信息管理",
           className: "el-icon-collection",
           child: [{
             index: "/admin/source",

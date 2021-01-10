@@ -16,7 +16,12 @@ export default {
     JobHunterIndexContent,
     JobHunterIndexSearch,
     JobHunterIndexBottom
+  },
+  mounted() {
+
+    //
   }
+
 
 }
 </script>

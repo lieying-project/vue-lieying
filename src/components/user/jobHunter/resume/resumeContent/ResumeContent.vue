@@ -2,18 +2,19 @@
     <div class="resume-content">
         <div class="resume-content-box">
             <div class="updated-time">
-                <span class="time">最后更新 {{resume.updatedTime}} </span>
-                <a class="preview">预览简历</a>
+<!--                <span class="time">最后更新 {{resume.updatedTime | formatDate}} </span>-->
+<!--                <a class="preview">预览简历</a>-->
             </div>
-            <ResumePersonalInfo :resume="resume"/>
-            <ResumePersonalAdvantage :resume="resume"/>
-            <ResumeExpectedPosition :resume="resume"/>
-            <ResumeInternshipExperience :resume="resume"/>
-            <ResumeProjectExperience :resume="resume"/>
-            <ResumeEducationExperience :resume="resume"/>
-            <ResumeCredential :resume="resume"/>
-            <ResumeSocialHomepage :resume="resume"/>
-            <ResumeVolunteerExperience :resume="resume"/>
+
+            <ResumePersonalInfo />
+            <ResumePersonalAdvantage/>
+            <ResumeExpectedPosition />
+            <ResumeInternshipExperience />
+            <ResumeProjectExperience />
+            <ResumeEducationExperience/>
+            <ResumeCredential />
+            <ResumeSocialHomepage />
+<!--            <ResumeVolunteerExperience />-->
         </div>
     </div>
 </template>
@@ -29,7 +30,7 @@ import ResumeSocialHomepage from "./ResumeSocialHomepage";
 import ResumeVolunteerExperience from "./ResumeVolunteerExperience";
 import ResumePersonalInfo from "./ResumePersonalInfo";
 import ResumeInternshipExperience from "./ResumeInternshipExperience";
-
+import {mapState} from 'vuex'
 export default {
   name: "ResumeContent",
   components: {
@@ -42,25 +43,13 @@ export default {
     ResumeProjectExperience,
     ResumeExpectedPosition,
     ResumePersonalAdvantage,
-
-  },
-  props: {
-    resume: {}
   },
   data() {
     return {}
+  },
+  computed:{
+    ...mapState(['resume'])
   }
-// watch: {
-//   'resume.advantage':{
-//     handler(newName,oldName){
-//
-//       console.log("newName："+this.resume.advantage )
-//
-//     },
-//     immediate: true,
-//     //deep: true
-//   }
-// }
 }
 </script>
 
@@ -70,11 +59,9 @@ export default {
         height: auto;
         background-color: #FFFFFF;
         margin: 20rem /@font-size 0 20rem /@font-size 155rem /@font-size;
-
         .resume-content-box {
             display: flex;
             flex-flow: column nowrap;
-
             .updated-time {
                 display: flex;
                 justify-content: space-between;

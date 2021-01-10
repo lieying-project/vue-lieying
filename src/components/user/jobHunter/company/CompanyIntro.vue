@@ -1,67 +1,68 @@
 <template>
     <div class="company-intro">
         <div class="hot-position">
-            <div class="title-wrapper">
-                <span>热招职位</span>
-                <ViewMore :text="'查看全部16个职位'" :font-size="'1.2rem'"/>
-            </div>
-            <ul>
-                <li v-for="i in 3" :key="i">
-                    <div class="name-wrapper">
-                        <span class="name">运营总监</span>
-                        <span class="salary">12-15k</span>
-                    </div>
-                    <p class="gray">
-                        <span>3-5年</span>
-                        <Vdot/>
-                        <span>大专</span>
-                        <Vdot/>
-                        <span>烟台</span>
-                    </p>
-                </li>
-            </ul>
+<!--            <div class="title-wrapper">-->
+<!--                <span>热招职位</span>-->
+<!--                <ViewMore :text="'查看全部16个职位'" :font-size="'1.2rem'"/>-->
+<!--            </div>-->
+<!--            <ul>-->
+<!--                <li v-for="i in 3" :key="i">-->
+<!--                    <div class="name-wrapper">-->
+<!--                        <span class="name">运营总监</span>-->
+<!--                        <span class="salary">12-15k</span>-->
+<!--                    </div>-->
+<!--                    <p class="gray">-->
+<!--                        <span>3-5年</span>-->
+<!--                        <Vdot/>-->
+<!--                        <span>大专</span>-->
+<!--                        <Vdot/>-->
+<!--                        <span>烟台</span>-->
+<!--                    </p>-->
+<!--                </li>-->
+<!--            </ul>-->
         </div>
         <div class="company-detail">
             <div class="company-detail-left">
-                <ContentItem :title="$store.state.company.name+'简介'"
+                <ContentItem :title="'公司简介'"
                              :desc="$store.state.company.intro"/>
-                <div class="product-intro">
-                    <TitleWrapper title="产品介绍"/>
-                    <ProductList/>
-                </div>
-                <div class="business-info">
-                    <TitleWrapper title="工商信息"/>
-                    <div class="business-detail">
-                        <h4 class="business-name">
-                            <span>阿里巴巴（中国）有限公司</span>
-                            <span class="source">来源：企查查</span>
-                        </h4>
-                        <ul class="detail-content" :style="{height: isShowBusinessAll?'auto': '3rem'}">
-                            <li><span class="t">法人代表：</span>张勇</li>
-                            <li><span class="t">注册资本：</span>15298万美元</li>
-                            <li><span class="t"> 成立时间：</span>2007-03-26</li>
-                            <li class="col-auto"><span class="t"> 企业类型：</span>有限责任公司（台港澳法人独资）</li>
-                            <li class="col-auto"><span class="t"> 经营状态：</span>存续</li>
-                            <li class="col-auto"><span class="t"> 注册地址：</span>浙江省杭州市滨江区长河街道网商路699号4号楼5楼508室</li>
-                            <li class="col-auto"><span class="t"> 统一信用代码：</span>91330100799655058B</li>
-                            <li class="col-auto"><span class="t"> 经营范围：</span>服务：企业管理，计算机系统服务，电脑动画设计，经济信息咨询服务（除商品中介），成年人的非证书劳动职业技能培训和成年人的非文化教育培训（涉及前置审批的项目除外）；生产：计算机软件；销售自产产品。（国家禁止和限制的除外，凡涉及许可证制度的凭证经营）
-                            </li>
-                            <div class="show-business-all" @click="handleShowBusinessAll()">
-                                <span v-show="isShowBusinessAll">收起</span>
-                                <span v-show="!isShowBusinessAll">展开</span>
-                                <i class="el-icon-arrow-down" v-show="!isShowBusinessAll"></i>
-                                <i class="el-icon-arrow-up" v-show="isShowBusinessAll"></i>
-                            </div>
-                        </ul>
-                    </div>
-                </div>
+<!--                <div class="product-intro">-->
+<!--                    <TitleWrapper title="产品介绍"/>-->
+<!--                    <ProductList/>-->
+<!--                </div>-->
+<!--                <div class="business-info">-->
+<!--                    <TitleWrapper title="工商信息"/>-->
+<!--                    <div class="business-detail">-->
+<!--                        <h4 class="business-name">-->
+<!--                            <span>阿里巴巴（中国）有限公司</span>-->
+<!--                            <span class="source">来源：企查查</span>-->
+<!--                        </h4>-->
+<!--                        <ul class="detail-content" :style="{height: isShowBusinessAll?'auto': '3rem'}">-->
+<!--                            <li><span class="t">法人代表：</span>张勇</li>-->
+<!--                            <li><span class="t">注册资本：</span>15298万美元</li>-->
+<!--                            <li><span class="t"> 成立时间：</span>2007-03-26</li>-->
+<!--                            <li class="col-auto"><span class="t"> 企业类型：</span>有限责任公司（台港澳法人独资）</li>-->
+<!--                            <li class="col-auto"><span class="t"> 经营状态：</span>存续</li>-->
+<!--                            <li class="col-auto"><span class="t"> 注册地址：</span>浙江省杭州市滨江区长河街道网商路699号4号楼5楼508室</li>-->
+<!--                            <li class="col-auto"><span class="t"> 统一信用代码：</span>91330100799655058B</li>-->
+<!--                            <li class="col-auto"><span class="t"> 经营范围：</span>服务：企业管理，计算机系统服务，电脑动画设计，经济信息咨询服务（除商品中介），成年人的非证书劳动职业技能培训和成年人的非文化教育培训（涉及前置审批的项目除外）；生产：计算机软件；销售自产产品。（国家禁止和限制的除外，凡涉及许可证制度的凭证经营）-->
+<!--                            </li>-->
+<!--                            <div class="show-business-all" @click="handleShowBusinessAll()">-->
+<!--                                <span v-show="isShowBusinessAll">收起</span>-->
+<!--                                <span v-show="!isShowBusinessAll">展开</span>-->
+<!--                                <i class="el-icon-arrow-down" v-show="!isShowBusinessAll"></i>-->
+<!--                                <i class="el-icon-arrow-up" v-show="isShowBusinessAll"></i>-->
+<!--                            </div>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                </div>-->
                 <div class="company-address">
                     <TitleWrapper title="公司地址"/>
+                    {{this.$store.state.company.address}}
                 </div>
-                <div class="recruiting-position">
-                    <TitleWrapper title="在招职位"/>
-                    <PositionList/>
-                </div>
+<!--                <div class="recruiting-position">-->
+<!--                    <TitleWrapper title="在招职位"/>-->
+<!--                    <PositionList/>-->
+<!--                </div>-->
             </div>
             <div class="company-condition">
                 <div class="leader-intro">
@@ -94,19 +95,19 @@
                         </li>
                     </ul>
                 </div>
-                <div class="company-environment">
-                    <TitleWrapper title="公司环境"/>
-                    <a class="btn-prev" id="btn-prev" href="javascript:void(0);" @click="prevPicture"><i
-                            class="el-icon-arrow-left"></i></a>
-                    <a class="btn-next" id="btn-next" href="javascript:void(0);" @click="nextPicture"><i
-                            class="el-icon-arrow-right"></i></a>
-                    <ul>
-                        <li v-for="(companyPicture,index) in $store.state.company.companyPictures" :key="index"
-                            v-show="currentCompanyPictureIndex==index">
-                            <img :src="require(`@/assets/${companyPicture.path}`)" @mouseover="displayPageBtn" @mouseleave="hidePageBtn">
-                        </li>
-                    </ul>
-                </div>
+<!--                <div class="company-environment">-->
+<!--                    <TitleWrapper title="公司环境"/>-->
+<!--                    <a class="btn-prev" id="btn-prev" href="javascript:void(0);" @click="prevPicture"><i-->
+<!--                            class="el-icon-arrow-left"></i></a>-->
+<!--                    <a class="btn-next" id="btn-next" href="javascript:void(0);" @click="nextPicture"><i-->
+<!--                            class="el-icon-arrow-right"></i></a>-->
+<!--                    <ul>-->
+<!--                        <li v-for="(companyPicture,index) in $store.state.company.companyPictures" :key="index"-->
+<!--                            v-show="currentCompanyPictureIndex==index">-->
+<!--                            <img :src="require(`@/assets/${companyPicture.path}`)" @mouseover="displayPageBtn" @mouseleave="hidePageBtn">-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
                 <div class="company-position">
                     <TitleWrapper title="招聘职位"/>
 <!--                    <ul v-if="$store.state.company.positions!=null">-->
@@ -126,7 +127,7 @@
                         <span>查看所有Boss的在招职位</span>
                         <i class="el-icon-arrow-right"></i>
                     </a>
-                    <span class="updated-time">更新时间:2020-07-31</span>
+<!--                    <span class="updated-time">更新时间:2020-07-31</span>-->
                 </div>
             </div>
         </div>
@@ -140,7 +141,7 @@ import ContentItem from "../../../common/ContentItem";
 import TitleWrapper from "../../../common/TitleWrapper";
 import ProductList from "../../../common/ProductList";
 import PositionList from "../../../common/PositionItems";
-
+import {mapState} from 'vuex'
 export default {
   name: "CompanyIntro",
   components: {PositionList, ProductList, TitleWrapper, ContentItem, Vdot, ViewMore},
@@ -208,7 +209,9 @@ export default {
       }
       this.$forceUpdate()
     }
-
+  },
+  computed:{
+    ...mapState(['company'])
   }
 }
 </script>

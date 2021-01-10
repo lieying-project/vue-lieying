@@ -8,8 +8,7 @@
                     text-color="#fff"
                     active-text-color="#5dd5c8"
                     :router="true"
-                    :collapse="isCollapse"
-            >
+                    :collapse="isCollapse">
                 <el-menu-item v-for="(item,index) in menuData" :index="item.index"  :key="index">
                     <i :class="item.className" style="font-size:16px"></i>
                     <span slot="title">{{item.des}}</span>
@@ -53,7 +52,7 @@
                         className: "el-icon-warning",
                     }, {
                         index: "/admin/information/publish",
-                        des: "资源信息管理",
+                        des: "资讯信息管理",
                         className: "el-icon-collection",
                     }
                 ],

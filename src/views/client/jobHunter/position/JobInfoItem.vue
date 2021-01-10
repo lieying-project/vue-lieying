@@ -20,9 +20,10 @@
                                 <h3 class="name">
                                     <img class="icon-chat"
                                          src="https://z.zhipin.com/web/geek/resource/icon-chat-v2.png"/>
-                                    "高洁"
+                                    <span v-if="position.recruiter!=null">{{position.recruiter.name}}</span>
                                     <em class="vline"></em>
-                                    "客户经理"
+
+                                    <span v-if="position.recruiter!=null">{{position.recruiter.position}}</span>
                                 </h3>
                             </div>
                         </div>
@@ -43,19 +44,22 @@
                         </p>
                     </div>
                     <img class="company-logo"
-                         :src="require(`@/assets/${position.company.sign}`)" alt="" v-if="position.company!=null&&position.company.sign!=null">
+                         :src="position.company.sign" alt="" v-if="position.company!=null&&position.company.sign!=null">
                 </div>
             </div>
             <div class="info-append clearfix">
-                <div class="tags">
-                    <span class="tag-item">招聘销售人员</span>
-                    <span class="tag-item">储备干部</span>
-                    <span class="tag-item">财务情况</span>
-                    <span class="tag-item">综合金融</span>
-                    <span class="tag-item">管理销售团队</span>
-                </div>
+
+<!--                <div class="tags">-->
+
+<!--                                        <span class="tag-item">招聘销售人员</span>-->
+<!--                                        <span class="tag-item">储备干部</span>-->
+<!--                                        <span class="tag-item">财务情况</span>-->
+<!--                                        <span class="tag-item">综合金融</span>-->
+<!--                                        <span class="tag-item">管理销售团队</span>-->
+<!--                </div>-->
                 <div class="info-desc">
-                    带薪年假，晋升空间大，员工旅游，工作环境好，年终奖，补充医疗保险，全勤奖，定期体检，节日福利
+                    {{position.detail}}
+<!--                    带薪年假，晋升空间大，员工旅游，工作环境好，年终奖，补充医疗保险，全勤奖，定期体检，节日福利-->
                 </div>
             </div>
         </div>
@@ -63,9 +67,6 @@
     </div>
 </template>
 <script>
-
-
-
 export default {
   name: "JobInfoItem",
   props: {
@@ -86,9 +87,6 @@ export default {
     viewPosition(id){
       this.$router.push("/position/"+id)
     }
-
-  },
-  computed:{
 
   }
 }

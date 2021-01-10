@@ -48,21 +48,20 @@
             <h3 class="edit-title">编辑期望职位</h3>
             <div class="form">
                 <div class="form-item-group">
-                    <div class="form-item">
-                        <div class="item-label">
-                            求职类型
-                        </div>
-                        <el-select v-model="resume.expectedPosition.type" placeholder="请选择" v-if="resume.expectedPosition!=null">
-                            <el-option v-for="positionType in expectedPositionTypes" :key="positionType.id"
-                                       :label="positionType.name" :value="positionType.name"/>
-                        </el-select>
-                    </div>
+<!--                    <div class="form-item">-->
+<!--                        <div class="item-label">-->
+<!--                            求职类型-->
+<!--                        </div>-->
+<!--                        <el-select v-model="resume.expectedPosition" placeholder="请选择" v-if="resume.expectedPosition!=null">-->
+<!--                        <el-option v-for="positionType in expectedPositionTypes" :key="positionType.id"-->
+<!--                                   :label="positionType.name" :value="positionType.name"/>-->
+<!--                    </el-select>-->
+<!--                    </div>-->
                     <div class="form-item">
                         <div class="item-label">
                             期望职位
                         </div>
-                        <el-cascader v-model="resume.expectedPosition.name" :options="positionTypes" v-if="resume.expectedPosition!=null"/>
-
+                        <el-cascader v-model="resume.expectedPosition" :options="positionTypes" v-if="resume.expectedPosition!=null"/>
                     </div>
 
                 </div>
@@ -71,29 +70,27 @@
                         <div class="item-label">
                             薪资要求
                         </div>
-
-                        <el-select  v-model="resume.salary">
+                        <el-select  v-model="resume.expectedSalary">
                             <el-option label="4k" value="4k"/>
                             <el-option label="5k" value="5k"/>
                             <el-option label="6k" value="6k"/>
                         </el-select>
                         至
-                        <el-select  v-model="resume.salary">
+                        <el-select  v-model="resume.expectedSalary">
                             <el-option label="7k" value="7k"/>
 
                             <el-option label="8k" value="8k"/>
                             <el-option label="9k" value="9k"/>
                         </el-select>
                     </div>
-                    <div class="form-item">
-                        <div class="item-label">
-                            行业
-                        </div>
-                        <el-cascader v-model="resume.expectedPosition.industry.name" :options="industryTypes"
-                                     v-if="resume.expectedPosition!=null&&resume.expectedPosition.industry!=null"/>
-
-
-                    </div>
+<!--                    <div class="form-item">-->
+<!--                        <div class="item-label">-->
+<!--                            行业-->
+<!--                        </div>-->
+<!--                        <el-cascader v-model="resume.expectedPosition.industry.name" :options="industryTypes"-->
+<!--                                     v-if="resume.expectedPosition!=null&&resume.expectedPosition.industry!=null"/>-->
+<!--                        -->
+<!--                    </div>-->
 
                 </div>
                 <div class="form-item-group">
@@ -102,8 +99,8 @@
                             城市
                         </div>
 
-                        <el-cascader v-model="resume.expectedPosition.city.name" :options="provinces"
-                                     v-if="resume.expectedPosition!=null&&resume.expectedPosition.city!=null"/>
+                        <el-cascader v-model="resume.expectedCity" :options="provinces"
+                                     v-if="resume.expectedCity!=null"/>
                     </div>
 
 
@@ -119,15 +116,11 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 import Vdot from "../../../../common/Vdot";
 export default {
   name: "ResumeExpectedPosition",
   components: {Vdot},
-  props: {
-    resume: {
-
-    }
-  },
   data() {
     return {
       isShowEditExpectedPositionForm: false,
@@ -208,6 +201,9 @@ export default {
       this.resume.expectedPosition = this.primaryPosition
 
     }
+  },
+  computed:{
+    ...mapState(['resume'])
   }
 }
 </script>

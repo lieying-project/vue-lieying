@@ -5,7 +5,7 @@
             <div slot="header" class="resume-list-header">
                 <span class="title">简历信息列表</span>
                 <div class="btn-group">
-                    <el-button  round class="btn">导入简历</el-button>
+<!--                    <el-button  round class="btn">导入简历</el-button>-->
                     <el-button type="primary" round class="btn">新建简历</el-button>
                 </div>
             </div>

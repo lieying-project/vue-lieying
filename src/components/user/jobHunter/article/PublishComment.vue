@@ -10,7 +10,6 @@
 
 <script>
 import {mapState} from 'vuex'
-
 export default {
   name: "PublishComment",
   props:{
@@ -38,6 +37,10 @@ export default {
       if (this.$store.state.jobHunter == null) {
         this.showMessageTip()
         return
+      }
+      console.log("发布评论")
+      if ( this.commentContent==""){
+        alert("请输入评论内容")
       }
       this.$store.dispatch('saveArticleCommentAction', {
         createdTime: new Date(),

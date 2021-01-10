@@ -6,7 +6,7 @@
             <p v-if="article.articleComments!=null" class="num">共{{article.articleComments.length}}条评论</p>
             <div class="item" v-for="(articleComment,index) in article.articleComments" :key="index"
                  style="border-bottom:0.078125rem solid #DCDFE6">
-                <div class="photo"><img :src="require(`@/assets/${articleComment.jobHunter.photo}`)"></div>
+                <div class="photo"><img :src="articleComment.jobHunter.photo"></div>
                 <div class="info">
                     <div class="top-info">
                         <span class="username">{{articleComment.jobHunter.username}}</span>
@@ -18,12 +18,9 @@
                         <ArticleCommentRely
                                 :articleCommentRelies="articleComment.articleCommentRelies"
                                 :jobHunter="articleComment.jobHunter" />
-
                     </div>
                 </div>
-
             </div>
-
         </div>
     </el-card>
 </template>

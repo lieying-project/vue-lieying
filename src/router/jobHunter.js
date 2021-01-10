@@ -101,14 +101,7 @@ export default[
       role:'jobHunter'
     }
   },
-  {
-    path: '/recruiter/chat/:recruiterId',
-    component: RecruiterChat,
-    meta: {
-      title: '招聘者聊天',
-      role:'jobHunter'
-    }
-  },
+
   {
     path:'/resume/list',
     component: ResumeInfoList,

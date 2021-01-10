@@ -33,12 +33,10 @@
 
 <script>
 import ResumeTitleWrapper from "../../../../common/ResumeTitleWrapper";
+import {mapState} from 'vuex'
 export default {
   name: "ResumePersonalAdvantage",
   components: {ResumeTitleWrapper},
-  props: {
-    resume: {}
-  },
   data () {
     return {
       isShowEditAdvantageForm: false,
@@ -53,9 +51,13 @@ export default {
     },
     confirmEditAdvantageForm() {
       this.isShowEditAdvantageForm = false
+      this.$store.dispatch('updateResumeAction',{
+        id:this.resume.id,
+        advantage:this.resume.advantage
+      })
+
     },
     cancelEditAdvantageForm() {
-
       this.resume.advantage = this.primaryAdvantage
       console.log(this.resume.advantage.length)
       this.isShowEditAdvantageForm = false
@@ -68,6 +70,7 @@ export default {
     },
   },
   computed: {
+    ...mapState(['resume']),
     advantageTextNum: {
       get: function () {
         if (this.resume==""||this.resume.advantage==null){

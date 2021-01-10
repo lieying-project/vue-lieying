@@ -32,7 +32,9 @@ export default {
   },
   methods: {
     searchPositions() {
+
       console.log(this.positionCategoryId)
+      console.log(this.keyword)
       this.$store.dispatch('getPositionsByCriteriaAction',{
         keyword: this.keyword,
         positionCategoryId:this.positionCategoryId[this.positionCategoryId.length-1]

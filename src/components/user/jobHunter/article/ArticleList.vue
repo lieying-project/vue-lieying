@@ -11,7 +11,7 @@
                             <div class="content" v-html="article.content"></div>
                             <div class="info">
                                 <p class="author" v-if="article.jobHunter!=null">
-                                    <img :src="require(`@/assets/${article.jobHunter.photo}`)"
+                                    <img :src="article.jobHunter.photo"
                                          v-if="article.jobHunter!=null" class="user-img"/>
                                     <span>{{article.jobHunter.username}}</span>
                                 </p>
@@ -22,7 +22,6 @@
                                     <img src="../../../../assets/imgs/comment.png" class="comment-img">
                                     <span>{{article.articleComments.length}}</span>
                                 </p>
-
                             </div>
                         </div>
                     </li>
