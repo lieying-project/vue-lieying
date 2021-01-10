@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="company-manage">
         <search :bread-arr="breadArr"/>
         <el-divider/>
         <div>
@@ -37,6 +37,10 @@
 </script>
 
 <style scoped lang="less">
-
+    .company-manage {
+        background-color: #ffffff;
+        margin: 12px;
+        padding: 20px;
+    }
 
 </style>

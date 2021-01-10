@@ -82,8 +82,9 @@ export default new Vuex.Store({
     getJobHunterResumesByJobHunterId(state, jobHunterId) {
       api.getJobHunterResumesByJobHunterId(jobHunterId)
     },
-    getResumeById(state, id) {
-      api.getResumeById(state,id)
+    getResumeById(state, res) {
+      // api.getResumeById(state,id)
+      state.resume = res.data;
     },
     getPositionById(state,id){
       api.getPositionById(state,id)
@@ -115,14 +116,14 @@ export default new Vuex.Store({
     getIndustryById(state,id){
       api.getIndustryById(id)
     },
-    getAllIndustries(state){
-      api.getAllIndustries(state)
+    getAllIndustries(state,res){
+      state.industries = res.data
     },
-    getAllFinancingStages(state){
-      api.getAllFinancingStages(state)
+    getAllFinancingStages(state,res){
+        state.financingStages = res.data;
     },
-    getCompanyScales(state){
-      api.getCompanyScales(state)
+    getCompanyScales(state,res){
+        state.companyScales = res.data
     },
     getAdministratorById(state,id){
       api.getAdministratorById(state,id)
@@ -138,8 +139,9 @@ export default new Vuex.Store({
       api.saveJobHunterReport(state,jobHunterReport)
     },
     adminLogin(state,data){
-      api.adminLogin(state,data)
-    },
+        state.administrator = data;
+        console.log("administrator",state.administrator);
+      },
     updateResumeState(state,data){
       api.updateResumeState(state,data)
     },
@@ -159,8 +161,10 @@ export default new Vuex.Store({
     getChatJobHuntersByRecruiterId(state,recruiterId){
       api.getChatJobHuntersByRecruiterId(state,recruiterId)
     },
-    getPositionsByCriteria(state,criteria){
-      api.getPositionsByCriteria(state,criteria)
+    //保存获取到的职位信息................................................................................................
+    getPositionsByCriteria(state,data){
+      state.foundPositionPageInfos = data;
+      console.log("mutations输出",state.foundPositionPageInfos)
     },
     getInformationById(state,id){
       api.getInformationById(state,id)
@@ -199,23 +203,26 @@ export default new Vuex.Store({
       api.saveArticle(state,article)
     },
     savePosition(state,position){
-      api.savePosition(state,position)
+
     },
     updatePosition(state,position){
-      api.updatePosition(state,position)
+
     },
     deletePosition(state,id){
-      api.deletePosition(state,id)
+
     },
-    getRecruiter(state){
-      api.getRecruiter(state)
+    getRecruiter(state,res){
+      console.log("res",res);
+      state.recruiter = res.data
+      console.log("mutationsRecruiter",state.recruiter);
     },
     getJobHunterReportsByCriteria(state,criteria){
-      api.getJobHunterReportsByCriteria(state,criteria)
+
+    },
+    updateCompany(state,res) {
     }
   },
   actions: {//允许异步操作
-
     updateTokenAction({commit}, payload) {
       commit("updateToken", payload);
     },
@@ -234,8 +241,12 @@ export default new Vuex.Store({
     getJobHunterResumesByJobHunterIdAction({commit}, jobHunterId) {
       commit('getJobHunterResumesByJobHunterId', jobHunterId)
     },
-    getResumeByIdAction({commit}, id) {
-      commit('getResumeById', id)
+    async getResumeByIdAction({commit}, id) {
+      const data = await api.getResumeById(id);
+      console.log("action",data);
+      commit('getResumeById', data);
+      return data;
+
     },
     getPositionByIdAction({commit},id){
       commit('getPositionById',id)
@@ -244,7 +255,7 @@ export default new Vuex.Store({
       commit('savePositionCollect',positionCollect)
     },
     deletePositionCollectAction({commit},data){
-      commit('deletePositionCollect',data)
+      // commit('deletePositionCollect',data)
     },
     savePositionBrowseAction({commit},positionBrowse){
       commit('savePositionBrowse',positionBrowse)
@@ -267,14 +278,21 @@ export default new Vuex.Store({
     getIndustryByIdAction({commit},id){
       commit('getIndustryById',id)
     },
-    getAllIndustriesAction({commit}){
-      commit('getAllIndustries')
+    async getAllIndustriesAction({commit}){
+      const data = await api.getAllIndustries();
+      commit('getAllIndustries',data);
+      return data;
     },
-    getAllFinancingStagesAction({commit}){
-      commit('getAllFinancingStages')
+   async getAllFinancingStagesAction({commit}){
+      const data = await api.getAllFinancingStages();
+      commit('getAllFinancingStages',data);
+     return data;
     },
-    getCompanyScalesAction({commit}){
-      commit('getCompanyScales')
+
+    async getCompanyScalesAction({commit}){
+      const data = await api.getCompanyScales()
+      commit('getCompanyScales',data);
+      return data;
     },
     getAdministratorByIdAction({commit},id){
       commit('getAdministratorById',id)
@@ -288,8 +306,12 @@ export default new Vuex.Store({
     saveJobHunterReportAction({commit},jobHunterReport){
       commit('saveJobHunterReport',jobHunterReport)
     },
-    adminLoginAction({commit},data){
-      commit('adminLogin',data)
+    async adminLoginAction({commit},data){
+      const data1 =  await api.adminLogin(data);
+      if(data.username === "xiaoming" && data.password === "abc123456") {
+        commit('adminLogin',data);
+      }
+      return data1;
     },
     updateResumeStateAction({commit},data){
       commit('updateResumeState',data)
@@ -310,9 +332,15 @@ export default new Vuex.Store({
     getChatJobHuntersByRecruiterIdAction({commit},recruiterId){
       commit('getChatJobHuntersByRecruiterId',recruiterId)
     },
-    getPositionsByCriteriaAction({commit},criteria){
-      commit('getPositionsByCriteria',criteria)
+    //获取招聘者发布的职位详细........................................................................................
+    async getPositionsByCriteriaAction({commit},criteria){
+      const data =  await api.getPositionsByCriteria(criteria);
+      commit('getPositionsByCriteria',data);
+      return data;
+      //  console.log('criteria',criteria);
+
     },
+
     getInformationByIdAction({commit},id){
 
       commit('getInformationById',id)
@@ -350,20 +378,36 @@ export default new Vuex.Store({
     saveArticleAction({commit},article){
       commit('saveArticle',article)
     },
-    savePositionAction({commit},position){
-      commit('savePosition',position)
+    async savePositionAction({commit},position){
+
+      const data = await api.savePosition(position);
+      commit('savePosition',data);
+      return data;
     },
-    updatePositionAction({commit},position){
+    async updatePositionAction({commit},position){
+      const data =  await   api.updatePosition(position);
       commit('updatePosition',position)
+      return data;
     },
-    deletePositionAction({commit},id){
-      commit('deletePosition',id)
+    async deletePositionAction({commit},id){
+      const data = await api.deletePosition(id);
+      commit('deletePosition',id);
+      return data;
     },
-    getRecruiterAction({commit}){
-      commit('getRecruiter')
+    async getRecruiterAction({commit}){
+      const data = await  api.getRecruiter();
+      commit('getRecruiter',data);
+      return data;
     },
-    getJobHunterReportsByCriteriaAction({commit},criteria){
-      commit('getJobHunterReportsByCriteria',criteria)
+    async getJobHunterReportsByCriteriaAction({commit},criteria){
+      const data = await api.getJobHunterReportsByCriteria(criteria)
+      commit('getJobHunterReportsByCriteria',criteria);
+      return data;
+    },
+    //更新公司信息
+    async updateCompanyAction({commit},company) {
+      const data = await api.updateCompany(company);
+      commit('updateCompany',data);
     }
   },
   modules: {}

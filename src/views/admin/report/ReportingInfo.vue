@@ -37,7 +37,7 @@
                 </template>
             </el-table-column>
         </el-table>
-        <reporting-info-detail :dialogVisible="dialogVisible" @cancelEvent="cancelDialog"/>
+        <reporting-info-detail :dialogVisible="dialogVisible" @cancelEvent="cancelDialog" :data="data"/>
     </div>
 </template>
 
@@ -50,7 +50,7 @@
             return {
                 tableData: [{
                     date: '2016-05-02',
-                    name:"我是公司的名称",
+                    name:"",
                     position:"我是公司的职位",
                     reason: '王小虎',
                     detail: '上海市普陀区金沙江路 1518 弄',
@@ -60,30 +60,32 @@
                     position:"我是公司的职位",
                     reason: '王小虎',
                     detail: '上海市普陀区金沙江路 1517 弄',
-                }, {
-                    date: '2016-05-01',
-                    name:"我是公司的名称",
-                    position:"我是公司的职位",
-                    reason: '王小虎',
-                    detail: '上海市普陀区金沙江路 1519 弄',
-                }, {
-                    date: '2016-05-03',
-                    name:"我是公司的名称",
-                    position:"我是公司的职位",
-                    reason: '王小虎',
-                    detail: '上海市普陀区金沙江路 1516 弄',
                 }],
                 //控制对话框显示
-                dialogVisible: false
+                dialogVisible: false,
+                data:{}
             }
+        },
+        created() {
+            this.getJobHunterReportsByCriteriaAction().then((data)=>{
+                //清洗数据
+                console.log(data);
+                this.tableData = data.data.map((item)=>{
+                    var time = new Date(item.createdTime).toLocaleDateString().replace(/\/(\d+)/g, function (a, b) {
+                        return '-' + b.padStart(2, 0)
+                    })
+                    return {id:item.id,date:time,name:item.position.name,position:item.position.name,reason:item.reason,detail:item.footnote}
+                })
+            })
         },
         components:{
             ReportingInfoDetail
         },
         methods:{
-            ...mapActions['getReportingInfoByStatus'],
+            ...mapActions(['getJobHunterReportsByCriteriaAction']),
             handleClick(row) {
                 console.log(row);
+                this.data = row;
                 this.dialogVisible = true
             },
             //取消对话框

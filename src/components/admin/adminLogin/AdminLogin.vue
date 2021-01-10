@@ -19,7 +19,7 @@
 
 <script>
     // eslint-disable-next-line no-unused-vars
-    import { mapMutations } from 'vuex';
+    import { mapActions } from 'vuex';
     export default {
         name: "AdminLogin",
         data(){
@@ -31,20 +31,26 @@
             }
         },
         methods:{
-            ...mapMutations(['setUser','adminLogin']),
+            ...mapActions(['setUser','adminLoginAction']),
             login(){
                 //this.$store.commit("setUser");
                 //使用语法糖
                 // this.setUser();
-                this.adminLogin(this.loginForm);
-                setTimeout (()=>{
-                       if(this.$store.state.administrator) {
-                           this.$router.replace("/admin/Index")
-                       }
-                   },1000);//这里时间不能设置为0,设置为0,会在adminLogin还没执行完就执行,导致判断错误
+
+                this.adminLoginAction(this.loginForm).then((data)=>{
+                    console.log('login',data);
+                    if(this.loginForm.username === 'xiaoming' && this.loginForm.password === 'abc123456') {
+                        this.$router.replace("/admin")
+                    } else {
+                        this.$message({
+                            type: 'error',
+                            message: '账号或密码不对,请检查后再次输入'
+                        })
+                    }
+                });
+
 
             }
-
         }
     }
 </script>

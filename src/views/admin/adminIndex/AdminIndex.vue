@@ -1,44 +1,43 @@
 <template>
     <div class="admin-contanier">
-        1111111111111
-<!--        <el-container>-->
-<!--            <el-header style="height:40px">-->
-<!--                <div class="logo"><img src="~@/assets/icons/logo.png"></div>-->
-<!--                <h2 class="admin-title">猎英网站管理系统</h2>-->
-<!--            </el-header>-->
-<!--            <el-container style="height: 100%">-->
-<!--                <el-aside width="200px">-->
-<!--                    <el-row>-->
-<!--                        <el-col>-->
-<!--                            <el-menu-->
-<!--                                    default-active="/admin/company"-->
-<!--                                    class="el-menu-vertical-demo aside-nav"-->
-<!--                                    background-color="#545c64"-->
-<!--                                    text-color="#fff"-->
-<!--                                    active-text-color="#5dd5c8"-->
-<!--                                    :router="true"-->
-<!--                            >-->
-<!--                                <el-submenu v-for="(item,index) in menuData" :index="item.index" :key="index">-->
-<!--                                    <template slot="title">-->
-<!--                                        <i :class="item.className" style="font-size:16px"></i>-->
-<!--                                        <span>{{item.des}}</span>-->
-<!--                                    </template>-->
-<!--                                    <el-menu-item-group>-->
-<!--                                        <el-menu-item v-for="(childEle,index) in item.child" :index="childEle.index"-->
-<!--                                                      :key="index">{{childEle.des}}-->
-<!--                                        </el-menu-item>-->
-<!--                                    </el-menu-item-group>-->
-<!--                                </el-submenu>-->
-<!--                            </el-menu>-->
-<!--                        </el-col>-->
-<!--                    </el-row>-->
-<!--                </el-aside>-->
-<!--                <el-main>-->
+        <el-container>
+            <el-header style="height:40px">
+                <div class="logo"><img src="~@/assets/icons/logo.png"></div>
+                <h2 class="admin-title">猎英网站管理系统</h2>
+            </el-header>
+            <el-container style="height: 100%">
+                <el-aside width="200px">
+                    <el-row>
+                        <el-col>
+                            <el-menu
+                                    default-active="/admin/company"
+                                    class="el-menu-vertical-demo aside-nav"
+                                    background-color="#545c64"
+                                    text-color="#fff"
+                                    active-text-color="#5dd5c8"
+                                    :router="true"
+                            >
+                                <el-submenu v-for="(item,index) in menuData" :index="item.index" :key="index">
+                                    <template slot="title">
+                                        <i :class="item.className" style="font-size:16px"></i>
+                                        <span>{{item.des}}</span>
+                                    </template>
+                                    <el-menu-item-group>
+                                        <el-menu-item v-for="(childEle,index) in item.child" :index="childEle.index"
+                                                      :key="index">{{childEle.des}}
+                                        </el-menu-item>
+                                    </el-menu-item-group>
+                                </el-submenu>
+                            </el-menu>
+                        </el-col>
+                    </el-row>
+                </el-aside>
+                <el-main>
 
-<!--                    <router-view></router-view>-->
-<!--                </el-main>-->
-<!--            </el-container>-->
-<!--        </el-container>-->
+                    <router-view></router-view>
+                </el-main>
+            </el-container>
+        </el-container>
     </div>
 </template>
 
