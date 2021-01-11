@@ -55,9 +55,17 @@
 <!--                        </ul>-->
 <!--                    </div>-->
 <!--                </div>-->
-                <div class="company-address">
-                    <TitleWrapper title="公司地址"/>
-                    {{this.$store.state.company.address}}
+                <div class="company-base-info">
+                    <TitleWrapper title="公司信息"/>
+                    <ul >
+                        <li>       公司地址:{{this.company.address}}</li>
+                        <li>       成立时间:{{this.company.established}}</li>
+                        <li>        企业法人:{{this.company.representative}}</li>
+                        <li>
+                            注册资本:{{this.company.registerCapital}}</li>
+                        <li>          经营范围:{{this.company.businessScope}}</li>
+                        <li></li>
+                    </ul>
                 </div>
 <!--                <div class="recruiting-position">-->
 <!--                    <TitleWrapper title="在招职位"/>-->
@@ -76,7 +84,7 @@
                         <li v-for="(recruiter,index) in $store.state.company.recruiters" :key="index"
                             :style="{display:currentDot==(index+1)?'block':'none'}">
                             <div class="user-base-info">
-                                <img :src="require(`@/assets/${recruiter.photo}`)" class="photo">
+                                <img :src="recruiter.photo" class="photo">
                                 <p>
                                     <span class="name">{{recruiter.name}}</span>
                                     <span class="title">{{recruiter.position}}</span>
@@ -341,6 +349,16 @@ export default {
                                 cursor: pointer;
                             }
                         }
+                    }
+                }
+                .company-base-info{
+                    ul{
+                        display:flex;
+                        flex-flow: column nowrap;
+                        margin: 0;
+                        padding: 0;
+                        list-style-type: none;
+                        line-height: 30rem /@font-size;
                     }
                 }
             }

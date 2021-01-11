@@ -35,15 +35,18 @@
                     <i class="iconfont   icon-zhiding "></i>
                 </div>
                 <div class="chat-position">
-                   <!-- <span>沟通职位</span>
-                    <span class="position">python开发工程师(初级)</span>
-                    <span class="salary">7-12k</span>
-                    <span class="address">烟台</span>-->
+                    <!-- <span>沟通职位</span>
+                     <span class="position">python开发工程师(初级)</span>
+                     <span class="salary">7-12k</span>
+                     <span class="address">烟台</span>-->
                 </div>
                 <ul class="chat-message-list" v-if="currentRecruiter.id!=0">
                     <li v-for="(chat,index) in  this.$store.state.jobHunterChats" :key="index">
-                        <div class="message-publish-time" v-if="chat.recruiter.id==currentRecruiter.id">{{chat.sentDate | formatDate}}</div>
-                        <div class="message-text" v-if="chat.senderFlag==false&&chat.recruiter!=null&&chat.recruiter.id==currentRecruiter.id">
+                        <div class="message-publish-time" v-if="chat.recruiter.id==currentRecruiter.id">{{chat.sentDate
+                            | formatDate}}
+                        </div>
+                        <div class="message-text"
+                             v-if="chat.senderFlag==false&&chat.recruiter!=null&&chat.recruiter.id==currentRecruiter.id">
                             <img :src="chat.recruiter.photo">
                             <span class="content" v-html="chat.content"></span>
                         </div>
@@ -70,112 +73,7 @@ export default {
   name: "JobHunterChat",
   data() {
     return {
-      recruiters: [
-        {
-          id: 1,
-          name: '彭宇发',
-          photo: require('../../../../assets/imgs/cb711967d6a627105a813f22f4b090510e342922abe6c27227865159c957b680_s.png'),
-          company: {id: 1, name: '烟台链家'},
-          position: '商圈经理',
-          lastRelyDate: '9月13日'
-        },
-        {
-          id: 3,
-          name: '于腾',
-          photo: require('../../../../assets/imgs/cb711967d6a627105a813f22f4b090510e342922abe6c27227865159c957b680_s.png'),
-          company: {id: 1, name: '杨桐'},
-          position: 'HR',
-          lastRelyDate: '9月12日'
-        },
-        {
-          id: 4,
-          name: '于腾',
-          photo: require('../../../../assets/imgs/cb711967d6a627105a813f22f4b090510e342922abe6c27227865159c957b680_s.png'),
-          company: {id: 1, name: '杨桐'},
-          position: 'HR',
-          lastRelyDate: '9月12日'
-        },
-        {
-          id: 5,
-          name: '于腾',
-          photo: require('../../../../assets/imgs/cb711967d6a627105a813f22f4b090510e342922abe6c27227865159c957b680_s.png'),
-          company: {id: 1, name: '杨桐'},
-          position: 'HR',
-          lastRelyDate: '9月12日'
-        },
-        {
-          id: 6,
-          name: '于腾',
-          photo: require('../../../../assets/imgs/cb711967d6a627105a813f22f4b090510e342922abe6c27227865159c957b680_s.png'),
-          company: {id: 1, name: '杨桐'},
-          position: 'HR',
-          lastRelyDate: '9月12日'
-        },
-        {
-          id: 7,
-          name: '于腾',
-          photo: require('../../../../assets/imgs/cb711967d6a627105a813f22f4b090510e342922abe6c27227865159c957b680_s.png'),
-          company: {id: 1, name: '杨桐'},
-          position: 'HR',
-          lastRelyDate: '9月12日'
-        },
-        {
-          id: 8,
-          name: '于腾',
-          photo: require('../../../../assets/imgs/cb711967d6a627105a813f22f4b090510e342922abe6c27227865159c957b680_s.png'),
-          company: {id: 1, name: '杨桐'},
-          position: 'HR',
-          lastRelyDate: '9月12日'
-        },
-        {
-          id: 9,
-          name: '于腾',
-          photo: require('../../../../assets/imgs/cb711967d6a627105a813f22f4b090510e342922abe6c27227865159c957b680_s.png'),
-          company: {id: 1, name: '杨桐'},
-          position: 'HR',
-          lastRelyDate: '9月12日'
-        },
-        {
-          id: 10,
-          name: '于腾',
-          photo: require('../../../../assets/imgs/cb711967d6a627105a813f22f4b090510e342922abe6c27227865159c957b680_s.png'),
-          company: {id: 1, name: '杨桐'},
-          position: 'HR',
-          lastRelyDate: '9月12日'
-        },
-        {
-          id: 11,
-          name: '于腾',
-          photo: require('../../../../assets/imgs/cb711967d6a627105a813f22f4b090510e342922abe6c27227865159c957b680_s.png'),
-          company: {id: 1, name: '杨桐'},
-          position: 'HR',
-          lastRelyDate: '9月12日'
-        },
-        {
-          id: 12,
-          name: '于腾',
-          photo: require('../../../../assets/imgs/cb711967d6a627105a813f22f4b090510e342922abe6c27227865159c957b680_s.png'),
-          company: {id: 1, name: '杨桐'},
-          position: 'HR',
-          lastRelyDate: '9月12日'
-        },
-        {
-          id: 13,
-          name: '于腾',
-          photo: require('../../../../assets/imgs/cb711967d6a627105a813f22f4b090510e342922abe6c27227865159c957b680_s.png'),
-          company: {id: 1, name: '杨桐'},
-          position: 'HR',
-          lastRelyDate: '9月12日'
-        },
-        {
-          id: 14,
-          name: '于腾',
-          photo: require('../../../../assets/imgs/cb711967d6a627105a813f22f4b090510e342922abe6c27227865159c957b680_s.png'),
-          company: {id: 1, name: '杨桐'},
-          position: 'HR',
-          lastRelyDate: '9月12日'
-        }
-      ],
+
       currentRecruiterIndex: 0,
       position: {id: 1, name: '市场营销', city: '烟台', salary: '7-12k'},
       chats: [
@@ -347,7 +245,7 @@ export default {
     websocketonmessage(e) {//数据接收
       console.log("接收到数据:")
       console.log(e.data)
-      this.chatData=JSON.parse(e.data)
+      this.chatData = JSON.parse(e.data)
       if (Array.isArray(this.chatData)) {
         this.$store.state.jobHunterChats = this.chatData
       } else {
@@ -370,7 +268,6 @@ export default {
     this.jobHunterId = this.$route.params.jobHunterId
     this.initWebSocket("ws://localhost:8080/lieying/websocket/" + this.jobHunterId + "/jobHunter")
     this.$store.dispatch("getChatRecruitersByJobHunterIdAction", this.jobHunterId)
-
   },
   computed: {
     ...mapState(['jobHunter'])

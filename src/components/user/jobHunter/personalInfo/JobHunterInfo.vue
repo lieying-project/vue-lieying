@@ -262,6 +262,9 @@ export default {
   },
   computed: {
     ...mapState(['jobHunter'])
+  },
+  mounted() {
+
   }
 }
 </script>

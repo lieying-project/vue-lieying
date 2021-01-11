@@ -20,6 +20,8 @@
                             <span v-if="this.$store.state.company.industry!=null">
                                                     {{this.$store.state.company.industry.name}}
                                                 </span>
+                            <Vdot/>
+                            <span>{{company.employeeWelfare}}</span>
                         </p>
                     </div>
                 </div>
@@ -166,7 +168,6 @@ export default {
         width: 100%;
         margin: 0 auto;
         background-color: #FFFFFF;
-
         .company-banner {
             width: 100%;
             display: flex;

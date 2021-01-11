@@ -137,8 +137,6 @@ export default {
   savePosition(position){
     return request.post("/api/position/save", position);
   },
-
-
   //更新职位
   // updatePosition(state,position){
   //   request.post("/api/position/update", position).then(res => {
@@ -501,8 +499,8 @@ export default {
     })
   },
   //添加简历
-  saveResume(state,resume){
-    request.post("/api/jobHunter/resume/add", resume).then(res => {
+  saveResume(resume){
+    return request.post("/api/jobHunter/resume/save", resume).then(res => {
       console.log(res.data)
     })
   },
@@ -561,7 +559,8 @@ export default {
     })
   },
   //添加教育经历
-  saveEducationExperience(state,data){
+  saveEducationExperience(data){
+    console.log(data)
     request.post("/api/jobHunter/resume/education/save", data).then(res => {
       console.log(res.data)
     })
@@ -595,12 +594,14 @@ export default {
         });
   },
   //推荐职位
-  getRecommendPositions(jobHunterId){
+  getRecommendPositions(state){
     console.log("recommend")
-    request.get("/api/position/recommend",{
-      jobHunterId:3
-    }).then(res => {
+    const jobHunterId=localStorage.getItem("jobHunterId")
+    request.get("/api/position/recommend?jobHunterId="+jobHunterId
+    ).then(res => {
+      console.log("推荐职位")
       console.log(res.data)
+      state.recommendedPositions=res.data
     })
   },
   //更新求职者信息
@@ -609,6 +610,12 @@ export default {
       console.log(res.data)
     })
   },
+  //保存聊天信息
+  saveChat(chat){
+    request.post("/api/chat/save",chat).then(res => {
+     // console.log(res.data)
+    })
+  }
   // getJobHunterReportsByCriteria(criteria){
   //   if(!criteria) {
   //     return request.get("/api/admin/reports");

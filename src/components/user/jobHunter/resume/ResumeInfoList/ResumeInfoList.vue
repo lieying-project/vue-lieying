@@ -1,13 +1,23 @@
 <template>
     <div class="main">
-
+        <el-dialog title="新建简历" :visible.sync="isResumeVisible" width="30%">
+            <el-input placeholder="请输入简历名称" v-model="resumeName"></el-input>
+            <br/>
+            <div class="add-btn">
+                <el-button type="primary" @click="addResume">添加</el-button>
+            </div>
+        </el-dialog>
         <el-card class="box-card">
             <div slot="header" class="resume-list-header">
                 <span class="title">简历信息列表</span>
                 <div class="btn-group">
 <!--                    <el-button  round class="btn">导入简历</el-button>-->
-                    <el-button type="primary" round class="btn">新建简历</el-button>
+                    <el-button type="primary" round class="btn" @click="isResumeVisible=!isResumeVisible">新建简历</el-button>
                 </div>
+            </div>
+
+            <div v-if="jobHunter.resumes.length==0" class="no-resume">
+                您还没有简历！
             </div>
             <ul class="resume-list" v-if="jobHunter!=null&&jobHunter.resumes!=null"
              ref="resumeItems">
@@ -36,6 +46,12 @@
 import {mapState} from 'vuex'
 export default {
   name: "ResumeInfoList",
+  data (){
+    return {
+      isResumeVisible:false,
+      resumeName:''
+    }
+  },
   computed:{
     ...mapState(['jobHunter'])
   },
@@ -77,7 +93,25 @@ export default {
     deleteResume(event){
       event.cancelBubble=true
       console.log("删除简历")
+    },
+    addResume(){
+      this.isResumeVisible=!this.isResumeVisible
+      if(this.resumeName==""){
+        alert('简历名称不合法')
+        return
+      } else if(this.resumeName.length<3){
+        alert('简历名称至少大于等于3个字符')
+        return
+      }
+      this.$store.dispatch('saveResumeAction',{
+        name:this.resumeName,
+        jobHunter:{
+          id:this.jobHunter.id
+        }
+      })
+      this.$router.go(0);
     }
+
   },
   mounted() {
     this.initResumeList()
@@ -95,6 +129,11 @@ export default {
         height: auto;
         background-color: #FFFFFF;
         margin: 20rem /@font-size 0 20rem /@font-size 155rem /@font-size;
+        .add-btn {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10rem /@font-size;
+        }
         .box-card{
             border-radius: 10rem /@font-size;
             padding: 0 20rem /@font-size;
@@ -111,6 +150,15 @@ export default {
                         font-size: 14rem /@font-size;
                     }
                 }
+            }
+            .no-resume{
+                width: 800rem /@font-size;
+                display: flex;
+                justify-content:center;
+                align-items: center;
+                font-size: 16rem /@font-size;
+                height: 300rem /@font-size;
+                width: 100%;
             }
             .resume-list{
                 display: flex;

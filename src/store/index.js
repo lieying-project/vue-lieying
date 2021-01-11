@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import api from "../api/index";
-
+import router from "../router";
 import request from "../api/request";
 
 
@@ -223,8 +223,9 @@ export default new Vuex.Store({
     updateCompany(state,company){
       api.updateCompany(state,company)
     },
-    setRecommendedPositions(state,positions){
-      state.recommendedPositions=positions
+    setRecommendedPositions(state){
+      api.getRecommendPositions(state)
+
     },
     getJobHunter1(state) {
       const jobHunterId = localStorage.getItem("jobHunterId")
@@ -452,11 +453,11 @@ export default new Vuex.Store({
       const data=await api.updateSocialHomepage(socialHomepage)
       return data;
     },
-    async getRecommendPositionsAction({commit},jobHunterId){
+    async getRecommendPositionsAction({commit}){
 
-      const data=await api.getRecommendPositions(jobHunterId)
-      commit('setRecommendedPositions',data.data)
-      return data
+
+      commit('setRecommendedPositions')
+
 
     },
     async updateJobHunterAction({commit},jobHunter) {
@@ -464,6 +465,23 @@ export default new Vuex.Store({
       commit('getJobHunter')
       return data
     },
+    async saveResumeAction({commit},resume){
+      const data= await api.saveResume(resume)
+
+
+      return data
+    },
+    async saveChatAction({commit},chat){
+      console.log(chat)
+      const data= await api.saveChat(chat)
+      console.log("chat:"+data)
+
+
+      return data
+    },
+    saveEducationExperienceAction({commit},data){
+      api.saveEducationExperience(data)
+    }
     // async getRecruiterAction({commit}){
     //   const data = await  api.getRecruiter();
     //   commit('getRecruiter',data);
