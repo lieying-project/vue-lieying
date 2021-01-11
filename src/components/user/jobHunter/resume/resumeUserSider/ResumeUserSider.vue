@@ -12,13 +12,14 @@
                 </li>
             </ul>
             <a class="upload-resume" href="javascript:void(0);" @click="dialogVisible2 = !dialogVisible2"
-               v-if="this.resume.enclosure==null||this.resume==''">上传简历</a>
-            <span   v-if="this.resume.enclosure!=null&&this.resume!=''">
-                <el-button type="success" >点击下载简历附件</el-button>
+               v-if="this.resume.enclosure==null||this.resume.enclosure==''">上传附件</a>
+            <span   v-if="this.resume.enclosure!=null&&this.resume.enclosure!=''">
+                <el-button type="success" @click="fileDownload">点击下载简历附件</el-button>
+
             <el-button type="danger"
             @click="deleteResumeEnclosure">删除简历附件</el-button>
           </span>
-            <el-dialog title="上传头像"
+            <el-dialog title="上传附件"
                        :visible.sync="dialogVisible2"
                        width="30%">
                 <el-form :model="form">
@@ -26,7 +27,7 @@
                                   ref="uploadElement">
                         <el-upload ref="upload"
                                    action="#"
-                                   accept="image/png,image/gif,image/jpg,image/jpeg"
+                                   accept="image/png,image/gif,image/jpg,image/jpeg,.docx,.doc,.pdf"
                                    list-type="picture-card"
                                    :limit=limitNum
                                    :auto-upload="false"
@@ -44,7 +45,6 @@
                                  alt="">
                         </el-dialog>
                     </el-form-item>
-
                     <el-form-item>
                         <el-button size="small"
                                    type="primary"
@@ -88,11 +88,13 @@ export default {
   methods: {
     // 上传文件之前的钩子
     handleBeforeUpload(file) {
+      console.log(file)
       if (!(file.type === 'image/png' || file.type === 'image/gif' || file.type === 'image/jpg' || file.type === 'image/jpeg')) {
         this.$notify.warning({
           title: '警告',
           message: '请上传格式为image/png, image/gif, image/jpg, image/jpeg的图片'
         })
+        return
       }
       let size = file.size / 1024 / 1024 / 2
       if (size > 2) {
@@ -103,7 +105,7 @@ export default {
       }
       let fd = new FormData();//通过form数据格式来传
       fd.append("file", file); //传文件
-      console.log(fd.get('picFile'));
+      console.log(fd.get('file'));
       axios({
         url: "/api/file/upload",
         method: "post",
@@ -154,6 +156,38 @@ export default {
       this.resume.enclosure =''
       this.$store.dispatch('updateResumeAction', this.resume)
       alert('删除成功')
+    },
+    fileDownload(){
+     {
+       axios({
+         method:'get',
+         url:'/api/file/download',
+         params:{
+           file:this.resume.enclosure
+         },
+         responseType: 'blob',
+
+       }).then(res =>{
+         console.log(res.data)
+         // 得到请求到的数据后，对数据进行处理
+         let blob = new Blob([res.data], { type: 'application/vnd.ms-excel;charset=utf-8' });// 创建一个类文件对象：Blob对象表示一个不可变的、原始数据的类文件对象
+         let fileName = decodeURI(res.headers['content-disposition']);// 设置文件名称,decodeURI：可以对后端使用encodeURI() 函数编码过的 URI 进行解码。encodeURI() 是后端为了解决中文乱码问题
+         if (fileName){// 根据后端返回的数据处理文件名称
+           fileName = fileName.substring(fileName.indexOf('=') + 1);
+         }
+         const elink = document.createElement('a')// 创建一个a标签
+         elink.download = fileName;// 设置a标签的下载属性
+         elink.style.display = 'none';// 将a标签设置为隐藏
+         elink.href = URL.createObjectURL(blob);// 把之前处理好的地址赋给a标签的href
+         document.body.appendChild(elink);// 将a标签添加到body中
+         elink.click();// 执行a标签的点击方法
+         URL.revokeObjectURL(elink.href) // 下载完成释放URL 对象
+         document.body.removeChild(elink)// 移除a标签
+       }).catch(err => {
+         console.log(err)
+       })
+     }
+
     }
   }
 }

@@ -52,14 +52,7 @@
                         :value="item.label">
                 </el-option>
             </el-select>
-            <el-select v-model="salary" placeholder="薪资要求" class="select-item" clearable @change="searchPositions">
-                <el-option
-                        v-for="item in salaries"
-                        :key="item.label"
-                        :label="item.label"
-                        :value="item.label">
-                </el-option>
-            </el-select>
+
             <el-select v-model="financingStageId" placeholder="融资阶段" class="select-item" clearable
                        @change="searchPositions">
                 <el-option
@@ -78,12 +71,21 @@
                         :value="companyScale.id">
                 </el-option>
             </el-select>
-            <el-select v-model="publishTime" placeholder="发布时间" class="select-item" clearable @change="searchPositions">
+<!--            <el-select v-model="publishTime" placeholder="发布时间" class="select-item" clearable @change="searchPositions">-->
+<!--                <el-option-->
+<!--                        v-for="item in publishTimes"-->
+<!--                        :key="item.value"-->
+<!--                        :label="item.label"-->
+<!--                        :value="item.value">-->
+<!--                </el-option>-->
+<!--                -->
+<!--            </el-select>-->
+            <el-select v-model="salary" placeholder="薪资要求" class="select-item" clearable @change="searchPositions">
                 <el-option
-                        v-for="item in publishTimes"
-                        :key="item.value"
+                        v-for="item in salaries"
+                        :key="item.label"
                         :label="item.label"
-                        :value="item.value">
+                        :value="item.label">
                 </el-option>
             </el-select>
         </div>
@@ -253,7 +255,7 @@ export default {
         financingStageId: this.financingStageId,
         positionEducation: this.education,
         positionSalary: this.salary,
-        positionPublishTime: this.publishTime,
+        // positionPublishTime: this.publishTime,
         keyword: ''
       }).then(() => {
         this.pubVue.$emit('searchWay', 'select')

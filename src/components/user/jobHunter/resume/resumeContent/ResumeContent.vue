@@ -2,17 +2,20 @@
     <div class="resume-content">
         <div class="resume-content-box">
             <div class="updated-time">
-<!--                <span class="time">最后更新 {{resume.updatedTime | formatDate}} </span>-->
+                {{resume.name}}
+
+                <span class="time">最后更新 {{resume.updatedTime | formatDate}} </span>
 <!--                <a class="preview">预览简历</a>-->
             </div>
+<!--            <ResumePersonalInfo />-->
+            <ResumeEducationExperience/>
+            <ResumeCredential />
 
-            <ResumePersonalInfo />
             <ResumePersonalAdvantage/>
             <ResumeExpectedPosition />
             <ResumeInternshipExperience />
             <ResumeProjectExperience />
-            <ResumeEducationExperience/>
-            <ResumeCredential />
+
             <ResumeSocialHomepage />
 <!--            <ResumeVolunteerExperience />-->
         </div>

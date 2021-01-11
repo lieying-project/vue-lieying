@@ -297,8 +297,20 @@ export default {
       }
 
     },
-    chat() {
-      this.$router.push("/chat")
+    async chat() {
+      console.log("chat")
+      await this.$store.dispatch('saveChatAction',{
+        jobHunter: {
+          id: this.jobHunter.id,
+        },
+        recruiter: {
+          id: this.position.recruiter.id,
+        },
+        senderFlag: 1,
+        content: "Hello",
+        sentDate: new Date()
+      })
+      await   this.$router.push('/jobHunter/chat/'+this.jobHunter.id)
     },
     getPositionInfo() {
       this.$store.dispatch('getPositionByIdAction', this.positionId)

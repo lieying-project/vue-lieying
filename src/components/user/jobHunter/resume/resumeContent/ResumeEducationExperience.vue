@@ -188,8 +188,9 @@ export default {
       })
       this.educationExperience.id=lastIndex+1
       this.resume.educationExperiences.push(this.educationExperience)
-      //console.log(this.resume.educationExperiences)
+      console.log(this.educationExperience)
       this.isAddEducationFormVisible=false
+      this.$store.dispatch('saveEducationExperienceAction',this.educationExperience)
       this.initEducationExperience()
     },
     editEducationExperience(){

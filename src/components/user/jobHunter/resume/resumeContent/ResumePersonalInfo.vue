@@ -253,7 +253,6 @@ export default {
     },
     tocancel () {
       this.dialogVisible2 = false
-
     }
   },
   computed: {
